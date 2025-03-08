@@ -24,8 +24,93 @@
             min-height: 100vh;
         }
         
-        
-        
+        .sidebar {
+    position: fixed;
+    left: -250px;
+    top: 0;
+    width: 250px;
+    height: 100%;
+    background: #001f3f;
+    transition: all 0.3s;
+    z-index: 999;
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+.sidebar-header {
+    padding: 20px;
+    background: #001529;
+    color: white;
+    border-bottom: 1px solid #00284f;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 20px 0;
+}
+
+.sidebar-menu li a {
+    color: #d0d4d6;
+    padding: 15px 25px;
+    display: block;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.sidebar-menu li a:hover {
+    background: #00284f;
+}
+
+.sidebar-menu li a i {
+    width: 25px;
+}
+
+.sidebar-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 20px;
+    border-top: 1px solid #00284f;
+}
+
+.logout-btn {
+    color: #d0d4d6;
+    text-decoration: none;
+    display: block;
+}
+
+.logout-btn:hover {
+    color: white;
+}
+
+
+/* Update the backdrop style */
+.sidebar-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Increased opacity from 0.5 to 0.7 */
+    z-index: 998;
+    display: none;
+    transition: opacity 0.3s;
+}
+
+/* Add this to make sure content stays behind sidebar */
+body {
+    position: relative;
+    transition: filter 0.3s;
+}
+
+/* Optional: Add blur effect to content */
+.sidebar.active ~ .content-section,
+.sidebar.active ~ body {
+    filter: brightness(0.8) blur(2px);
+}
+
         .company-logo {
     width: 40px;
     height: 40px;
@@ -229,19 +314,30 @@ h2 {
 </head>
 <body>
 
-    <nav class="top-nav">
-        <div class="profile-pic">
-            <img src="omni.png" alt="">
-        </div>
-        <div class="company-name">Mynvestor</div>
-        <i class="bi bi-bell notifications-icon"></i>
-        <div class="notifications-popover">
-            <div class="notification-item">Notification 1</div>
-            <div class="notification-item">Notification 2</div>
-        </div>
-    </nav>
+<div class="sidebar">
+    <div class="sidebar-header">
+        <h4>Mynvestor</h4>
+    </div>
+    <ul class="sidebar-menu">
+        <li><a href="#"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a></li>
+        <li><a href="#"><i class="bi bi-wallet2 me-2"></i> Portfolio</a></li>
+        <li><a href="#"><i class="bi bi-arrow-left-right me-2"></i> Trade</a></li>
+        <li><a href="#"><i class="bi bi-clock-history me-2"></i> Transactions</a></li>
+        <li><a href="#"><i class="bi bi-gear me-2"></i> Settings</a></li>
+    </ul>
+    <div class="sidebar-footer">
+        <a href="#" class="logout-btn"><i class="bi bi-box-arrow-left me-2"></i> Log Out</a>
+    </div>
+</div>
 
-
+<!-- Updated Top Navigation (changed icon to bi-list) -->
+<nav class="top-nav">
+    <div class="profile-pic">
+        <img src="omni.png" alt="">
+    </div>
+    <div class="company-name">Mynvestor</div>
+    <i class="bi bi-list notifications-icon"></i>
+</nav>
 <section id="market" class="content-section active">
 
         <h1 class="mb-4">Market</h1>
@@ -1001,6 +1097,28 @@ new Chart(document.getElementById('fsiChart'), {
         }]
     },
     options: chartOptions
+});
+
+document.querySelector('.notifications-icon').addEventListener('click', function(e) {
+    e.stopPropagation();
+    document.querySelector('.sidebar').classList.toggle('active');
+    document.querySelector('.sidebar-backdrop').style.display = 'block';
+});
+
+// Close sidebar when clicking outside
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.sidebar') && !e.target.closest('.notifications-icon')) {
+        document.querySelector('.sidebar').classList.remove('active');
+        document.querySelector('.sidebar-backdrop').style.display = 'none';
+    }
+});
+
+// Close sidebar when clicking a menu item
+document.querySelectorAll('.sidebar-menu a').forEach(item => {
+    item.addEventListener('click', () => {
+        document.querySelector('.sidebar').classList.remove('active');
+        document.querySelector('.sidebar-backdrop').style.display = 'none';
+    });
 });
     </script>
 </body>
