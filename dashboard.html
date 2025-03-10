@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mynvestor</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: #454e55;
+            margin: 0;
+            padding: 60px 0 80px;
+            min-height: 100vh;
+        }
+        
+/* Add these new rules to fix text colors */
+.card,
+.card h2,
+.card h4,
+.card .list-group-item,
+.card .btn {
+    color: #d0d4d6 !important;
+}
+
+.card .text-muted {
+    color: #8a9297 !important; /* Slightly lighter muted text */
+}
+
+.card .list-group-item {
+    background-color: #2d3338 !important;
+    border-color: #495057 !important;
+}
+
+/* Update heading colors specifically */
+h2 {
+    color: #d0d4d6 !important;
+    border-bottom: 2px solid #495057;
+}
+
+/* Chart text color fixes */
+.chart-container canvas {
+    color: #d0d4d6 !important;
+}
+
+        .sidebar {
+    position: fixed;
+    left: -250px;
+    top: 0;
+    width: 250px;
+    height: 100%;
+    background: #001f3f;
+    transition: all 0.3s;
+    z-index: 999;
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+.sidebar-header {
+    padding: 20px;
+    background: #001529;
+    color: white;
+    border-bottom: 1px solid #00284f;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 20px 0;
+}
+
+.sidebar-menu li a {
+    color: #d0d4d6;
+    padding: 15px 25px;
+    display: block;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.sidebar-menu li a:hover {
+    background: #00284f;
+}
+
+.sidebar-menu li a i {
+    width: 25px;
+}
+
+.sidebar-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 20px;
+    border-top: 1px solid #00284f;
+}
+
+.logout-btn {
+    color: #d0d4d6;
+    text-decoration: none;
+    display: block;
+}
+
+.logout-btn:hover {
+    color: white;
+}
+
+
+/* Update the backdrop style */
+.sidebar-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Increased opacity from 0.5 to 0.7 */
+    z-index: 998;
+    display: none;
+    transition: opacity 0.3s;
+}
+
+/* Add this to make sure content stays behind sidebar */
+body {
+    position: relative;
+    transition: filter 0.3s;
+}
+
+/* Optional: Add blur effect to content */
+.sidebar.active ~ .content-section,
+.sidebar.active ~ body {
+    filter: brightness(0.8) blur(2px);
+}
+
+        .company-logo {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
+
+.badge {
+    padding: 0.5em 0.75em;
+    border-radius: 20px;
+    font-size: 0.85rem;
+}
+
+.bg-success {
+    background-color: #28a745 !important;
+}
+
+.bg-danger {
+    background-color: #dc3545 !important;
+}
+
+h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #495057;
+}.company-logo {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
+
+.badge {
+    padding: 0.5em 0.75em;
+    border-radius: 20px;
+    font-size: 0.85rem;
+}
+
+.bg-success {
+    background-color: #28a745 !important;
+}
+
+.bg-danger {
+    background-color: #dc3545 !important;
+}
+
+h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #495057;
+}
+
+
+
+        
+    .card {
+            background: #343a40;
+            border: 1px solid #495057;
+            border-radius: 8px;
+            margin-bottom: 0.3rem;
+        }
+        
+        /* Add this new rule for card text */
+.card,
+.card .text-muted {
+    color: #d0d4d6 !important;
+}
+
+/* Optional: If you want to adjust badge text contrast */
+.badge {
+    color: white !important;
+}
+
+/* Add this new rule to reduce row spacing */
+.content-section .row {
+    margin-bottom: -0.5rem;
+}
+
+/* Adjust card body padding */
+.card-body {
+    padding: 0.5rem; /* Reduced from 1.25rem */
+}
+
+/* Add this to reduce column gutter */
+.row.g-2 {
+    --bs-gutter-x: 0.4rem;
+    --bs-gutter-y: 0.4rem;
+}
+        .card-body {
+            padding: 1.25rem;
+        }
+        
+        .chart-container {
+            height: 250px;
+            position: relative;
+        }
+        /* Top Navigation */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: #001f3f;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: white;
+            z-index: 1000;
+        }
+
+        /* Update the profile-pic CSS */
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex; /* Add this */
+        }
+
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block; /* Add this to prevent extra spacing */
+        }
+
+        .company-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .notifications-icon {
+            cursor: pointer;
+            padding: 8px;
+            color: white;
+            font-size: 24px;
+        }
+
+        /* Notifications Popover */
+        .notifications-popover {
+            position: absolute;
+            right: 20px;
+            top: 60px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 15px;
+            width: 300px;
+            display: none;
+        }
+
+        /* Main Content Sections */
+        .content-section {
+            display: none;
+            padding: 20px;
+            color: white;
+            min-height: calc(100vh - 140px);
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 0.3s ease;
+        }
+
+        .content-section.active {
+            display: block;
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Footer Navigation */
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: #001f3f;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: transform 0.2s;
+        }
+
+        .nav-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 4px;
+            color: inherit;
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <div class="sidebar-header">
+        <h4>Mynvestor</h4>
+    </div>
+    <ul class="sidebar-menu">
+        <li><a href="#"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a></li>
+        <li><a href="#"><i class="bi bi-wallet2 me-2"></i> Portfolio</a></li>
+        <li><a href="#"><i class="bi bi-arrow-left-right me-2"></i> Trade</a></li>
+        <li><a href="#"><i class="bi bi-clock-history me-2"></i> Transactions</a></li>
+        <li><a href="#"><i class="bi bi-gear me-2"></i> Settings</a></li>
+    </ul>
+    <div class="sidebar-footer">
+        <a href="#" class="logout-btn"><i class="bi bi-box-arrow-left me-2"></i> Log Out</a>
+    </div>
+</div>
+
+<!-- Updated Top Navigation (changed icon to bi-list) -->
+<nav class="top-nav">
+    <div class="profile-pic">
+        <img src="omni.png" alt="">
+    </div>
+    <div class="company-name">Mynvestor</div>
+    <i class="bi bi-list notifications-icon"></i>
+</nav>
+
+
+<section id="dashboard" class="content-section active">
+    <div class="container-fluid">
+        <h1 class="mb-4">Dashboard</h1>
+        
+        <div class="row g-3">
+            <!-- Left Column -->
+            <div class="col-xxl-3 col-xl-4">
+                <!-- Market Schedule -->
+                <div class="card">
+                    <div class="card-body">
+                        <h2><i class="bi bi-clock me-2"></i>Market Schedule</h2>
+                        <ul class="list-unstyled">
+                            <li class="d-flex justify-content-between mb-2">
+                                <span>NYSE Open</span>
+                                <span>09:30 ET</span>
+                            </li>
+                            <li class="d-flex justify-content-between mb-2">
+                                <span>NYSE Close</span>
+                                <span>16:00 ET</span>
+                            </li>
+                            <li class="d-flex justify-content-between">
+                                <span>After Hours</span>
+                                <span>16:00-20:00 ET</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="card">
+                    <div class="card-body">
+                        <h2><i class="bi bi-lightning me-2"></i>Quick Actions</h2>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-success btn-sm"><i class="bi bi-plus-circle"></i> Deposit</button>
+                            <button class="btn btn-danger btn-sm"><i class="bi bi-dash-circle"></i> Withdraw</button>
+                            <button class="btn btn-primary btn-sm"><i class="bi bi-arrow-left-right"></i> Trade</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Learning Center -->
+                <div class="card">
+                    <div class="card-body">
+                        <h2><i class="bi bi-book me-2"></i>Learning Center</h2>
+                        <div class="list-group">
+                            <a href="#" class="list-group-item list-group-item-action bg-dark border-secondary">
+                                <i class="bi bi-play-circle me-2"></i>Beginner's Guide
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action bg-dark border-secondary">
+                                <i class="bi bi-graph-up me-2"></i>Technical Analysis
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Middle Column -->
+            <div class="col-xxl-6 col-xl-8">
+                <!-- Portfolio Summary -->
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h2><i class="bi bi-wallet2 me-2"></i>Portfolio Summary</h2>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="h4">$124,560</div>
+                                <small class="text-success">+2.4% Today</small>
+                            </div>
+                            <div class="col-8">
+                                <div class="chart-container">
+                                    <canvas id="performanceChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Asset Allocation -->
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h2><i class="bi bi-pie-chart me-2"></i>Asset Allocation</h2>
+                        <div class="chart-container">
+                            <canvas id="allocationChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Transactions -->
+                <div class="card">
+                    <div class="card-body">
+                        <h2><i class="bi bi-list-check me-2"></i>Recent Transactions</h2>
+                        <div class="list-group">
+                            <div class="list-group-item bg-dark border-secondary d-flex justify-content-between">
+                                <span>Buy AAPL</span>
+                                <span class="text-success">+10 shares</span>
+                                <span>$189.32</span>
+                            </div>
+                            <div class="list-group-item bg-dark border-secondary d-flex justify-content-between">
+                                <span>Sell TSLA</span>
+                                <span class="text-danger">-5 shares</span>
+                                <span>$842.76</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="col-xxl-3">
+                <!-- Watch List -->
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h2><i class="bi bi-binoculars me-2"></i>Watch List</h2>
+                        <div class="list-group">
+                            <div class="list-group-item bg-dark border-secondary d-flex align-items-center">
+                                <img src="apple.png" class="company-logo me-2" alt="AAPL">
+                                <div class="flex-fill">
+                                    <div>AAPL</div>
+                                    <small class="text-muted">$189.32</small>
+                                </div>
+                                <span class="text-success">+1.2%</span>
+                            </div>
+                            <div class="list-group-item bg-dark border-secondary d-flex align-items-center">
+                                <img src="tesla.png" class="company-logo me-2" alt="TSLA">
+                                <div class="flex-fill">
+                                    <div>TSLA</div>
+                                    <small class="text-muted">$842.76</small>
+                                </div>
+                                <span class="text-danger">-0.8%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Market News -->
+                <div class="card">
+                    <div class="card-body">
+                        <h2><i class="bi bi-newspaper me-2"></i>Market News</h2>
+                        <div class="list-group">
+                            <a href="#" class="list-group-item bg-dark border-secondary">
+                                <div>Fed Announces Rate Hike</div>
+                                <small class="text-muted">2h ago</small>
+                            </a>
+                            <a href="#" class="list-group-item bg-dark border-secondary">
+                                <div>Tech Stocks Rally</div>
+                                <small class="text-muted">4h ago</small>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+// Performance Chart
+new Chart(document.getElementById('performanceChart'), {
+    type: 'line',
+    data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [{
+            label: 'Portfolio Value',
+            data: [90000, 95000, 102000, 98000, 110000, 124560],
+            borderColor: '#4dc9f6',
+            fill: true,
+            backgroundColor: 'rgba(77, 201, 246, 0.1)',
+            tension: 0.4,
+            pointRadius: 3
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: { display: false }
+        },
+        scales: {
+            y: {
+                grid: { color: '#495057' },
+                ticks: { color: '#d0d4d6' }
+            },
+            x: {
+                grid: { color: '#495057' },
+                ticks: { color: '#d0d4d6' }
+            }
+        }
+    }
+});
+
+// Allocation Chart
+new Chart(document.getElementById('allocationChart'), {
+    type: 'doughnut',
+    data: {
+        labels: ['AAPL', 'TSLA', 'GOOGL', 'AMZN', 'MSFT', 'NVDA'],
+        datasets: [{
+            data: [25, 20, 18, 15, 12, 10],
+            backgroundColor: ['#4dc9f6', '#4dd091', '#f67019', '#f63bc5', '#864df6', '#f6d24d'],
+            borderColor: '#343a40',
+            borderWidth: 2
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'right',
+                labels: { color: '#d0d4d6' }
+            }
+        },
+        cutout: '60%'
+    }
+});
+</script>
+
+
+    <!-- Footer Navigation -->
+    <nav class="footer-nav">
+        <a href="#market" class="nav-item">
+            <i class="bi bi-layers nav-icon"></i>
+            Market
+        </a>
+        <a href="#companies" class="nav-item">
+            <i class="bi bi-people nav-icon"></i>
+            Companies
+        </a>
+        <a href="#learn" class="nav-item">
+            <i class="bi bi-book nav-icon"></i>
+            Learn
+        </a>
+        <a href="#reports" class="nav-item">
+            <i class="bi bi-bar-chart-line nav-icon"></i>
+            Reports
+        </a>
+        <a href="#help" class="nav-item">
+            <i class="bi bi-question-circle nav-icon"></i>
+            Help
+        </a>
+    </nav>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+    <script>
+    
+// Performance Chart
+new Chart(document.getElementById('performanceChart'), {
+    type: 'line',
+    data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [{
+            label: 'Portfolio Value',
+            data: [90000, 95000, 102000, 98000, 110000, 124560],
+            borderColor: '#4dc9f6',
+            fill: true,
+            backgroundColor: 'rgba(77, 201, 246, 0.1)',
+            tension: 0.4,
+            pointRadius: 3
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: { display: false }
+        },
+        scales: {
+            y: {
+                grid: { color: '#495057' },
+                ticks: { color: '#d0d4d6' }
+            },
+            x: {
+                grid: { color: '#495057' },
+                ticks: { color: '#d0d4d6' }
+            }
+        }
+    }
+});
+
+// Allocation Chart
+new Chart(document.getElementById('allocationChart'), {
+    type: 'doughnut',
+    data: {
+        labels: ['AAPL', 'TSLA', 'GOOGL', 'AMZN', 'MSFT', 'NVDA'],
+        datasets: [{
+            data: [25, 20, 18, 15, 12, 10],
+            backgroundColor: ['#4dc9f6', '#4dd091', '#f67019', '#f63bc5', '#864df6', '#f6d24d'],
+            borderColor: '#343a40',
+            borderWidth: 2
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'right',
+                labels: { color: '#d0d4d6' }
+            }
+        },
+        cutout: '60%'
+    }
+});
+
+
+
+        // Section transitions
+        document.querySelectorAll('.nav-item').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                document.querySelectorAll('.content-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                document.getElementById(targetId).classList.add('active');
+            });
+        });
+
+
+document.querySelector('.notifications-icon').addEventListener('click', function(e) {
+    e.stopPropagation();
+    document.querySelector('.sidebar').classList.toggle('active');
+    document.querySelector('.sidebar-backdrop').style.display = 'block';
+});
+
+// Close sidebar when clicking outside
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.sidebar') && !e.target.closest('.notifications-icon')) {
+        document.querySelector('.sidebar').classList.remove('active');
+        document.querySelector('.sidebar-backdrop').style.display = 'none';
+    }
+});
+
+// Close sidebar when clicking a menu item
+document.querySelectorAll('.sidebar-menu a').forEach(item => {
+    item.addEventListener('click', () => {
+        document.querySelector('.sidebar').classList.remove('active');
+        document.querySelector('.sidebar-backdrop').style.display = 'none';
+    });
+});
+    </script>
+</body>
+</html>
+

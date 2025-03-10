@@ -1,0 +1,1572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mynvestor</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        /* Add these new rules to fix text colors */
+        .card,
+        .card h2,
+        .card h4,
+        .card .list-group-item,
+        .card .btn {
+            color: #d0d4d6 !important;
+        }
+
+        .card .text-muted {
+            color: #8a9297 !important;
+            /* Slightly lighter muted text */
+        }
+
+        .card .list-group-item {
+            background-color: #2d3338 !important;
+            border-color: #495057 !important;
+        }
+
+        /* Update heading colors specifically */
+        h2 {
+            color: #d0d4d6 !important;
+            border-bottom: 2px solid #495057;
+        }
+
+        /* Chart text color fixes */
+        .chart-container canvas {
+            color: #d0d4d6 !important;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: -250px;
+            top: 0;
+            width: 250px;
+            height: 100%;
+            background: #001f3f;
+            transition: all 0.3s;
+            z-index: 999;
+        }
+
+        /* Add this to the existing CSS */
+        .balance-card {
+            border: 1px solid #495057;
+            border-radius: 8px;
+            background: #212529 !important;
+        }
+
+        .balance-card small {
+            font-size: 0.75rem;
+        }
+
+        .balance-card .fw-bold {
+            font-size: 0.9rem;
+        }
+        body {
+            background: #454e55;
+            margin: 0;
+            padding: 60px 0 80px;
+            min-height: 100vh;
+        }
+        .modal-content {
+            border: 1px solid #495057;
+        }
+
+        .company-logo {
+            width: 30px;
+            height: 30px;
+        }
+
+        #btnBuy, #btnSell {
+            font-size: 1.1rem;
+            padding: 0.75rem;
+        }
+        .sidebar {
+            position: fixed;
+            left: -250px;
+            top: 0;
+            width: 250px;
+            height: 100%;
+            background: #001f3f;
+            transition: all 0.3s;
+            z-index: 999;
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            background: #001529;
+            color: white;
+            border-bottom: 1px solid #00284f;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 20px 0;
+        }
+
+        .sidebar-menu li a {
+            color: #d0d4d6;
+            padding: 15px 25px;
+            display: block;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .sidebar-menu li a:hover {
+            background: #00284f;
+        }
+
+        .sidebar-menu li a i {
+            width: 25px;
+        }
+
+        .sidebar-footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 20px;
+            border-top: 1px solid #00284f;
+        }
+
+        .logout-btn {
+            color: #d0d4d6;
+            text-decoration: none;
+            display: block;
+        }
+
+        .logout-btn:hover {
+            color: white;
+        }
+
+
+        /* Update the backdrop style */
+        .sidebar-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            /* Increased opacity from 0.5 to 0.7 */
+            z-index: 998;
+            display: none;
+            transition: opacity 0.3s;
+        }
+
+        /* Add this to make sure content stays behind sidebar */
+        body {
+            position: relative;
+            transition: filter 0.3s;
+        }
+
+        /* Optional: Add blur effect to content */
+        .sidebar.active ~ .content-section,
+        .sidebar.active ~ body {
+            filter: brightness(0.8) blur(2px);
+        }
+
+        .company-logo {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+        }
+
+        .badge {
+            padding: 0.5em 0.75em;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .bg-success {
+            background-color: #28a745 !important;
+        }
+
+        .bg-danger {
+            background-color: #dc3545 !important;
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #495057;
+        }
+
+        .company-logo {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+        }
+
+        .badge {
+            padding: 0.5em 0.75em;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .bg-success {
+            background-color: #28a745 !important;
+        }
+
+        .bg-danger {
+            background-color: #dc3545 !important;
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #495057;
+        }
+
+
+
+
+        .card {
+            background: #343a40;
+            border: 1px solid #495057;
+            border-radius: 8px;
+            margin-bottom: 0.3rem;
+        }
+
+        /* Add this new rule for card text */
+        .card,
+        .card .text-muted {
+            color: #d0d4d6 !important;
+        }
+
+        /* Optional: If you want to adjust badge text contrast */
+        .badge {
+            color: white !important;
+        }
+
+        /* Add this new rule to reduce row spacing */
+        .content-section .row {
+            margin-bottom: -0.5rem;
+        }
+
+        /* Adjust card body padding */
+        .card-body {
+            padding: 0.5rem;
+            /* Reduced from 1.25rem */
+        }
+
+        /* Add this to reduce column gutter */
+        .row.g-2 {
+            --bs-gutter-x: 0.4rem;
+            --bs-gutter-y: 0.4rem;
+        }
+        .card-body {
+            padding: 1.25rem;
+        }
+
+        .chart-container {
+            height: 250px;
+            position: relative;
+        }
+        /* Top Navigation */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: #001f3f;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: white;
+            z-index: 1000;
+        }
+
+        /* Update the profile-pic CSS */
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            /* Add this */
+        }
+
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            /* Add this to prevent extra spacing */
+        }
+
+        .company-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .notifications-icon {
+            cursor: pointer;
+            padding: 8px;
+            color: white;
+            font-size: 24px;
+        }
+
+
+
+        /* Main Content Sections */
+        .content-section {
+            display: none;
+            padding: 20px;
+            color: white;
+            min-height: calc(100vh - 140px);
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 0.3s ease;
+        }
+
+        .content-section.active {
+            display: block;
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Footer Navigation */
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: #001f3f;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: transform 0.2s;
+        }
+
+        .nav-item:hover {
+            transform: translateY(-3px);
+        }
+        .nav-item.active {
+            color: #28a745 !important;
+        }
+        .jon {
+            color: #24ac44!important;
+        }
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 4px;
+            color: inherit;
+        }
+    </style>
+</head>
+<body>
+
+
+    <!-- Updated Top Navigation (changed icon to bi-list) -->
+    <nav class="top-nav">
+        <div class="profile-pic">
+            <img src="omni.png" alt="">
+        </div>
+        <div class="company-name">
+            <span class=" jon">Myn</span>vestor
+        </div>
+        <i class="bi bi-list notifications-icon"></i>
+    </nav>
+
+    <section id="dashboard" class="content-section active">
+
+        <h1 class="mb-4">Dashboard</h1>
+
+        <div class="row g-3">
+            <!-- Left Column -->
+            <div class="col-xxl-3 col-xl-4">
+                <!-- Market Schedule -->
+                <div class="card">
+                    <div class="card-body">
+                        <h2><i class="bi bi-clock me-2"></i>MSE Market Schedule</h2>
+                        <ul class="list-unstyled">
+                            <li class="d-flex justify-content-between mb-2">
+                                <span>MSE Open</span>
+                                <span>09:30 ET</span>
+                            </li>
+                            <li class="d-flex justify-content-between mb-2">
+                                <span>MSE Close</span>
+                                <span>16:00 ET</span>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="card">
+                    <div class="card-body">
+                        <h2><i class="bi bi-lightning me-2"></i>Quick Actions</h2>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-success btn-sm"><i class="bi bi-plus-circle"></i> Deposit</button>
+                            <button class="btn btn-danger btn-sm"><i class="bi bi-dash-circle"></i> Withdraw</button>
+                            <button class="btn btn-primary btn-sm"><i class="bi bi-arrow-left-right"></i> Trade</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Learning Center -->
+                <div class="card">
+                    <div class="card-body">
+                        <h2><i class="bi bi-book me-2"></i>Learning Center</h2>
+                        <div class="list-group">
+                            <a href="#" class="list-group-item list-group-item-action bg-dark border-secondary">
+                                <i class="bi bi-play-circle me-2"></i>Beginner's Guide
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action bg-dark border-secondary">
+                                <i class="bi bi-graph-up me-2"></i>Technical Analysis
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Middle Column -->
+            <div class="col-xxl-6 col-xl-8">
+
+                <!-- Asset Allocation -->
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h2><i class="bi bi-pie-chart me-2"></i>Asset Allocation</h2>
+                        <div class="chart-container">
+                            <canvas id="allocationChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Transactions -->
+                <div class="card">
+                    <div class="card-body">
+                        <h2><i class="bi bi-list-check me-2"></i>Recent Transactions</h2>
+                        <div class="list-group">
+                            <div class="list-group-item bg-dark border-secondary d-flex justify-content-between">
+                                <span>Buy AAPL</span>
+                                <span class="text-success">+10 shares</span>
+                                <span>$189.32</span>
+                            </div>
+                            <div class="list-group-item bg-dark border-secondary d-flex justify-content-between">
+                                <span>Sell TSLA</span>
+                                <span class="text-danger">-5 shares</span>
+                                <span>$842.76</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="col-xxl-3">
+
+                <!-- Market News -->
+                <div class="card">
+                    <div class="card-body">
+                        <h2><i class="bi bi-newspaper me-2"></i>Market News</h2>
+                        <div class="list-group">
+                            <a href="#" class="list-group-item bg-dark border-secondary">
+                                <div>
+                                    Fed Announces Rate Hike
+                                </div>
+                                <small class="text-muted">2h ago</small>
+                            </a>
+                            <a href="#" class="list-group-item bg-dark border-secondary">
+                                <div>
+                                    Tech Stocks Rally
+                                </div>
+                                <small class="text-muted">4h ago</small>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <section id="portfolio" class="content-section">
+        <h1 class="mb-4">Portfolio</h1>
+
+        <div class="row g-3">
+            <!-- Left Column -->
+            <div class="col-xxl-8">
+                <!-- Portfolio Summary Chart -->
+                
+                                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Portfolio Summary</h5>
+                        <div class="row align-items-center">
+                            <div class="col-12 col-md-4 text-center mb-3 mb-md-0">
+                                <h2 class="text-success">$124,560</h2>
+                                <small class="text-muted">Total Portfolio Value</small>
+                            </div>
+                            <div class="col-6 col-md-4 text-center">
+                                <div class="text-warning">+2.45%</div>
+                                <small class="text-muted">Daily Change</small>
+                            </div>
+                            <div class="col-6 col-md-4 text-center">
+                                <div class="text-success">+15.6%</div>
+                                <small class="text-muted">Annual Return</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h2><i class="bi bi-graph-up me-2"></i>Portfolio Performance</h2>
+                        <div class="chart-container">
+                            <canvas id="portfolioPerformanceChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Asset Allocation Chart -->
+                <div class="card">
+                    <div class="card-body">
+                        <h2><i class="bi bi-pie-chart me-2"></i>Asset Allocation</h2>
+                        <div class="chart-container">
+                            <canvas id="portfolioAllocationChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="col-xxl-4">
+                <!-- Positions Held -->
+                <div class="card">
+                    <div class="card-body">
+                        <h2><i class="bi bi-wallet2 me-2"></i>Current Positions</h2>
+                        <div class="table-responsive">
+                            <table class="table table-dark table-hover mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Stock</th>
+                                        <th>Shares</th>
+                                        <th>Price</th>
+                                        <th>Value</th>
+                                        <th>Day Δ</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="d-flex align-items-center">
+                                            <img src="apple.png" class="company-logo me-2" alt="AAPL">
+                                            <div>
+                                                <div>
+                                                    AAPL
+                                                </div>
+                                                <small class="text-muted">Apple Inc.</small>
+                                            </div>
+                                        </td>
+                                        <td>25</td>
+                                        <td>$189.32</td>
+                                        <td>$4,733.00</td>
+                                        <td class="text-success">+1.2%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="d-flex align-items-center">
+                                            <img src="tesla.png" class="company-logo me-2" alt="TSLA">
+                                            <div>
+                                                <div>
+                                                    TSLA
+                                                </div>
+                                                <small class="text-muted">Tesla Inc.</small>
+                                            </div>
+                                        </td>
+                                        <td>10</td>
+                                        <td>$842.76</td>
+                                        <td>$8,427.60</td>
+                                        <td class="text-danger">-0.8%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="d-flex align-items-center">
+                                            <img src="microsoft.png" class="company-logo me-2" alt="MSFT">
+                                            <div>
+                                                <div>
+                                                    MSFT
+                                                </div>
+                                                <small class="text-muted">Microsoft Corp.</small>
+                                            </div>
+                                        </td>
+                                        <td>15</td>
+                                        <td>$328.73</td>
+                                        <td>$4,930.95</td>
+                                        <td class="text-success">+0.6%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="learn" class="content-section">
+
+        <h1 class="mb-4">Learn Investing Basics</h1>
+        <div class="row g-4">
+            <!-- Card 1 -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card h-100">
+                    <img src="Portfolio.svg" class="card-img-top" alt="Investing Basics" style="height: 200px; object-fit: cover;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Stock Market 101</h5>
+                        <p class="card-text">
+                            Learn the fundamental concepts of stock markets, how they operate, and why companies go public.
+                            <a href="lesson.html" class="text-info">
+                                Read More
+                            </a>
+                        </p>
+                        <div class="mt-auto d-flex justify-content-end gap-3 text-muted">
+                            <small><i class="bi bi-chat"></i> 45</small>
+                            <small><i class="bi bi-eye"></i> 1.2k</small>
+                            <small><i class="bi bi-hand-thumbs-up"></i> 89</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card h-100">
+                    <img src="invest.svg" class="card-img-top" alt="Risk Management" style="height: 200px; object-fit: cover;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Risk Management</h5>
+                        <p class="card-text">
+                            Understand how to assess and manage investment risks to protect your capital.
+                            <a href="lesson.html" class="text-info">
+                                Read More
+                            </a>
+                        </p>
+                        <div class="mt-auto d-flex justify-content-end gap-3 text-muted">
+                            <small><i class="bi bi-chat"></i> 32</small>
+                            <small><i class="bi bi-eye"></i> 987</small>
+                            <small><i class="bi bi-hand-thumbs-up"></i> 65</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card h-100">
+                    <img src="sec.svg" class="card-img-top" alt="Diversification" style="height: 200px; object-fit: cover;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Portfolio Diversification</h5>
+                        <p class="card-text">
+                            Discover the importance of spreading investments across different assets and sectors.
+                            <a href="lesson.html" class="text-info">
+                                Read More
+                            </a>
+                        </p>
+                        <div class="mt-auto d-flex justify-content-end gap-3 text-muted">
+                            <small><i class="bi bi-chat"></i> 28</small>
+                            <small><i class="bi bi-eye"></i> 845</small>
+                            <small><i class="bi bi-hand-thumbs-up"></i> 72</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card h-100">
+                    <img src="capito.svg" class="card-img-top" alt="Market Orders" style="height: 200px; object-fit: cover;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Market Orders</h5>
+                        <p class="card-text">
+                            Learn about different order types and how to execute trades effectively.
+                            <a href="lesson.html" class="text-info">
+                                Read More
+                            </a>
+                        </p>
+                        <div class="mt-auto d-flex justify-content-end gap-3 text-muted">
+                            <small><i class="bi bi-chat"></i> 51</small>
+                            <small><i class="bi bi-eye"></i> 1.1k</small>
+                            <small><i class="bi bi-hand-thumbs-up"></i> 93</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card h-100">
+                    <img src="gaina.svg" class="card-img-top" alt="Fundamental Analysis" style="height: 200px; object-fit: cover;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Fundamental Analysis</h5>
+                        <p class="card-text">
+                            Evaluate companies through financial statements and economic indicators.
+                            <a href="lesson.html" class="text-info">
+                                Read More
+                            </a>
+                        </p>
+                        <div class="mt-auto d-flex justify-content-end gap-3 text-muted">
+                            <small><i class="bi bi-chat"></i> 67</small>
+                            <small><i class="bi bi-eye"></i> 1.5k</small>
+                            <small><i class="bi bi-hand-thumbs-up"></i> 104</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card h-100">
+                    <img src="gsh.svg" class="card-img-top" alt="Technical Analysis" style="height: 200px; object-fit: cover;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Technical Analysis</h5>
+                        <p class="card-text">
+                            Understand price charts and technical indicators to identify market trends.
+                            <a href="lesson.html" class="text-info">
+                                Read More
+                            </a>
+                        </p>
+                        <div class="mt-auto d-flex justify-content-end gap-3 text-muted">
+                            <small><i class="bi bi-chat"></i> 39</small>
+                            <small><i class="bi bi-eye"></i> 923</small>
+                            <small><i class="bi bi-hand-thumbs-up"></i> 81</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <section id="market" class="content-section">
+
+        <h1 class="mb-4">Market</h1>
+        <div class="row">
+            <!-- MASI Index -->
+            <div class="col-12 col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">MASI Index</h5>
+                        <div class="chart-container">
+                            <canvas id="masiChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DSI Index -->
+            <div class="col-12 col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">DSI Index</h5>
+                        <div class="chart-container">
+                            <canvas id="dsiChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- New FSI Index -->
+            <div class="col-12 col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">FSI Index</h5>
+                        <div class="chart-container">
+                            <canvas id="fsiChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <h2 class="text-white mt-4 mb-3">Top Gainers</h2>
+        <div class="row g-2">
+            <div class="col-12 col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body d-flex align-items-center">
+                        <img src="logos/tnm-logo.png" alt="Company Logo" class="company-logo rounded-circle me-3">
+                        <div class="flex-grow-1">
+                            <h6 class="mb-0">Tech Corp</h6>
+                            <small class="text-muted">TEC.UM</small>
+                        </div>
+                        <span class="badge bg-success">+5.25%</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Repeat similar structure for other gainers -->
+            <div class="col-12 col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body d-flex align-items-center">
+                        <img src="https://dummyimage.com/40x40/28a745/fff" alt="Company Logo" class="company-logo rounded-circle me-3">
+                        <div class="flex-grow-1">
+                            <h6 class="mb-0">Green Energy</h6>
+                            <small class="text-muted">GRE.UM</small>
+                        </div>
+                        <span class="badge bg-success">+3.89%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body d-flex align-items-center">
+                        <img src="https://dummyimage.com/40x40/17a2b8/fff" alt="Company Logo" class="company-logo rounded-circle me-3">
+                        <div class="flex-grow-1">
+                            <h6 class="mb-0">Med Pharma</h6>
+                            <small class="text-muted">MED.UM</small>
+                        </div>
+                        <span class="badge bg-success">+2.45%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Losers Section -->
+        <h2 class="text-white mt-4 mb-3">Top Losers</h2>
+        <div class="row">
+            <div class="col-12 col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body d-flex align-items-center">
+                        <img src="https://dummyimage.com/40x40/dc3545/fff" alt="Company Logo" class="company-logo rounded-circle me-3">
+                        <div class="flex-grow-1">
+                            <h6 class="mb-0">Oil & Gas Co</h6>
+                            <small class="text-muted">OIL.UM</small>
+                        </div>
+                        <span class="badge bg-danger">-4.75%</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Repeat similar structure for other losers -->
+            <div class="col-12 col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body d-flex align-items-center">
+                        <img src="https://dummyimage.com/40x40/ffc107/fff" alt="Company Logo" class="company-logo rounded-circle me-3">
+                        <div class="flex-grow-1">
+                            <h6 class="mb-0">Gold Mines</h6>
+                            <small class="text-muted">GLD.UM</small>
+                        </div>
+                        <span class="badge bg-danger">-3.15%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body d-flex align-items-center">
+                        <img src="https://dummyimage.com/40x40/6c757d/fff" alt="Company Logo" class="company-logo rounded-circle me-3">
+                        <div class="flex-grow-1">
+                            <h6 class="mb-0">Auto Motors</h6>
+                            <small class="text-muted">AUT.UM</small>
+                        </div>
+                        <span class="badge bg-danger">-1.95%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section id="companies" class="content-section">
+
+    <h1 class="mb-4">Companies</h1>
+    <div class="row g-2">
+        <!-- Auto Motors -->
+        <div class="col-12 col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body d-flex align-items-center">
+                    <img src="https://dummyimage.com/40x40/6c757d/fff" alt="Auto Motors" class="company-logo rounded-circle me-3">
+                    <div class="flex-grow-1">
+                        <h6 class="mb-0">Auto Motors</h6>
+                        <small class="text-muted">AUT.UM</small>
+                    </div>
+                    <span class="badge bg-danger">-1.95%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bank Financial -->
+        <div class="col-12 col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body d-flex align-items-center">
+                    <img src="https://dummyimage.com/40x40/007bff/fff" alt="Bank Financial" class="company-logo rounded-circle me-3">
+                    <div class="flex-grow-1">
+                        <h6 class="mb-0">Bank Financial</h6>
+                        <small class="text-muted">BNK.UM</small>
+                    </div>
+                    <span class="badge bg-success">+2.10%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gold Mines -->
+        <div class="col-12 col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body d-flex align-items-center">
+                    <img src="https://dummyimage.com/40x40/ffc107/fff" alt="Gold Mines" class="company-logo rounded-circle me-3">
+                    <div class="flex-grow-1">
+                        <h6 class="mb-0">Gold Mines</h6>
+                        <small class="text-muted">GLD.UM</small>
+                    </div>
+                    <span class="badge bg-danger">-3.15%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Green Energy -->
+        <div class="col-12 col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body d-flex align-items-center">
+                    <img src="https://dummyimage.com/40x40/28a745/fff" alt="Green Energy" class="company-logo rounded-circle me-3">
+                    <div class="flex-grow-1">
+                        <h6 class="mb-0">Green Energy</h6>
+                        <small class="text-muted">GRE.UM</small>
+                    </div>
+                    <span class="badge bg-success">+3.89%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Health Care Inc. -->
+        <div class="col-12 col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body d-flex align-items-center">
+                    <img src="https://dummyimage.com/40x40/17a2b8/fff" alt="Health Care" class="company-logo rounded-circle me-3">
+                    <div class="flex-grow-1">
+                        <h6 class="mb-0">Health Care Inc.</h6>
+                        <small class="text-muted">HLT.UM</small>
+                    </div>
+                    <span class="badge bg-success">+1.75%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Med Pharma -->
+        <div class="col-12 col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body d-flex align-items-center">
+                    <img src="https://dummyimage.com/40x40/17a2b8/fff" alt="Med Pharma" class="company-logo rounded-circle me-3">
+                    <div class="flex-grow-1">
+                        <h6 class="mb-0">Med Pharma</h6>
+                        <small class="text-muted">MED.UM</small>
+                    </div>
+                    <span class="badge bg-success">+2.45%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Oil & Gas Co -->
+        <div class="col-12 col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body d-flex align-items-center">
+                    <img src="https://dummyimage.com/40x40/dc3545/fff" alt="Oil & Gas" class="company-logo rounded-circle me-3">
+                    <div class="flex-grow-1">
+                        <h6 class="mb-0">Oil & Gas Co</h6>
+                        <small class="text-muted">OIL.UM</small>
+                    </div>
+                    <span class="badge bg-danger">-4.75%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Retail Plus -->
+        <div class="col-12 col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body d-flex align-items-center">
+                    <img src="https://dummyimage.com/40x40/6f42c1/fff" alt="Retail Plus" class="company-logo rounded-circle me-3">
+                    <div class="flex-grow-1">
+                        <h6 class="mb-0">Retail Plus</h6>
+                        <small class="text-muted">RET.UM</small>
+                    </div>
+                    <span class="badge bg-success">+0.90%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tech Corp -->
+        <div class="col-12 col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body d-flex align-items-center">
+                    <img src="https://dummyimage.com/40x40/007bff/fff" alt="Tech Corp" class="company-logo rounded-circle me-3">
+                    <div class="flex-grow-1">
+                        <h6 class="mb-0">Tech Corp</h6>
+                        <small class="text-muted">TEC.UM</small>
+                    </div>
+                    <span class="badge bg-success">+5.25%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Telecom Networks -->
+        <div class="col-12 col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body d-flex align-items-center">
+                    <img src="https://dummyimage.com/40x40/e83e8c/fff" alt="Telecom Networks" class="company-logo rounded-circle me-3">
+                    <div class="flex-grow-1">
+                        <h6 class="mb-0">Telecom Networks</h6>
+                        <small class="text-muted">TEL.UM</small>
+                    </div>
+                    <span class="badge bg-danger">-2.30%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<section id="reports" class="content-section">
+
+    <h1 class="mb-4">Financial Reports</h1>
+
+    <!-- Annual Reports -->
+    <div class="card mb-4">
+        <div class="card-header bg-dark text-white">
+            <h5 class="mb-0"><i class="bi bi-file-earmark-text me-2"></i>Annual Reports</h5>
+        </div>
+        <div class="card-body">
+            <div class="list-group list-group-flush">
+                <div class="list-group-item bg-transparent text-white d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="mb-1">2023 Annual Financial Report</h6>
+                        <small class="text-muted">PDF - 2.4 MB</small>
+                    </div>
+                    <a href="#" class="btn btn-sm btn-outline-primary">
+                        <i class="bi bi-download me-2"></i>
+                    </a>
+                </div>
+                <!-- Add more annual reports -->
+                <div class="list-group-item bg-transparent text-white d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="mb-1">2022 Annual Financial Report</h6>
+                        <small class="text-muted">PDF - 2.1 MB</small>
+                    </div>
+                    <a href="#" class="btn btn-sm btn-outline-primary">
+                        <i class="bi bi-download me-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quarterly Reports -->
+    <div class="card mb-4">
+        <div class="card-header bg-dark text-white">
+            <h5 class="mb-0"><i class="bi bi-calendar-event me-2"></i>Quarterly Reports</h5>
+        </div>
+        <div class="card-body">
+            <div class="list-group list-group-flush">
+                <div class="list-group-item bg-transparent text-white d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="mb-1">Q1 2024 Financial Report</h6>
+                        <small class="text-muted">PDF - 1.2 MB</small>
+                    </div>
+                    <a href="#" class="btn btn-sm btn-outline-success">
+                        <i class="bi bi-download me-2"></i>
+                    </a>
+                </div>
+                <!-- Add more quarterly reports -->
+                <div class="list-group-item bg-transparent text-white d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="mb-1">Q4 2023 Financial Report</h6>
+                        <small class="text-muted">PDF - 1.3 MB</small>
+                    </div>
+                    <a href="#" class="btn btn-sm btn-outline-success">
+                        <i class="bi bi-download me-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Regulatory Filings -->
+    <div class="card mb-4">
+        <div class="card-header bg-dark text-white">
+            <h5 class="mb-0"><i class="bi bi-folder-fill me-2"></i>Regulatory Filings</h5>
+        </div>
+        <div class="card-body">
+            <div class="list-group list-group-flush">
+                <div class="list-group-item bg-transparent text-white d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="mb-1">2023 SEC Form 10-K</h6>
+                        <small class="text-muted">PDF - 890 KB</small>
+                    </div>
+                    <a href="#" class="btn btn-sm btn-outline-warning">
+                        <i class="bi bi-download me-2"></i>
+                    </a>
+                </div>
+                <!-- Add more regulatory filings -->
+                <div class="list-group-item bg-transparent text-white d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="mb-1">2024 Insider Trading Report</h6>
+                        <small class="text-muted">PDF - 450 KB</small>
+                    </div>
+                    <a href="#" class="btn btn-sm btn-outline-warning">
+                        <i class="bi bi-download me-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sustainability Reports -->
+    <div class="card">
+        <div class="card-header bg-dark text-white">
+            <h5 class="mb-0"><i class="bi bi-globe me-2"></i>Sustainability Reports</h5>
+        </div>
+        <div class="card-body">
+            <div class="list-group list-group-flush">
+                <div class="list-group-item bg-transparent text-white d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="mb-1">2023 Environmental Impact Report</h6>
+                        <small class="text-muted">PDF - 1.8 MB</small>
+                    </div>
+                    <a href="#" class="btn btn-sm btn-outline-info">
+                        <i class="bi bi-download me-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+<div class="modal fade" id="stockModal" tabindex="-1" aria-labelledby="stockModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header border-secondary">
+                <h5 class="modal-title" id="stockModalLabel">
+                    <img src="" alt="Logo" class="company-logo me-2" id="modalCompanyLogo">
+                    <span id="modalCompanyName"></span> (<span id="modalCompanyTicker"></span>)
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <div class="h4" id="modalStockPrice">
+                            --.--
+                        </div>
+                        <span class="badge" id="modalStockChange">+0.00%</span>
+                    </div>
+                    <div class="col-6">
+                        <div class="small text-muted">
+                            Day Range
+                        </div>
+                        <div id="modalDayRange">
+                            00.00 - 00.00
+                        </div>
+                        <div class="small text-muted mt-2">
+                            Volume
+                        </div>
+                        <div id="modalVolume">
+                            0
+                        </div>
+                    </div>
+                </div>
+                <div class="d-grid gap-2">
+                    <button class="btn btn-success btn-lg" id="btnBuy">
+                        <i class="bi bi-arrow-up-circle"></i> Buy
+                    </button>
+                    <button class="btn btn-danger btn-lg" id="btnSell">
+                        <i class="bi bi-arrow-down-circle"></i> Sell
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add this toast for trade confirmation -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="tradeToast" class="toast bg-dark text-white" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-body">
+            <span id="toastMessage"></span>
+        </div>
+    </div>
+</div>
+
+
+<!-- Updated Footer Navigation -->
+<nav class="footer-nav">
+    <a href="#dashboard" class="nav-item active">
+        <i class="bi bi-speedometer2 nav-icon"></i>
+        Dashboard
+    </a>
+    <a href="#portfolio" class="nav-item">
+        <i class="bi bi-wallet2 nav-icon"></i>
+        Portfolio
+    </a>
+    <a href="#learn" class="nav-item">
+        <i class="bi bi-book nav-icon"></i>
+        Learn
+    </a>
+    <a href="#market" class="nav-item ">
+        <i class="bi bi-layers nav-icon"></i>
+        Market
+    </a>
+    <a href="#companies" class="nav-item">
+        <i class="bi bi-people nav-icon"></i>
+        Companies
+    </a>
+</nav>
+
+
+<!-- Updated Sidebar -->
+<div class="sidebar">
+    <div class="sidebar-header">
+        <h4>Mynvestor</h4>
+    </div>
+
+
+    <ul class="sidebar-menu">
+        <li><a href="profile.html"><i class="bi bi-person me-2"></i> Profile</a></li>
+        <li><a href="transfer.html"><i class="bi bi-cash-coin me-2"></i> Transfer Funds</a></li>
+        <li><a href="trade.html"><i class="bi bi-arrow-left-right me-2"></i> Trade/Place Order</a></li>
+        <li><a href="news.html"><i class="bi bi-newspaper me-2"></i> News</a></li>
+
+        <li><a href="help.html"><i class="bi bi-question-circle me-2"></i> Help & Support</a></li>
+
+        <li><a href="settings.html"><i class="bi bi-gear me-2"></i> Settings</a></li>
+        <!-- ... rest of the menu items ... -->
+    </ul>
+    <!-- Add this new balance card -->
+    <div class="card balance-card mx-3 my-3 bg-dark text-white">
+        <div class="card-body p-3">
+            <div class="row">
+                <div class="col-6 border-end border-secondary">
+                    <small class="text-muted d-block">Cash Balance</small>
+                    <span class="text-success fw-bold">MK145,500</span>
+                </div>
+                <div class="col-6">
+                    <small class="text-muted d-block">Portfolio Value</small>
+                    <span class="text-primary fw-bold">MK23,567</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar-footer">
+        <a href="login.html" class="logout-btn"><i class="bi bi-box-arrow-left me-2"></i> Log Out</a>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+<script>
+
+    document.querySelectorAll('#companies .card').forEach(card => {
+        card.addEventListener('click', function() {
+            const companyName = this.querySelector('h6').textContent;
+            const ticker = this.querySelector('small').textContent;
+            const changeBadge = this.querySelector('.badge');
+            const logo = this.querySelector('img').src;
+
+            // Set modal content
+            document.getElementById('modalCompanyName').textContent = companyName;
+            document.getElementById('modalCompanyTicker').textContent = ticker;
+            document.getElementById('modalCompanyLogo').src = logo;
+
+            // Generate random price data for demo
+            const isPositive = changeBadge.classList.contains('bg-success');
+            const basePrice = Math.random() * 100 + 50;
+            const changePercent = parseFloat(changeBadge.textContent.replace(/[+-]/g, ''));
+            const currentPrice = isPositive ?
+            basePrice * (1 + changePercent/100):
+            basePrice * (1 - changePercent/100);
+
+            // Update modal values
+            document.getElementById('modalStockPrice').textContent = currentPrice.toFixed(2);
+            document.getElementById('modalStockChange').textContent = changeBadge.textContent;
+            document.getElementById('modalStockChange').className = `badge ${isPositive ? 'bg-success': 'bg-danger'}`;
+            document.getElementById('modalDayRange').textContent =
+            `${(currentPrice * 0.98).toFixed(2)} - ${(currentPrice * 1.02).toFixed(2)}`;
+            document.getElementById('modalVolume').textContent =
+            Math.floor(Math.random() * 1000000).toLocaleString();
+
+            // Show modal
+            new bootstrap.Modal(document.getElementById('stockModal')).show();
+        });
+    });
+
+    // Handle buy/sell actions
+    document.getElementById('btnBuy').addEventListener('click', () => showToast('Buy order placed successfully!'));
+    document.getElementById('btnSell').addEventListener('click', () => showToast('Sell order placed successfully!'));
+
+    function showToast(message) {
+        const toast = new bootstrap.Toast(document.getElementById('tradeToast'));
+        document.getElementById('toastMessage').textContent = message;
+        toast.show();
+        setTimeout(() => toast.hide(), 3000);
+    }
+    // Section transitions and active state
+    document.querySelectorAll('.nav-item').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+
+            // Remove active classes
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Add active classes
+            document.getElementById(targetId).classList.add('active');
+            this.classList.add('active');
+        });
+    });
+
+
+
+    // Section transitions
+    document.querySelectorAll('.nav-item').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(targetId).classList.add('active');
+        });
+    });
+    // Common chart configuration
+    const chartOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            x: {
+                grid: {
+                    color: '#495057'
+                },
+                ticks: {
+                    color: '#fff'
+                }
+            },
+            y: {
+                grid: {
+                    color: '#495057'
+                },
+                ticks: {
+                    color: '#fff'
+                }
+            }
+        }
+    };
+
+    // MASI Chart
+    new Chart(document.getElementById('masiChart'), {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            datasets: [{
+                label: 'MASI',
+                data: [12000, 12500, 12400, 12800, 13000, 13200],
+                borderColor: '#4dc9f6',
+                tension: 0.4,
+                pointRadius: 3,
+                pointBackgroundColor: '#4dc9f6'
+            }]
+        },
+        options: chartOptions
+    });
+
+    // DSI Chart
+    new Chart(document.getElementById('dsiChart'), {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            datasets: [{
+                label: 'DSI',
+                data: [1800, 1850, 1820, 1900, 1950, 2000],
+                borderColor: '#f67019',
+                tension: 0.4,
+                pointRadius: 3,
+                pointBackgroundColor: '#f67019'
+            }]
+        },
+        options: chartOptions
+    });
+
+    // FSI Chart
+    new Chart(document.getElementById('fsiChart'), {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            datasets: [{
+                label: 'FSI',
+                data: [850, 880, 870, 900, 910, 925],
+                borderColor: '#4dd091',
+                tension: 0.4,
+                pointRadius: 3,
+                pointBackgroundColor: '#4dd091'
+            }]
+        },
+        options: chartOptions
+    });
+
+
+    // Performance Chart
+    new Chart(document.getElementById('performanceChart'), {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            datasets: [{
+                label: 'Portfolio Value',
+                data: [90000, 95000, 102000, 98000, 110000, 124560],
+                borderColor: '#4dc9f6',
+                fill: true,
+                backgroundColor: 'rgba(77, 201, 246, 0.1)',
+                tension: 0.4,
+                pointRadius: 3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    grid: {
+                        color: '#495057'
+                    },
+                    ticks: {
+                        color: '#d0d4d6'
+                    }
+                },
+                x: {
+                    grid: {
+                        color: '#495057'
+                    },
+                    ticks: {
+                        color: '#d0d4d6'
+                    }
+                }
+            }
+        }
+    });
+
+    // Allocation Chart
+    new Chart(document.getElementById('allocationChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['AAPL', 'TSLA', 'GOOGL', 'AMZN', 'MSFT', 'NVDA'],
+            datasets: [{
+                data: [25, 20, 18, 15, 12, 10],
+                backgroundColor: ['#4dc9f6', '#4dd091', '#f67019', '#f63bc5', '#864df6', '#f6d24d'],
+                borderColor: '#343a40',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'right',
+                    labels: {
+                        color: '#d0d4d6'
+                    }
+                }
+            },
+            cutout: '60%'
+        }
+    });
+    // Portfolio Performance Chart
+    new Chart(document.getElementById('portfolioPerformanceChart'), {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            datasets: [{
+                label: 'Portfolio Value',
+                data: [85000, 92000, 89000, 105000, 115000, 124560],
+                borderColor: '#4dd091',
+                fill: true,
+                backgroundColor: 'rgba(77, 208, 145, 0.1)',
+                tension: 0.4,
+                pointRadius: 3
+            }]
+        },
+        options: chartOptions
+    });
+
+    // Portfolio Allocation Chart
+    new Chart(document.getElementById('portfolioAllocationChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Stocks', 'Bonds', 'Cash', 'Crypto', 'ETFs'],
+            datasets: [{
+                data: [65, 15, 12, 5, 3],
+                backgroundColor: ['#4dc9f6', '#4dd091', '#f67019', '#f63bc5', '#864df6'],
+                borderColor: '#343a40',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'right',
+                    labels: {
+                        color: '#d0d4d6'
+                    }
+                }
+            },
+            cutout: '60%'
+        }
+    });
+
+    document.querySelector('.notifications-icon').addEventListener('click', function(e) {
+        e.stopPropagation();
+        document.querySelector('.sidebar').classList.toggle('active');
+        document.querySelector('.sidebar-backdrop').style.display = 'block';
+    });
+
+    // Close sidebar when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.sidebar') && !e.target.closest('.notifications-icon')) {
+            document.querySelector('.sidebar').classList.remove('active');
+            document.querySelector('.sidebar-backdrop').style.display = 'none';
+        }
+    });
+
+    // Close sidebar when clicking a menu item
+    document.querySelectorAll('.sidebar-menu a').forEach(item => {
+        item.addEventListener('click', () => {
+            document.querySelector('.sidebar').classList.remove('active');
+            document.querySelector('.sidebar-backdrop').style.display = 'none';
+        });
+    });
+</script>
+</body>
+</html>
