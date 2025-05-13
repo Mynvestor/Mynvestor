@@ -1,54 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-P2MFR6QP');</script>
-<!-- End Google Tag Manager -->
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-G1KCCX6EL3"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-712Q0009YE"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'G-712Q0009YE');
+    </script>
 
-  gtag('config', 'G-G1KCCX6EL3');
-</script>
+    <!-- Google Tag Manager -->
+    <script>
+        (function(w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s), dl = l != 'dataLayer'?'&l='+l: ''; j.async = true; j.src =
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-TQ5FZ6Q4');
+    </script>
+    <!-- End Google Tag Manager -->
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mynvestor - Sign Up (Step 2)</title>
+    <title>Mynvestor Broker - Sign Up (Step 2)</title>
     <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
         body {
-            background: linear-gradient(135deg, rgba(240, 244, 248, 0.9) 0%, rgba(217, 226, 236, 0.9) 100%), 
-            url('logos/bakgraund.jpeg') no-repeat center center fixed;
-            background-size: cover;
+            background: linear-gradient(135deg, #001f3f 0%, #003087 100%);
             font-family: 'Inter', sans-serif;
-            color: #333;
         }
         .highlight {
-            color: #27a844;
+            color: #34d399;
+        }
+        .signup-container {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .signup-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
         .form-input {
-            background: #ffffff;
-            border: 1px solid #d1d5db;
-            color: #333;
+            background: #2c3034;
+            border: 1px solid #4b5563;
+            color: #fff;
             font-weight: 500;
         }
         .form-input::placeholder {
             color: #9ca3af;
         }
         .form-input:focus {
-            border-color: #27a844;
+            border-color: #34d399;
             box-shadow: none;
-            background: #ffffff;
-            color: #333;
+            background: #2c3034;
+            color: #fff;
         }
         .error-message {
             color: #ef4444;
@@ -57,121 +69,51 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             margin-top: 0.25rem;
         }
         .secure-note i {
-            color: #27a844;
-        }
-        /* Toast Notification */
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            opacity: 0;
-            transform: translateY(100px);
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            z-index: 100;
-        }
-        .toast.success {
-            background-color: #27a844;
-        }
-        .toast.error {
-            background-color: #ef4444;
-        }
-        .toast.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .toast .bi-check-circle,
-        .toast .bi-exclamation-circle {
-            margin-right: 0.5rem;
-            font-size: 1.25rem;
+            color: #34d399;
         }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center text-gray-800">
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P2MFR6QP"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-
-    <div class="bg-white bg-opacity-80 rounded-2xl p-6 md:p-8 shadow-2xl max-w-md w-full mx-4 transform transition-transform hover:-translate-y-1 hover:shadow-2xl">
+<body class="min-h-screen flex items-center justify-center text-white">
+    <div class="signup-container bg-gray-800 bg-opacity-80 rounded-2xl p-6 md:p-8 shadow-2xl max-w-md w-full mx-4">
         <!-- Logo and Header -->
         <div class="text-center mb-6">
-            <img src="logos/omni.png" alt="Mynvestor Logo" class="mx-auto w-24 mb-4">
-            <h1 class="text-3xl font-bold"><span class="highlight">Myn</span>vestor</h1>
-            <p class="text-gray-600 mt-2">Step 2: Contact Information</p>
+            <img src="../logos/omni.png" alt="Mynvestor Broker Logo" class="mx-auto w-24 mb-4">
+            <h1 class="text-3xl font-bold"><span class="highlight">Myn</span>vestor Broker</h1>
+            <p class="text-gray-300 mt-2">Step 2: Firm Contact Information</p>
         </div>
 
         <!-- Progress Bar -->
-        <div class="w-full bg-gray-200 rounded-full h-2 mb-6">
-            <div class="bg-green-600 h-2 rounded-full" style="width: 66%;"></div>
+        <div class="w-full bg-gray-700 rounded-full h-2 mb-6">
+            <div class="bg-green-500 h-2 rounded-full" style="width: 66%;"></div>
         </div>
 
         <!-- Form -->
-        <form id="signupStep2Form" action="https://formspree.io/f/xrbqkjgq" method="POST">
-            <!-- Hidden Fields for Step 1 Data -->
-            <input type="hidden" name="firstName" id="firstName">
-            <input type="hidden" name="lastName" id="lastName">
-            <input type="hidden" name="dob" id="dob">
+        <form id="brokerSignupStep2Form">
             <div class="mb-4">
-                <label for="email" class="block text-sm font-medium text-gray-600">Email Address</label>
-                <input type="email" class="form-input w-full mt-1 p-2 rounded-lg" id="email" name="_replyto" placeholder="Enter email" required>
-                <div class="error-message" id="emailError">Please enter a valid email address.</div>
+                <label for="email" class="block text-sm font-medium">Firm Email Address</label>
+                <input type="email" class="form-input w-full mt-1 p-2 rounded-lg" id="email" placeholder="Enter firm email" required>
+                <div class="error-message" id="emailError">Please enter a valid business email address.</div>
             </div>
             <div class="mb-4">
-                <label for="phone" class="block text-sm font-medium text-gray-600">Phone Number</label>
-                <input type="tel" class="form-input w-full mt-1 p-2 rounded-lg" id="phone" name="phone" placeholder="Enter phone number" required>
+                <label for="phone" class="block text-sm font-medium">Firm Phone Number</label>
+                <input type="tel" class="form-input w-full mt-1 p-2 rounded-lg" id="phone" placeholder="Enter firm phone number" required>
                 <div class="error-message" id="phoneError">Please enter a valid phone number (e.g., +265123456789).</div>
             </div>
-            <input type="hidden" name="_subject" value="Signup Step 2 Submission from Mynvestor">
-            <input type="hidden" name="_next" value="https://mynvestor.netlify.app/signup_step3.html">
-            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-full transition duration-300 w-full flex items-center justify-center text-sm">
+            <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 w-full flex items-center justify-center text-sm">
                 Continue to Step 3 <i class="bi bi-arrow-right ml-2"></i>
             </button>
-            <p class="secure-note text-gray-600 text-center mt-4 text-sm"><i class="bi bi-shield-lock mr-1"></i>Your data is protected with advanced encryption.</p>
+            <p class="secure-note text-gray-400 text-center mt-4 text-sm"><i class="bi bi-shield-lock mr-1"></i>Your data is protected with advanced encryption.</p>
         </form>
 
         <!-- Login Link -->
         <p class="text-center mt-4 text-sm">
-            <a href="login.html" class="text-green-600 hover:text-green-700">Already have an account? Sign in</a>
+            <a href="login.html" class="text-green-400 hover:text-green-300">Already have an account? Sign in</a>
         </p>
     </div>
 
-    <!-- Toast Notification -->
-    <div id="toast" class="toast">
-        <i id="toastIcon" class="bi"></i>
-        <span id="toastMessage"></span>
-    </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Function to show toast notification
-        function showToast(message, type = 'success', duration = 3000) {
-            const toast = document.getElementById('toast');
-            const toastIcon = document.getElementById('toastIcon');
-            const toastMessage = document.getElementById('toastMessage');
-
-            toastMessage.textContent = message;
-            toastIcon.className = `bi ${type === 'success' ? 'bi-check-circle' : 'bi-exclamation-circle'}`;
-            toast.className = `toast ${type} show`;
-
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, duration);
-        }
-
-        // Populate hidden fields with Step 1 data
-        document.addEventListener('DOMContentLoaded', function() {
-            const signupData = JSON.parse(sessionStorage.getItem('signupData') || '{}');
-            document.getElementById('firstName').value = signupData.firstName || '';
-            document.getElementById('lastName').value = signupData.lastName || '';
-            document.getElementById('dob').value = signupData.dob || '';
-        });
-
-        document.getElementById('signupStep2Form').addEventListener('submit', async function(e) {
+        document.getElementById('brokerSignupStep2Form').addEventListener('submit', function(e) {
             e.preventDefault();
 
             // Get form inputs
@@ -189,55 +131,33 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             // Validation
             let isValid = true;
 
-            // Email validation
-            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            // Email: stricter validation for business emails (must include a domain)
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailRegex.test(email) || email.includes('gmail.com') || email.includes('yahoo.com') || email.includes('hotmail.com')) {
                 emailError.style.display = 'block';
                 isValid = false;
             }
 
-            // Phone validation (e.g., +265 followed by 9 digits)
-            if (!/^\+265\d{9}$/.test(phone)) {
+            // Phone: Malawi format (+265 or 0 followed by 9 digits)
+            const phoneRegex = /^(\+265|0)[1-9]\d{8}$/;
+            if (!phoneRegex.test(phone)) {
                 phoneError.style.display = 'block';
                 isValid = false;
             }
 
             if (isValid) {
-                try {
-                    const formData = new FormData(document.getElementById('signupStep2Form'));
-                    const response = await fetch('https://formspree.io/f/xrbqkjgq', {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'Accept': 'application/json',
-                        },
-                    });
+                // Retrieve step 1 data
+                const step1Data = JSON.parse(sessionStorage.getItem('brokerSignupData') || '{}');
 
-                    if (response.ok) {
-                        // Update signupData in sessionStorage
-                        const signupData = JSON.parse(sessionStorage.getItem('signupData') || '{}');
-                        signupData.email = email;
-                        signupData.phone = phone;
-                        sessionStorage.setItem('signupData', JSON.stringify(signupData));
-
-                        showToast('Form Submitted Successfully!', 'success');
-                        setTimeout(() => {
-                            window.location.href = 'signup_step3.html';
-                        }, 3000);
-                    } else {
-                        console.error('Form submission failed:', response.statusText);
-                        showToast('Form submission failed. Please try again.', 'error');
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                    showToast('An error occurred. Please try again.', 'error');
-                }
+                // Update signup data in sessionStorage
+                sessionStorage.setItem('brokerSignupData', JSON.stringify({
+                    ...step1Data,
+                    email,
+                    phone
+                }));
+                window.location.href = 'signup_step3.html';
             }
         });
-
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-        });
     </script>
-    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93c92d99ad746750',t:'MTc0NjcwOTYyNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93d99a34eed87bab',t:'MTc0Njg4MTg0Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>

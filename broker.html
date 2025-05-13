@@ -1,0 +1,3832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mynvestor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+        #transfers .help-icon {
+            cursor: pointer;
+            padding: 8px;
+            color: #fff;
+            font-size: 24px;
+            transition: transform 0.2s;
+        }
+        .profile-pic-img {
+    background-size: cover;
+    background-position: center;
+}
+        /* Clients Section */
+.client-search {
+    margin-bottom: 15px;
+}
+.client-search .form-control {
+    background: #212529;
+    border: 1px solid #495057;
+    color: #d0d4d6;
+}
+.client-search .form-control:focus {
+    border-color: #28a745;
+    box-shadow: none;
+}
+.table-dark {
+    background: #2c3034;
+    border: 1px solid #495057;
+}
+.table-dark th {
+    background: #212529;
+    color: #d0d4d6;
+}
+.table-dark td {
+    color: #d0d4d6;
+}
+.table-dark tr:hover {
+    background: #003366;
+}
+.card {
+    background: #2c3034;
+    border: 1px solid #495057;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.card-body {
+    padding: 15px;
+}
+.sortable {
+    cursor: pointer;
+    user-select: none;
+}
+.sortable.asc i::before {
+    content: '\F145'; /* Bootstrap Icons arrow-up */
+}
+.sortable.desc i::before {
+    content: '\F140'; /* Bootstrap Icons arrow-down */
+}
+.sortable i {
+    opacity: 0.5;
+}
+.sortable:hover i {
+    opacity: 1;
+}
+/* Settings Section */
+#settings .form-label {
+    color: #d0d4d6;
+    font-weight: 500;
+}
+#settings .form-control.bg-dark,
+#settings .form-select.bg-dark {
+    background: #212529;
+    border: 1px solid #495057;
+    color: #d0d4d6;
+}
+#settings .form-control.bg-dark:focus,
+#settings .form-select.bg-dark:focus {
+    border-color: #28a745;
+    box-shadow: none;
+}
+#settings .form-check-label {
+    color: #d0d4d6;
+}
+#settings .btn-success {
+    background: #28a745;
+    border: none;
+}
+#settings .btn-success:hover {
+    background: #218838;
+}
+
+/* Edit Profile and Change Password Modals */
+#editProfileModal .modal-content,
+#changePasswordModal .modal-content {
+    background: linear-gradient(145deg, #2c3034 0%, #1a1e22 100%);
+    border: 1px solid #5a6268;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+#editProfileModal .modal-body,
+#changePasswordModal .modal-body {
+    padding: 20px;
+}
+/* Transactions Section */
+.transaction-search {
+    margin-bottom: 15px;
+}
+.transaction-search .form-control {
+    background: #212529;
+    border: 1px solid #495057;
+    color: #d0d4d6;
+}
+.transaction-search .form-control:focus {
+    border-color: #28a745;
+    box-shadow: none;
+}
+.table-dark .verify-trans-btn, .table-dark .view-trans-btn {
+    background: linear-gradient(145deg, #17a2b8 0%, #138496 100%);
+    border: none;
+    font-weight: 500;
+}
+.table-dark .verify-trans-btn:hover, .table-dark .view-trans-btn:hover {
+    background: linear-gradient(145deg, #138496 0%, #117a8b 100%);
+}
+#transactionVerificationTable .form-select, #transactionVerificationTable .form-control {
+    background: #212529;
+    border: 1px solid #495057;
+    color: #d0d4d6;
+}
+#transactionVerificationTable .form-select:focus, #transactionVerificationTable .form-control:focus {
+    border-color: #28a745;
+    box-shadow: none;
+}
+#transactionVerificationTable .form-label {
+    color: #c4c8cc;
+    font-size: 0.9rem;
+}
+#refreshTransactionsBtn, #exportTransactionDataBtn {
+    background: linear-gradient(145deg, #17a2b8 0%, #138496 100%);
+    border: none;
+}
+#refreshTransactionsBtn:hover, #exportTransactionDataBtn:hover {
+    background: linear-gradient(145deg, #138496 0%, #117a8b 100%);
+}
+/* Messaging Modal */
+#messageClientModal .modal-content {
+    background: linear-gradient(145deg, #2c3034 0%, #1a1e22 100%);
+    border: 1px solid #5a6268;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+#messageClientModal .modal-body {
+    padding: 20px;
+}
+#messageClientModal .form-label {
+    color: #d0d4d6;
+    font-weight: 500;
+}
+#messageClientModal .form-control,
+#messageClientModal .form-select {
+    background: #212529;
+    border: 1px solid #495057;
+    color: #d0d4d6;
+}
+#messageClientModal .form-control:focus,
+#messageClientModal .form-select:focus {
+    border-color: #28a745;
+    box-shadow: none;
+}
+#messageClientModal .btn-success {
+    background: #28a745;
+    border: none;
+}
+#messageClientModal .btn-success:hover {
+    background: #218838;
+}
+
+/* Transaction and Order Detail Modals */
+#transactionDetailsModal .modal-content,
+#orderDetailsModal .modal-content {
+    background: linear-gradient(145deg, #2c3034 0%, #1a1e22 100%);
+    border: 1px solid #5a6268;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+#transactionDetailsModal .modal-body,
+#orderDetailsModal .modal-body {
+    padding: 20px;
+}
+#transactionDetailsModal .stock-info-row,
+#orderDetailsModal .stock-info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #495057;
+}
+#transactionDetailsModal .stock-info-label,
+#orderDetailsModal .stock-info-label {
+    color: #adb5bd;
+}
+#transactionDetailsModal .stock-info-value,
+#orderDetailsModal .stock-info-value {
+    font-weight: 500;
+    color: #d0d4d6;
+}
+        /* Tabs Styling */
+        #clientDetailsModal .nav-tabs {
+            border-bottom: 1px solid #495057;
+        }
+        #clientDetailsModal .nav-tabs .nav-link {
+            color: #d0d4d6;
+            background: #2c3034;
+            border: 1px solid transparent;
+            margin-right: 4px;
+            border-radius: 8px 8px 0 0;
+        }
+        #clientDetailsModal .nav-tabs .nav-link:hover {
+            border-color: #495057;
+            background: #343a40;
+        }
+        #clientDetailsModal .nav-tabs .nav-link.active {
+            color: #fff;
+            background: #003366;
+            border-color: #495057 #495057 #2c3034;
+        }
+        #clientDetailsModal .tab-content {
+            background: #2c3034;
+            padding: 20px;
+            border-radius: 0 0 8px 8px;
+            border: 1px solid #495057;
+            border-top: none;
+        }
+        /* Portfolio Chart */
+        #clientDetailsModal canvas {
+            max-height: 200px;
+            width: 100%;
+        }
+        /* Transaction and Order Tables */
+        #clientDetailsModal .table-dark tr.transaction-row,
+        #clientDetailsModal .table-dark tr.order-row {
+            cursor: pointer;
+        }
+        #clientDetailsModal .table-dark tr.transaction-row:hover,
+        #clientDetailsModal .table-dark tr.order-row:hover {
+            background: #003366;
+        }
+        /* Ensure KYC file links are consistent */
+        #clientDetailsModal .client-info-section a.text-success {
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        #clientDetailsModal .client-info-section a.text-success:hover {
+            color: #20c997;
+            text-decoration: underline;
+        }
+        /* CSD Number Input */
+        #pendingVerificationSection .input-group-text {
+            background: #212529;
+            border: 1px solid #495057;
+            color: #d0d4d6;
+        }
+        #pendingVerificationSection .form-control {
+            background: #212529;
+            border: 1px solid #495057;
+            color: #d0d4d6;
+        }
+        #pendingVerificationSection .form-control:focus {
+            border-color: #28a745;
+            box-shadow: none;
+        }
+        #pendingVerificationSection .form-control.is-invalid {
+            border-color: #dc3545;
+        }
+        #pendingVerificationSection .invalid-feedback {
+            color: #dc3545;
+            font-size: 0.875rem;
+        }
+        /* File Links */
+        #clientDetailsModal .client-info-section a.text-success {
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        #clientDetailsModal .client-info-section a.text-success:hover {
+            color: #20c997;
+            text-decoration: underline;
+        }
+        /* Client Details Modal Styling */
+        #clientDetailsModal .modal-content {
+            background: linear-gradient(145deg, #2c3034 0%, #1a1e22 100%);
+            border: 1px solid #5a6268;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        #clientDetailsModal .modal-body {
+            padding: 20px;
+        }
+        #clientDetailsModal .client-info-section {
+            margin-bottom: 20px;
+        }
+        #clientDetailsModal .client-info-section h6 {
+            color: #28a745;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        #clientDetailsModal .client-info-section p {
+            margin: 5px 0;
+            font-size: 0.9rem;
+            color: #d0d4d6;
+        }
+        #clientDetailsModal .status-badge {
+            font-size: 0.8rem;
+            padding: 5px 10px;
+            border-radius: 12px;
+        }
+        #clientDetailsModal .status-new {
+            background: #6c757d;
+            color: #fff;
+        }
+        #clientDetailsModal .status-pending {
+            background: #ffc107;
+            color: #000;
+        }
+        #clientDetailsModal .status-active {
+            background: #28a745;
+            color: #fff;
+        }
+        /* Ensure table buttons are styled consistently */
+        #clientTable .btn-primary.view-client-btn {
+            background: linear-gradient(145deg, #17a2b8 0%, #138496 100%);
+            border: none;
+            font-weight: 500;
+        }
+        #clientTable .btn-primary.view-client-btn:hover {
+            background: linear-gradient(145deg, #138496 0%, #117a8b 100%);
+        }
+        .badge.bg-warning {
+            background-color: #ffc107 !important;
+            color: #212529 !important;
+        }
+        .badge.bg-secondary {
+            background-color: #6c757d !important;
+            color: #fff !important;
+        }
+        .text-muted {
+            color: #6c757d !important;
+        }
+        .btn-success {
+            margin-left: 10px;
+        }
+        .btn-secondary {
+            margin-left: 10px;
+        }
+        .btn-danger {
+            margin-left: 10px;
+        }
+        /* Brighten .text-muted and related classes for better contrast */
+        .text-muted {
+            color: #c4c8cc !important;
+        }
+        /* Ensure small text is legible */
+        small, .small {
+            color: #c4c8cc;
+        }
+        /* Improve placeholder text visibility */
+        .form-control.bg-dark::placeholder {
+            color: #c4c8cc;
+            opacity: 1;
+        }
+        /* Enhance warning badge contrast */
+        .badge.bg-warning {
+            background-color: #e0a800 !important;
+            color: #fff !important;
+        }
+        /* Global fallback for text on dark backgrounds */
+        body, .card, .modal-content.bg-dark, .table-dark, .list-group-item.bg-dark {
+            color: #d0d4d6;
+        }
+        /* Ensure card-text is visible */
+        .card-text {
+            color: #c4c8cc;
+        }
+        .sidebar {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 200px;
+            height: calc(100vh - 60px);
+            background: #001f3f;
+            padding: 20px;
+            z-index: 999;
+            transition: transform 0.3s ease;
+        }
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .sidebar .nav-item {
+            display: flex;
+            align-items: center;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .sidebar .nav-item:hover {
+            background: #003366;
+            transform: translateX(5px);
+        }
+        .sidebar .nav-item.active {
+            background: #003366;
+            color: #28a745;
+        }
+        .sidebar .nav-icon {
+            font-size: 20px;
+            margin-right: 10px;
+        }
+        #profile-pic-container {
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        #profile-pic-container:hover {
+            opacity: 0.8;
+        }
+        #userAccountModal .modal-content {
+            background-color: #001f3f;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+        }
+        #userAccountModal .modal-body {
+            padding: 20px;
+        }
+        #userAccountModal .user-avatar .profile-pic {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #28a745;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+        }
+        #userAccountModal .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        #userAccountModal .form-check-label {
+            color: #d0d4d6;
+        }
+        #userAccountModal .btn-outline-light {
+            border-color: #d0d4d6;
+            color: #d0d4d6;
+            text-decoration: none;
+        }
+        #userAccountModal .btn-outline-light:hover {
+            background-color: #003366;
+            color: #fff;
+        }
+        @media (min-width: 769px) {
+            nav.footer-nav {
+                display: none !important;
+            }
+            .sidebar {
+                transform: translateX(0);
+            }
+            .content-section {
+                margin-left: 200px;
+                width: calc(100% - 200px);
+            }
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+            .content-section {
+                margin-left: 0;
+                width: 100%;
+            }
+            nav.footer-nav {
+                display: flex;
+            }
+        }
+        .help-icon:hover {
+            transform: scale(1.1);
+        }
+        .card-title {
+            text-align: center;
+            white-space: normal;
+            overflow: visible;
+            text-overflow: initial;
+            max-width: 100%;
+        }
+        body {
+            background: #454e55;
+            padding: 60px 0 80px;
+            min-height: 100vh;
+            color: #d0d4d6;
+        }
+        .top-nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: #001f3f;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #fff;
+            z-index: 1000;
+        }
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid #fff;
+            transition: transform .2s;
+        }
+        .profile-pic:hover {
+            transform: scale(1.1);
+        }
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .profile-initials {
+            width: 100%;
+            height: 100%;
+            background: #28a745;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        .company-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+        .notifications-icon {
+            cursor: default;
+            padding: 8px;
+            color: #fff;
+            font-size: 24px;
+        }
+        .content-section {
+            display: none;
+            padding: 20px 20px 80px;
+            min-height: calc(100vh - 160px);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all .5s ease;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            right: 0;
+        }
+        .content-section.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .loading {
+            color: #28a745;
+            font-style: italic;
+            display: none;
+        }
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: #001f3f;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 1px solid #00284f;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #fff;
+            text-decoration: none;
+            font-size: .8rem;
+            transition: transform .2s;
+            padding: 5px;
+        }
+        .nav-item:hover {
+            transform: translateY(-3px);
+        }
+        .nav-item.active {
+            color: #28a745;
+            background: #003366;
+            border-radius: 5px;
+        }
+        .jon {
+            color: #24ac44;
+        }
+        .nav-icon {
+            font-size: 20px;
+            margin-bottom: 6px;
+            color: inherit;
+        }
+        .index-chart {
+            height: 200px;
+            background: #2c3034;
+            border: 1px solid #495057;
+            border-radius: 8px;
+            padding: 15px;
+            position: relative;
+            padding-top: 40px;
+        }
+        .index-name {
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            font-size: 1rem;
+            color: #d0d4d6;
+            font-weight: 700;
+        }
+        .index-points {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1rem;
+            color: #28a745;
+            font-weight: 700;
+        }
+        .company-card {
+            background: #2c3034;
+            border: 1px solid #495057;
+            border-radius: 8px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all .3s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 70px;
+            box-shadow: 0 2px 6px rgba(0,0,0,.1);
+            margin-bottom: .5rem;
+        }
+        .company-card:hover {
+            background: #003366;
+            box-shadow: 0 6px 12px rgba(0,0,0,.2);
+        }
+        .company-logo {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .price-change-up {
+            color: #28a745;
+        }
+        .price-change-down {
+            color: #dc3545;
+        }
+        .card-title {
+            color: #fff;
+            font-size: .9rem;
+            margin-bottom: .25rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 150px;
+        }
+        .card-title.long-name {
+            font-size: .75rem;
+        }
+        .card-text {
+            color: #adb5bd;
+            font-size: .85rem;
+            margin: 0;
+        }
+        .share-price {
+            color: #fff;
+            font-size: .95rem;
+            font-weight: 700;
+            text-align: right;
+        }
+        .daily-change {
+            font-size: .85rem;
+            text-align: right;
+        }
+        .company-info {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            overflow: hidden;
+        }
+        .price-info {
+            flex-shrink: 0;
+            text-align: right;
+            min-width: 120px;
+        }
+        .modal-content.bg-dark {
+            background: #2c3034;
+            color: #fff;
+            border: 1px solid #495057;
+        }
+        .modal-content.bg-dark .modal-header,
+        .modal-content.bg-dark .modal-footer {
+            border-color: #495057;
+            padding: .75rem;
+        }
+        .modal-content.bg-dark .btn-close {
+            filter: invert(1);
+        }
+        .stock-info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: .5rem 0;
+            border-bottom: 1px solid #495057;
+        }
+        .stock-info-label {
+            color: #adb5bd;
+        }
+        .stock-info-value {
+            font-weight: 500;
+        }
+        #companyDetailsModal .modal-content {
+            background: #2c3034;
+            color: #fff;
+            border: 1px solid #495057;
+            border-radius: 12px;
+        }
+        #companyDetailsModal .modal-header {
+            border-bottom: 1px solid #495057;
+            padding: 1rem;
+        }
+        #companyDetailsModal .modal-body {
+            padding: 1.5rem;
+        }
+        #companyDetailsModal h1 {
+            font-size: 1.8rem;
+            color: #fff;
+        }
+        #companyDetailsModal h2 {
+            font-size: 1.5rem;
+            color: #fff;
+        }
+        #companyDetailsModal h5 {
+            font-size: 1.25rem;
+            color: #fff;
+        }
+        #companyDetailsModal h6 {
+            font-size: 1rem;
+            color: #e9ecef;
+            font-weight: 600;
+        }
+        #companyDetailsModal .card {
+            background: #2c3034;
+            border: 1px solid #495057;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,.1);
+        }
+        #companyDetailsModal .card-body {
+            padding: 1rem;
+        }
+        #companyDetailsModal .text-muted {
+            color: #adb5bd !important;
+        }
+        #companyDetailsModal .badge.bg-success {
+            background: #28a745;
+        }
+        #companyDetailsModal .text-success {
+            color: #28a745 !important;
+        }
+        #companyDetailsModal .progress {
+            background: #212529;
+        }
+        #companyDetailsModal .progress-bar {
+            background: #007bff;
+            color: #fff;
+            text-align: left;
+            padding-left: 5px;
+        }
+        #companyDetailsModal .table td {
+            color: #adb5bd;
+        }
+        #companyDetailsModal a.text-white {
+            color: #fff;
+            text-decoration: none;
+        }
+        #companyDetailsModal a.text-white:hover {
+            text-decoration: underline;
+        }
+        .btn-details {
+            background: #17a2b8;
+            border-color: #17a2b8;
+        }
+        .btn-details:hover {
+            background: #138496;
+        }
+        @media (max-width: 768px) {
+            .footer-nav {
+                padding: 5px 0;
+            }
+            .nav-item {
+                font-size: .7rem;
+            }
+            .nav-icon {
+                font-size: 18px;
+            }
+            .index-chart {
+                height: 150px;
+            }
+            .company-card {
+                padding: 10px;
+                min-height: 70px;
+            }
+            .card-title {
+                max-width: 120px;
+            }
+        }
+        @media (max-width: 576px) {
+            .card-title {
+                max-width: 100px;
+            }
+            .company-card {
+                padding: 10px;
+                min-height: 70px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            .company-info {
+                flex-grow: 1;
+            }
+            .price-info {
+                min-width: 100px;
+                text-align: right;
+            }
+        }
+    </style>
+</head>
+<body>
+    <aside class="sidebar" id="sidebar">
+        <nav class="sidebar-nav">
+            <a href="#dashboard" class="nav-item" title="View Dashboard" aria-label="Dashboard">
+                <i class="bi bi-speedometer2 nav-icon"></i>Dashboard
+            </a>
+            <a href="#market" class="nav-item active" title="View Market Data" aria-label="Market">
+                <i class="bi bi-bar-chart-line nav-icon"></i>Market
+            </a>
+            <a href="#clients" class="nav-item" title="Manage Clients" aria-label="Clients">
+                <i class="bi bi-people nav-icon"></i>Clients
+            </a>
+            <a href="#orders" class="nav-item" title="View Orders" aria-label="Orders">
+                <i class="bi bi-arrow-left-right nav-icon"></i>Orders
+            </a>
+            <a href="#transactions" class="nav-item" title="View Transactions" aria-label="Transactions">
+                <i class="bi bi-cash-coin nav-icon"></i>Transactions
+            </a>
+            <a href="#settings" class="nav-item" title="Manage Settings" aria-label="Settings">
+                <i class="bi bi-gear nav-icon"></i>Settings
+            </a>
+        </nav>
+    </aside>
+    <nav class="top-nav">
+        <div class="profile-pic" id="profile-pic-container">
+            <div class="profile-initials" id="user-initials">BR</div>
+        </div>
+        <div class="company-name"><span class="jon">Myn</span>vestor Broker</div>
+        <i class="bi bi-question-circle help-icon notifications-icon" data-bs-toggle="modal" data-bs-target="#helpModal" aria-label="Open Help"></i>
+    </nav>
+    <section id="dashboard" class="content-section active">
+        <div class="loading" id="dashboard-loading">Loading...</div>
+        <h1 class="mb-2"><i class="bi bi-speedometer2 me-2"></i>Dashboard</h1>
+    
+        <!-- Market Snapshot -->
+        <div class="card mb-2">
+            <div class="card-body">
+                <h2 class="mb-2"><i class="bi bi-bar-chart-line me-2"></i>Market Snapshot</h2>
+                <div class="row">
+                    <div class="col-md-4 mb-1">
+                        <div class="index-chart">
+                            <span class="index-name">MASI</span>
+                            <span class="index-points" id="masi-points">10,800</span>
+                            <canvas id="dashboardMasiChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-1">
+                        <div class="index-chart">
+                            <span class="index-name">DSI</span>
+                            <span class="index-points" id="dsi-points">8,450</span>
+                            <canvas id="dashboardDsiChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-1">
+                        <div class="index-chart">
+                            <span class="index-name">FSI</span>
+                            <span class="index-points" id="fsi-points">4,700</span>
+                            <canvas id="dashboardFsiChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Key Statistics -->
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Portfolio Value</h5>
+                        <p class="card-text" id="totalPortfolioValue">MK 0</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Active Clients</h5>
+                        <p class="card-text" id="activeClients">0</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Pending Verifications</h5>
+                        <p class="card-text" id="pendingVerifications">0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Client Overview -->
+        <div class="card mb-2">
+            <div class="card-body">
+                <h2 class="mb-2"><i class="bi bi-people me-2"></i>Client Overview</h2>
+                <div class="client-search mb-2">
+                    <input type="text" class="form-control" id="dashboardClientSearch" placeholder="Search clients by name or ID..." aria-label="Search clients">
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-dark table-hover" id="dashboardClientTable">
+                        <thead>
+                            <tr>
+                                <th class="sortable" data-sort="name"><i class="bi bi-arrow-down-up"></i> Name</th>
+                                <th class="sortable" data-sort="clientId"><i class="bi bi-arrow-down-up"></i> Client ID</th>
+                                <th class="sortable" data-sort="status"><i class="bi bi-arrow-down-up"></i> Status</th>
+                                <th class="sortable" data-sort="lastActive"><i class="bi bi-arrow-down-up"></i> Last Active</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dashboardClientTableBody">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Recent Orders -->
+        <div class="card mb-2">
+            <div class="card-body">
+                <h2 class="mb-2"><i class="bi bi-arrow-left-right me-2"></i>Recent Orders</h2>
+                <div class="transaction-search mb-2">
+                    <input type="text" class="form-control" id="dashboardOrderSearch" placeholder="Search orders by ID or client..." aria-label="Search orders">
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-dark table-hover" id="dashboardOrderTable">
+                        <thead>
+                            <tr>
+                                <th class="sortable" data-sort="orderId"><i class="bi bi-arrow-down-up"></i> Order ID</th>
+                                <th class="sortable" data-sort="client"><i class="bi bi-arrow-down-up"></i> Client</th>
+                                <th class="sortable" data-sort="order"><i class="bi bi-arrow-down-up"></i> Order</th>
+                                <th class="sortable" data-sort="status"><i class="bi bi-arrow-down-up"></i> Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dashboardOrderTableBody">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+                <button class="btn btn-primary mt-2" id="exportDashboardOrdersBtn"><i class="bi bi-download"></i> Export Orders</button>
+            </div>
+        </div>
+    
+        <!-- Recent Transactions -->
+        <div class="card mb-2">
+            <div class="card-body">
+                <h2 class="mb-2"><i class="bi bi-cash-coin me-2"></i>Recent Transactions</h2>
+                <div class="transaction-search mb-2">
+                    <input type="text" class="form-control" id="dashboardTransactionSearch" placeholder="Search transactions by client or ID..." aria-label="Search transactions">
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-dark table-hover" id="dashboardTransactionTable">
+                        <thead>
+                            <tr>
+                                <th class="sortable" data-sort="client"><i class="bi bi-arrow-down-up"></i> Client</th>
+                                <th class="sortable" data-sort="transId"><i class="bi bi-arrow-down-up"></i> Transaction ID</th>
+                                <th class="sortable" data-sort="amount"><i class="bi bi-arrow-down-up"></i> Amount</th>
+                                <th class="sortable" data-sort="status"><i class="bi bi-arrow-down-up"></i> Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dashboardTransactionTableBody">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+                <button class="btn btn-primary mt-2" id="exportDashboardTransactionsBtn"><i class="bi bi-download"></i> Export Transactions</button>
+                <button class="btn btn-primary mt-2" id="refreshDashboardTransactionsBtn"><i class="bi bi-arrow-repeat"></i> Refresh Transactions</button>
+            </div>
+        </div>
+    
+        <!-- Quick Actions -->
+        <div class="card">
+            <div class="card-body">
+                <h2 class="mb-2"><i class="bi bi-lightning me-2"></i>Quick Actions</h2>
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="#clients" class="btn btn-success"><i class="bi bi-people"></i> View Clients</a>
+                    <a href="#transactions" class="btn btn-success"><i class="bi bi-cash-coin"></i> Verify Transactions</a>
+                    <a href="#orders" class="btn btn-success"><i class="bi bi-arrow-left-right"></i> Manage Orders</a>
+                    <a href="#market" class="btn btn-success"><i class="bi bi-bar-chart-line"></i> View Market</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="market" class="content-section">
+        <div class="loading" id="market-loading">Loading...</div>
+        <h1 class="mb-2"><i class="bi bi-bar-chart-line me-2"></i>Market</h1>
+        <div class="row mb-2">
+            <div class="col-md-4 col-xl-12 mb-1">
+                <div class="index-chart"><span class="index-name">MASI</span><span class="index-points"
+                        id="masi-points">10,800</span><canvas id="masiChart"></canvas></div>
+            </div>
+            <div class="col-md-4 col-xl-6 mb-1">
+                <div class="index-chart"><span class="index-name">DSI</span><span class="index-points"
+                        id="dsi-points">8,450</span><canvas id="dsiChart"></canvas></div>
+            </div>
+            <div class="col-md-4 col-xl-6 mb-1">
+                <div class="index-chart"><span class="index-name">FSI</span><span class="index-points"
+                        id="fsi-points">4,700</span><canvas id="fsiChart"></canvas></div>
+            </div>
+        </div>
+        <h2 class="mb-2"><i class="bi bi-arrow-up-circle me-2"></i>Top Gainers</h2>
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <div class="company-card" data-company="AIRTEL">
+                    <div class="company-info"><img src="../logos/airtel.jpg" alt="Airtel Logo" class="company-logo me-3">
+                        <div>
+                            <h5 class="card-title">Airtel Malawi</h5>
+                            <p class="card-text">AIRTEL</p>
+                        </div>
+                    </div>
+                    <div class="price-info">
+                        <div class="share-price">MK 52.30</div>
+                        <div class="daily-change price-change-up"><i class="bi bi-arrow-up me-1"></i>+2.10 (+4.18%)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="company-card" data-company="NBM">
+                    <div class="company-info"><img src="../logos/Nb.png" alt="NBM Logo" class="company-logo me-3">
+                        <div>
+                            <h5 class="card-title">National Bank</h5>
+                            <p class="card-text">NBM</p>
+                        </div>
+                    </div>
+                    <div class="price-info">
+                        <div class="share-price">MK 1,234.50</div>
+                        <div class="daily-change price-change-up"><i class="bi bi-arrow-up me-1"></i>+34.50 (+2.87%)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="company-card" data-company="TNM">
+                    <div class="company-info"><img src="../logos/Tnm.png" alt="TNM Logo" class="company-logo me-3">
+                        <div>
+                            <h5 class="card-title">Telekom Networks</h5>
+                            <p class="card-text">TNM</p>
+                        </div>
+                    </div>
+                    <div class="price-info">
+                        <div class="share-price">MK 18.75</div>
+                        <div class="daily-change price-change-up"><i class="bi bi-arrow-up me-1"></i>+0.45 (+2.46%)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h2 class="mb-2"><i class="bi bi-arrow-down-circle me-2"></i>Top Losers</h2>
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <div class="company-card" data-company="ILLOVO">
+                    <div class="company-info"><img src="../logos/illovo.png" alt="Illovo Logo" class="company-logo me-3">
+                        <div>
+                            <h5 class="card-title">Illovo Sugar</h5>
+                            <p class="card-text">ILLOVO</p>
+                        </div>
+                    </div>
+                    <div class="price-info">
+                        <div class="share-price">MK 305.20</div>
+                        <div class="daily-change price-change-down"><i class="bi bi-arrow-down me-1"></i>-15.80 (-4.92%)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="company-card" data-company="PCL">
+                    <div class="company-info"><img src="../logos/Pcl.png" alt="PCL Logo" class="company-logo me-3">
+                        <div>
+                            <h5 class="card-title">Press Corp Ltd</h5>
+                            <p class="card-text">PCL</p>
+                        </div>
+                    </div>
+                    <div class="price-info">
+                        <div class="share-price">MK 2,150.00</div>
+                        <div class="daily-change price-change-down"><i class="bi bi-arrow-down me-1"></i>-50.00 (-2.27%)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="company-card" data-company="STANBIC">
+                    <div class="company-info"><img src="../logos/Std.jpg" alt="Stanbic Logo" class="company-logo me-3">
+                        <div>
+                            <h5 class="card-title">Standard Bank</h5>
+                            <p class="card-text">STANBIC</p>
+                        </div>
+                    </div>
+                    <div class="price-info">
+                        <div class="share-price">MK 3,890.10</div>
+                        <div class="daily-change price-change-down"><i class="bi bi-arrow-down me-1"></i>-45.90 (-1.17%)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h2 class="mb-2"><i class="bi bi-graph-up me-2"></i>Volume Gainers</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="company-card" data-company="NBM">
+                    <div class="company-info"><img src="../logos/Nb.png" alt="NBM Logo" class="company-logo me-3">
+                        <div>
+                            <h5 class="card-title">National Bank</h5>
+                            <p class="card-text">NBM - 245,670 shares</p>
+                        </div>
+                    </div>
+                    <div class="price-info">
+                        <div class="share-price">MK 1,234.50</div>
+                        <div class="daily-change price-change-up"><i class="bi bi-arrow-up me-1"></i>+34.50 (+2.87%)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="company-card" data-company="AIRTEL">
+                    <div class="company-info"><img src="../logos/airtel.jpg" alt="Airtel Logo" class="company-logo me-3">
+                        <div>
+                            <h5 class="card-title">Airtel Malawi</h5>
+                            <p class="card-text">AIRTEL - 187,450 shares</p>
+                        </div>
+                    </div>
+                    <div class="price-info">
+                        <div class="share-price">MK 52.30</div>
+                        <div class="daily-change price-change-up"><i class="bi bi-arrow-up me-1"></i>+2.10 (+4.18%)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="company-card" data-company="STANBIC">
+                    <div class="company-info"><img src="../logos/Std.jpg" alt="Stanbic Logo" class="company-logo me-3">
+                        <div>
+                            <h5 class="card-title">Standard Bank</h5>
+                            <p class="card-text">STANBIC - 156,230 shares</p>
+                        </div>
+                    </div>
+                    <div class="price-info">
+                        <div class="share-price">MK 3,890.10</div>
+                        <div class="daily-change price-change-down"><i class="bi bi-arrow-down me-1"></i>-45.90 (-1.17%)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h2 class="mb-2"><i class="bi bi-buildings me-2"></i>Main Board</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="company-card" data-company="AIRTEL">
+                    <div class="company-info"><img src="../logos/airtel.jpg" alt="Airtel Logo" class="company-logo me-3">
+                        <div>
+                            <h5 class="card-title">Airtel Malawi Ltd</h5>
+                            <p class="card-text">AIRTEL</p>
+                        </div>
+                    </div>
+                    <div class="price-info">
+                        <div class="share-price">MK 128.11</div>
+                        <div class="daily-change price-change-up"><i class="bi bi-arrow-up me-1"></i>+3.20 (+2.56%)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="company-card" data-company="BHL">
+                    <div class="company-info"><img src="../logos/Bhl.png" alt="BHL Logo" class="company-logo me-3">
+                        <div>
+                            <h5 class="card-title">BHL Ltd</h5>
+                            <p class="card-text">BHL</p>
+                        </div>
+                    </div>
+                    <div class="price-info">
+                        <div class="share-price">MK 14.54</div>
+                        <div class="daily-change price-change-down"><i class="bi bi-arrow-down me-1"></i>-0.35 (-2.35%)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="company-card" data-company="FDH">
+                    <div class="company-info"><img src="../logos/FDHLogo.webp" alt="FDH Logo" class="company-logo me-3">
+                        <div>
+                            <h5 class="card-title">FDH Bank Ltd</h5>
+                            <p class="card-text">FDH</p>
+                        </div>
+                    </div>
+                    <div class="price-info">
+                        <div class="share-price">MK 315.19</div>
+                        <div class="daily-change price-change-up"><i class="bi bi-arrow-up me-1"></i>+7.89 (+2.57%)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="company-card" data-company="FMBCH">
+                    <div class="company-info"><img src="../logos/fmbch.jpg" alt="FMBCH Logo" class="company-logo me-3">
+                        <div>
+                            <h5 class="card-title">FMB Capital Holdings</h5>
+                            <p class="card-text">FMBCH</p>
+                        </div>
+                    </div>
+                    <div class="price-info">
+                        <div class="share-price">MK 1,412.24</div>
+                        <div class="daily-change price-change-down"><i class="bi bi-arrow-down me-1"></i>-25.50 (-1.77%)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="company-card" data-company="ICON">
+                    <div class="company-info"><img src="../logos/icon.png" alt="ICON Logo" class="company-logo me-3">
+                        <div>
+                            <h5 class="card-title">ICON Properties Ltd</h5>
+                            <p class="card-text">ICON</p>
+                        </div>
+                    </div>
+                    <div class="price-info">
+                        <div class="share-price">MK 17.94</div>
+                        <div class="daily-change price-change-up"><i class="bi bi-arrow-up me-1"></i>+0.45 (+2.57%)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="company-card" data-company="ILLOVO">
+                    <div class="company-info"><img src="../logos/illovo.png" alt="Illovo Logo" class="company-logo me-3">
+                        <div>
+                            <h5 class="card-title">Illovo Sugar Ltd</h5>
+                            <p class="card-text">ILLOVO</p>
+                        </div>
+                    </div>
+                    <div class="price-info">
+                        <div class="share-price">MK 1,791.69</div>
+                        <div class="daily-change price-change-down"><i class="bi bi-arrow-down me-1"></i>-35.80 (-1.96%)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="company-card" data-company="MPICO">
+                    <div class="company-info"><img src="../logos/mpico.png" alt="MPICO Logo" class="company-logo me-3">
+                        <div>
+                            <h5 class="card-title">MPICO Ltd</h5>
+                            <p class="card-text">MPICO</p>
+                        </div>
+                    </div>
+                    <div class="price-info">
+                        <div class="share-price">MK 19.00</div>
+                        <div class="daily-change price-change-up"><i class="bi bi-arrow-up me-1"></i>+0.50 (+2.70%)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="company-card" data-company="NBM">
+                    <div class="company-info"><img src="../logos/Nb.png" alt="NBM Logo" class="company-logo me-3">
+                        <div>
+                            <h5 class="card-title">National Bank Ltd</h5>
+                            <p class="card-text">NBM</p>
+                        </div>
+                    </div>
+                    <div class="price-info">
+                        <div class="share-price">MK 6,200.11</div>
+                        <div class="daily-change price-change-up"><i class="bi bi-arrow-up me-1"></i>+150.00 (+2.48%)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="company-card" data-company="NBS">
+                    <div class="company-info"><img src="../logos/Nbs.png" alt="NBS Logo" class="company-logo me-3">
+                        <div>
+                            <h5 class="card-title">NBS Bank Ltd</h5>
+                            <p class="card-text">NBS</p>
+                        </div>
+                    </div>
+                    <div class="price-info">
+                        <div class="share-price">MK 348.99</div>
+                        <div class="daily-change price-change-down"><i class="bi bi-arrow-down me-1"></i>-8.75 (-2.45%)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="company-card" data-company="NICO">
+                    <div class="company-info"><img src="../logos/Nico.png" alt="NICO Logo" class="company-logo me-3">
+                        <div>
+                            <h5 class="card-title">NICO Holdings Ltd</h5>
+                            <p class="card-text">NICO</p>
+                        </div>
+                    </div>
+                    <div class="price-info">
+                        <div class="share-price">MK 779.00</div>
+                        <div class="daily-change price-change-up"><i class="bi bi-arrow-up me-1"></i>+19.47 (+2.56%)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="company-card" data-company="NITL">
+                    <div class="company-info"><img src="../logos/Nitl.jpg" alt="NITL Logo" class="company-logo me-3">
+                        <div>
+                            <h5 class="card-title">NITL Ltd</h5>
+                            <p class="card-text">NITL</p>
+                        </div>
+                    </div>
+                    <div class="price-info">
+                        <div class="share-price">MK 634.09</div>
+                        <div class="daily-change price-change-down"><i class="bi bi-arrow-down me-1"></i>-12.68 (-1.96%)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="company-card" data-company="OMU">
+                    <div class="company-info"><img src="../logos/Omu.jpg" alt="OMU Logo" class="company-logo me-3">
+                        <div>
+                            <h5 class="card-title">Old Mutual Ltd</h5>
+                            <p class="card-text">OMU</p>
+                        </div>
+                    </div>
+                    <div class="price-info">
+                        <div class="share-price">MK 1,950.03</div>
+                        <div class="daily-change price-change-up"><i class="bi bi-arrow-up me-1"></i>+48.75 (+2.56%)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="company-card" data-company="PCL">
+                    <div class="company-info"><img src="../logos/Pcl.png" alt="PCL Logo" class="company-logo me-3">
+                        <div>
+                            <h5 class="card-title">Press Corp Ltd</h5>
+                            <p class="card-text">PCL</p>
+                        </div>
+                    </div>
+                    <div class="price-info">
+                        <div class="share-price">MK 2,500.03</div>
+                        <div class="daily-change price-change-down"><i class="bi bi-arrow-down me-1"></i>-50.00 (-1.96%)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="company-card" data-company="STANDARD">
+                    <div class="company-info"><img src="../logos/Std.jpg" alt="Standard Logo" class="company-logo me-3">
+                        <div>
+                            <h5 class="card-title">Standard Bank Ltd</h5>
+                            <p class="card-text">STANDARD</p>
+                        </div>
+                    </div>
+                    <div class="price-info">
+                        <div class="share-price">MK 7,935.07</div>
+                        <div class="daily-change price-change-up"><i class="bi bi-arrow-up me-1"></i>+198.38 (+2.56%)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="company-card" data-company="SUNBIRD">
+                    <div class="company-info"><img src="../logos/Sunbird.svg" alt="Sunbird Logo" class="company-logo me-3">
+                        <div>
+                            <h5 class="card-title">Sunbird Tourism Ltd</h5>
+                            <p class="card-text">SUNBIRD</p>
+                        </div>
+                    </div>
+                    <div class="price-info">
+                        <div class="share-price">MK 300.03</div>
+                        <div class="daily-change price-change-down"><i class="bi bi-arrow-down me-1"></i>-6.00 (-1.96%)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="company-card" data-company="TNM">
+                    <div class="company-info"><img src="../logos/Tnm.png" alt="TNM Logo" class="company-logo me-3">
+                        <div>
+                            <h5 class="card-title">Telekom Networks Ltd</h5>
+                            <p class="card-text">TNM</p>
+                        </div>
+                    </div>
+                    <div class="price-info">
+                        <div class="share-price">MK 25.00</div>
+                        <div class="daily-change price-change-up"><i class="bi bi-arrow-up me-1"></i>+0.62 (+2.54%)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> 
+    <section id="clients" class="content-section">
+        <div class="loading" id="clients-loading">Loading...</div>
+        <h1 class="mb-2"><i class="bi bi-people me-2"></i>Clients</h1>
+        <div class="client-search">
+            <input type="text" class="form-control" placeholder="Search clients by name or ID..." aria-label="Search clients">
+        </div>
+        <div class="card mb-2">
+            <div class="card-body">
+                <h2 class="mb-2"><i class="bi bi-people me-2"></i>Client Overview</h2>
+                <div class="table-responsive">
+                    <table class="table table-dark table-hover" id="clientTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Client ID</th>
+                                <th>Status</th>
+                                <th>Last Active</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="clientTableBody">
+                            <tr data-client-id="CL001" data-status="active">
+                                <td>John Mwale</td>
+                                <td>CL001</td>
+                                <td><span class="badge bg-success">Active</span></td>
+                                <td>2025-04-12 14:30</td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm me-1 view-client-btn" data-bs-toggle="modal" data-bs-target="#clientDetailsModal"><i class="bi bi-eye"></i> View</button>
+                                    <button class="btn btn-primary btn-sm"><i class="bi bi-chat"></i> Message</button>
+                                </td>
+                            </tr>
+                            <tr data-client-id="CL002" data-status="pending">
+                                <td>Grace Banda</td>
+                                <td>CL002</td>
+                                <td><span class="badge bg-warning">Pending</span></td>
+                                <td>2025-04-11 09:15</td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm me-1 view-client-btn" data-bs-toggle="modal" data-bs-target="#clientDetailsModal"><i class="bi bi-eye"></i> View</button>
+                                    <button class="btn btn-primary btn-sm"><i class="bi bi-chat"></i> Message</button>
+                                </td>
+                            </tr>
+                            <tr data-client-id="CL003" data-status="new">
+                                <td>Peter Kumwenda</td>
+                                <td>CL003</td>
+                                <td><span class="badge bg-secondary">New</span></td>
+                                <td>2025-04-10 16:45</td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm me-1 view-client-btn" data-bs-toggle="modal" data-bs-target="#clientDetailsModal"><i class="bi bi-eye"></i> View</button>
+                                    <button class="btn btn-primary btn-sm"><i class="bi bi-chat"></i> Message</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Keep existing KYC Management, Activity Monitoring, and Portfolio Management cards -->
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="mb-2"><i class="bi bi-person-check me-2"></i>KYC Management</h2>
+                        <div class="table-responsive">
+                            <table class="table table-dark table-hover">
+                                <thead><tr><th>Client</th><th>Document</th><th>Status</th><th>Actions</th></tr></thead>
+                                <tbody>
+                                    <tr data-client-id="CL002" data-status="pending">
+                                        <td>Grace Banda</td><td>ID Card</td><td><span class="badge bg-warning">Pending</span></td>
+                                        <td><button class="btn btn-primary btn-sm me-1 view-client-btn" data-bs-toggle="modal" data-bs-target="#clientDetailsModal"><i class="bi bi-eye"></i> View</button></td>
+                                    </tr>
+                                    <tr data-client-id="CL004" data-status="pending">
+                                        <td>James Phiri</td><td>Passport</td><td><span class="badge bg-warning">Pending</span></td>
+                                        <td><button class="btn btn-primary btn-sm me-1 view-client-btn" data-bs-toggle="modal" data-bs-target="#clientDetailsModal"><i class="bi bi-eye"></i> View</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="mb-2"><i class="bi bi-activity me-2"></i>Activity Monitoring</h2>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item bg-transparent text-light border-0"><small class="text-muted">2025-04-12 14:30</small> John Mwale placed a buy order for NBM.</li>
+                            <li class="list-group-item bg-transparent text-light border-0"><small class="text-muted">2025-04-11 09:15</small> Grace Banda submitted KYC documents.</li>
+                            <li class="list-group-item bg-transparent text-light border-0"><small class="text-muted">2025-04-10 16:45</small> Peter Kumwenda deposited MK 30,000.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="mb-2"><i class="bi bi-briefcase me-2"></i>Portfolio Management</h2>
+                        <div class="table-responsive">
+                            <table class="table table-dark table-hover">
+                                <thead><tr><th>Client</th><th>Total Value</th><th>Top Holding</th><th>Actions</th></tr></thead>
+                                <tbody>
+                                    <tr data-client-id="CL001" data-status="active">
+                                        <td>John Mwale</td><td>MK 250,000</td><td>NBM (40%)</td>
+                                        <td><button class="btn btn-primary btn-sm me-1 view-client-btn" data-bs-toggle="modal" data-bs-target="#clientDetailsModal"><i class="bi bi-eye"></i> View</button></td>
+                                    </tr>
+                                    <tr data-client-id="CL005" data-status="active">
+                                        <td>Peter Kumwenda</td><td>MK 180,000</td><td>AIRTEL (35%)</td>
+                                        <td><button class="btn btn-primary btn-sm me-1 view-client-btn" data-bs-toggle="modal" data-bs-target="#clientDetailsModal"><i class="bi bi-eye"></i> View</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <button class="btn btn-primary btn-sm mt-2"><i class="bi bi-eye"></i> View All Portfolios</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="orders" class="content-section">
+        <div class="loading" id="orders-loading">Loading...</div>
+        <h1 class="mb-2"><i class="bi bi-arrow-left-right me-2"></i>Orders</h1>
+        <div class="card mb-2">
+            <div class="card-body">
+                <h2 class="mb-2"><i class="bi bi-list-ul me-2"></i>Order Overview</h2>
+                <div class="d-flex justify-content-between mb-3">
+                    <div class="client-search" style="max-width: 300px;">
+                        <input type="text" class="form-control" id="orderOverviewSearch" placeholder="Search by Order ID, client, or order..." aria-label="Search orders">
+                    </div>
+                    <button class="btn btn-primary" id="exportOverviewBtn"><i class="bi bi-download me-1"></i>Export</button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-dark table-hover" id="orderOverviewTable">
+                        <thead>
+                            <tr>
+                                <th class="sortable" data-sort="orderId">Order ID <i class="bi bi-arrow-down-up"></i></th>
+                                <th class="sortable" data-sort="client">Client <i class="bi bi-arrow-down-up"></i></th>
+                                <th class="sortable" data-sort="order">Order <i class="bi bi-arrow-down-up"></i></th>
+                                <th class="sortable" data-sort="status">Status <i class="bi bi-arrow-down-up"></i></th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orderOverviewTableBody">
+                            <tr data-order-id="OR001" data-client="John Mwale" data-order="Buy NBM" data-status="new">
+                                <td>OR001</td>
+                                <td>John Mwale</td>
+                                <td>Buy NBM</td>
+                                <td><span class="badge bg-info">New</span></td>
+                                <td><button class="btn btn-primary btn-sm view-order-btn" data-bs-toggle="modal" data-bs-target="#orderDetailsModal"><i class="bi bi-eye"></i> View</button></td>
+                            </tr>
+                            <tr data-order-id="OR002" data-client="Grace Banda" data-order="Sell AIRTEL" data-status="pending">
+                                <td>OR002</td>
+                                <td>Grace Banda</td>
+                                <td>Sell AIRTEL</td>
+                                <td><span class="badge bg-warning">Pending</span></td>
+                                <td><button class="btn btn-primary btn-sm view-order-btn" data-bs-toggle="modal" data-bs-target="#orderDetailsModal"><i class="bi bi-eye"></i> View</button></td>
+                            </tr>
+                            <tr data-order-id="OR003" data-client="Peter Kumwenda" data-order="Buy ILLOVO" data-status="executed">
+                                <td>OR003</td>
+                                <td>Peter Kumwenda</td>
+                                <td>Buy ILLOVO</td>
+                                <td><span class="badge bg-success">Executed</span></td>
+                                <td><button class="btn btn-primary btn-sm view-order-btn" data-bs-toggle="modal" data-bs-target="#orderDetailsModal"><i class="bi bi-eye"></i> View</button></td>
+                            </tr>
+                            <tr data-order-id="OR004" data-client="James Phiri" data-order="Sell SUNBIRD" data-status="cancelled">
+                                <td>OR004</td>
+                                <td>James Phiri</td>
+                                <td>Sell SUNBIRD</td>
+                                <td><span class="badge bg-danger">Cancelled</span></td>
+                                <td><button class="btn btn-primary btn-sm view-order-btn" data-bs-toggle="modal" data-bs-target="#orderDetailsModal"><i class="bi bi-eye"></i> View</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="mb-2"><i class="bi bi-gear me-2"></i>Order Management</h2>
+                        <div class="d-flex flex-wrap gap-2 mb-3">
+                            <div class="client-search" style="max-width: 300px;">
+                                <input type="text" class="form-control" id="orderManagementSearch" placeholder="Search by Order ID, client, or order..." aria-label="Search orders">
+                            </div>
+                            <div style="max-width: 200px;">
+                                <label for="orderStatusFilter" class="form-label text-muted">Filter by Status</label>
+                                <select class="form-select bg-dark text-light border-0" id="orderStatusFilter">
+                                    <option value="">All Statuses</option>
+                                    <option value="new">New</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="executed">Executed</option>
+                                    <option value="cancelled">Cancelled</option>
+                                    <option value="expired">Expired</option>
+                                </select>
+                            </div>
+                            <div style="max-width: 200px;">
+                                <label for="orderActionFilter" class="form-label text-muted">Filter by Action</label>
+                                <select class="form-select bg-dark text-light border-0" id="orderActionFilter">
+                                    <option value="">All Actions</option>
+                                    <option value="buy">Buy</option>
+                                    <option value="sell">Sell</option>
+                                </select>
+                            </div>
+                            <div style="max-width: 200px;">
+                                <label for="orderTypeFilter" class="form-label text-muted">Filter by Type</label>
+                                <select class="form-select bg-dark text-light border-0" id="orderTypeFilter">
+                                    <option value="">All Types</option>
+                                    <option value="market">Market</option>
+                                    <option value="limit">Limit</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end mb-3">
+                            <button class="btn btn-primary" id="exportManagementBtn"><i class="bi bi-download me-1"></i>Export</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-dark table-hover" id="orderManagementTable">
+                                <thead>
+                                    <tr>
+                                        <th class="sortable" data-sort="orderId">Order ID <i class="bi bi-arrow-down-up"></i></th>
+                                        <th class="sortable" data-sort="client">Client <i class="bi bi-arrow-down-up"></i></th>
+                                        <th class="sortable" data-sort="order">Order <i class="bi bi-arrow-down-up"></i></th>
+                                        <th class="sortable" data-sort="status">Status <i class="bi bi-arrow-down-up"></i></th>
+                                        <th class="sortable" data-sort="action">Action <i class="bi bi-arrow-down-up"></i></th>
+                                        <th class="sortable" data-sort="type">Type <i class="bi bi-arrow-down-up"></i></th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="orderManagementTableBody">
+                                    <tr data-order-id="OR001" data-client="John Mwale" data-order="Buy NBM" data-status="new" data-action="buy" data-type="market">
+                                        <td>OR001</td>
+                                        <td>John Mwale</td>
+                                        <td>Buy NBM</td>
+                                        <td><span class="badge bg-info">New</span></td>
+                                        <td>Buy</td>
+                                        <td>Market</td>
+                                        <td><button class="btn btn-primary btn-sm view-order-btn" data-bs-toggle="modal" data-bs-target="#orderDetailsModal"><i class="bi bi-eye"></i> View</button></td>
+                                    </tr>
+                                    <tr data-order-id="OR002" data-client="Grace Banda" data-order="Sell AIRTEL" data-status="pending" data-action="sell" data-type="limit">
+                                        <td>OR002</td>
+                                        <td>Grace Banda</td>
+                                        <td>Sell AIRTEL</td>
+                                        <td><span class="badge bg-warning">Pending</span></td>
+                                        <td>Sell</td>
+                                        <td>Limit</td>
+                                        <td><button class="btn btn-primary btn-sm view-order-btn" data-bs-toggle="modal" data-bs-target="#orderDetailsModal"><i class="bi bi-eye"></i> View</button></td>
+                                    </tr>
+                                    <tr data-order-id="OR003" data-client="Peter Kumwenda" data-order="Buy ILLOVO" data-status="executed" data-action="buy" data-type="market">
+                                        <td>OR003</td>
+                                        <td>Peter Kumwenda</td>
+                                        <td>Buy ILLOVO</td>
+                                        <td><span class="badge bg-success">Executed</span></td>
+                                        <td>Buy</td>
+                                        <td>Market</td>
+                                        <td><button class="btn btn-primary btn-sm view-order-btn" data-bs-toggle="modal" data-bs-target="#orderDetailsModal"><i class="bi bi-eye"></i> View</button></td>
+                                    </tr>
+                                    <tr data-order-id="OR004" data-client="James Phiri" data-order="Sell SUNBIRD" data-status="cancelled" data-action="sell" data-type="limit">
+                                        <td>OR004</td>
+                                        <td>James Phiri</td>
+                                        <td>Sell SUNBIRD</td>
+                                        <td><span class="badge bg-danger">Cancelled</span></td>
+                                        <td>Sell</td>
+                                        <td>Limit</td>
+                                        <td><button class="btn btn-primary btn-sm view-order-btn" data-bs-toggle="modal" data-bs-target="#orderDetailsModal"><i class="bi bi-eye"></i> View</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="mb-2"><i class="bi bi-pie-chart me-2"></i>Order Statistics</h2>
+                        <div class="row">
+                            <div class="col-6"><small class="text-muted d-block"><i class="bi bi-arrow-left-right me-1"></i>Total Orders</small><span class="fw-bold">150</span></div>
+                            <div class="col-6"><small class="text-muted d-block"><i class="bi bi-hourglass-split me-1"></i>Pending Orders</small><span class="fw-bold">34</span></div>
+                            <div class="col-6 mt-2"><small class="text-muted d-block"><i class="bi bi-check-circle me-1"></i>Executed Today</small><span class="fw-bold">25</span></div>
+                            <div class="col-6 mt-2"><small class="text-muted d-block"><i class="bi bi-x-circle me-1"></i>Cancelled Today</small><span class="fw-bold">5</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-2">
+                    <div class="card-body">
+                        <h2 class="mb-2"><i class="bi bi-activity me-2"></i>Order Activity Log</h2>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item bg-transparent text-light border-0"><small class="text-muted">2025-04-12 14:30</small> John Mwale placed a buy order for NBM.</li>
+                            <li class="list-group-item bg-transparent text-light border-0"><small class="text-muted">2025-04-12 10:15</small> Grace Banda’s sell order for AIRTEL approved.</li>
+                            <li class="list-group-item bg-transparent text-light border-0"><small class="text-muted">2025-04-11 16:45</small> Peter Kumwenda’s buy order for ILLOVO executed.</li>
+                            <li class="list-group-item bg-transparent text-light border-0"><small class="text-muted">2025-04-11 09:00</small> James Phiri’s sell order for SUNBIRD cancelled.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="mb-2"><i class="bi bi-gear me-2"></i>Quick Actions</h2>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-primary"><i class="bi bi-check-all me-1"></i>Approve All Pending</button>
+                            <button class="btn btn-primary"><i class="bi bi-download me-1"></i>Export Order Data</button>
+                            <button class="btn btn-primary"><i class="bi bi-chat me-1"></i>Contact Client</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="transactions" class="content-section">
+        <div class="loading" id="transactions-loading">Loading...</div>
+        <h1 class="mb-2"><i class="bi bi-cash-coin me-2"></i>Transactions</h1>
+        <div class="client-search">
+            <input type="text" class="form-control" id="transactionOverviewSearch" placeholder="Search transactions by client or status..." aria-label="Search transactions">
+        </div>
+        <div class="card mb-2">
+            <div class="card-body">
+                <h2 class="mb-2"><i class="bi bi-cash-stack me-2"></i>Transaction Overview <button class="btn btn-primary btn-sm float-end" id="exportTransactionOverviewBtn"><i class="bi bi-download me-1"></i>Export</button></h2>
+                <div class="table-responsive">
+                    <table class="table table-dark table-hover" id="transactionOverviewTable">
+                        <thead>
+                            <tr>
+                                <th class="sortable" data-sort="client"><i class="bi bi-sort-alpha-down"></i> Client</th>
+                                <th class="sortable" data-sort="type"><i class="bi bi-sort-alpha-down"></i> Type</th>
+                                <th class="sortable" data-sort="amount"><i class="bi bi-sort-numeric-down"></i> Amount</th>
+                                <th class="sortable" data-sort="status"><i class="bi bi-sort-alpha-down"></i> Status</th>
+                                <th class="sortable" data-sort="date"><i class="bi bi-sort-numeric-down"></i> Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transactionOverviewTableBody">
+                            <tr data-trans-id="TR001" data-client="John Mwale" data-type="Deposit" data-amount="50000" data-status="new" data-date="2025-04-12 14:30">
+                                <td>John Mwale</td>
+                                <td>Deposit</td>
+                                <td>MK 50,000</td>
+                                <td><span class="badge bg-info">New</span></td>
+                                <td>2025-04-12 14:30</td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm me-1 verify-trans-btn" data-trans-id="TR001"><i class="bi bi-check"></i> Verify</button>
+                                    <button class="btn btn-primary btn-sm view-trans-btn" data-trans-id="TR001"><i class="bi bi-eye"></i> View</button>
+                                </td>
+                            </tr>
+                            <tr data-trans-id="TR002" data-client="Grace Banda" data-type="Withdrawal" data-amount="20000" data-status="new" data-date="2025-04-12 10:15">
+                                <td>Grace Banda</td>
+                                <td>Withdrawal</td>
+                                <td>MK 20,000</td>
+                                <td><span class="badge bg-info">New</span></td>
+                                <td>2025-04-12 10:15</td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm me-1 verify-trans-btn" data-trans-id="TR002"><i class="bi bi-check"></i> Verify</button>
+                                    <button class="btn btn-primary btn-sm view-trans-btn" data-trans-id="TR002"><i class="bi bi-eye"></i> View</button>
+                                </td>
+                            </tr>
+                            <tr data-trans-id="TR003" data-client="Peter Kumwenda" data-type="Deposit" data-amount="30000" data-status="verified" data-date="2025-04-11 16:45">
+                                <td>Peter Kumwenda</td>
+                                <td>Deposit</td>
+                                <td>MK 30,000</td>
+                                <td><span class="badge bg-success">Verified</span></td>
+                                <td>2025-04-11 16:45</td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm view-trans-btn" data-trans-id="TR003"><i class="bi bi-eye"></i> View</button>
+                                </td>
+                            </tr>
+                            <tr data-trans-id="TR004" data-client="James Phiri" data-type="Withdrawal" data-amount="15000" data-status="verified" data-date="2025-04-11 09:00">
+                                <td>James Phiri</td>
+                                <td>Withdrawal</td>
+                                <td>MK 15,000</td>
+                                <td><span class="badge bg-success">Verified</span></td>
+                                <td>2025-04-11 09:00</td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm view-trans-btn" data-trans-id="TR004"><i class="bi bi-eye"></i> View</button>
+                                </td>
+                            </tr>
+                            <tr data-trans-id="TR005" data-client="Mary Chirwa" data-type="Deposit" data-amount="40000" data-status="new" data-date="2025-04-10 12:30">
+                                <td>Mary Chirwa</td>
+                                <td>Deposit</td>
+                                <td>MK 40,000</td>
+                                <td><span class="badge bg-info">New</span></td>
+                                <td>2025-04-10 12:30</td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm me-1 verify-trans-btn" data-trans-id="TR005"><i class="bi bi-check"></i> Verify</button>
+                                    <button class="btn btn-primary btn-sm view-trans-btn" data-trans-id="TR005"><i class="bi bi-eye"></i> View</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="mb-2"><i class="bi bi-check-circle me-2"></i>Transaction Verification <button class="btn btn-primary btn-sm float-end" id="exportTransactionVerificationBtn"><i class="bi bi-download me-1"></i>Export</button></h2>
+                        <div class="client-search mb-2">
+                            <input type="text" class="form-control" id="transactionVerificationSearch" placeholder="Search by client or transaction ID..." aria-label="Search verification transactions">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 mb-2">
+                                <label for="transactionStatusFilter" class="form-label text-muted">Status</label>
+                                <select class="form-select bg-dark text-light border-dark" id="transactionStatusFilter">
+                                    <option value="">All Statuses</option>
+                                    <option value="new">New</option>
+                                    <option value="verified">Verified</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <label for="transactionIdFilter" class="form-label text-muted">Transaction ID</label>
+                                <input type="text" class="form-control bg-dark text-light border-dark" id="transactionIdFilter" placeholder="e.g., TR001">
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <label for="transactionMethodFilter" class="form-label text-label">Method</label>
+                                <select class="form-select bg-dark text-light border-dark" id="transactionMethodFilter">
+                                    <option value="">All Methods</option>
+                                    <option value="deposit">Deposit</option>
+                                    <option value="withdrawal">Withdrawal</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-dark table-hover" id="transactionVerificationTable">
+                                <thead>
+                                    <tr>
+                                        <th>Client</th>
+                                        <th>Type</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="transactionVerificationTableBody">
+                                    <tr data-trans-id="TR001" data-client="John Mwale" data-type="deposit" data-status="new">
+                                        <td>John Mwale</td>
+                                        <td>Deposit</td>
+                                        <td>MK 50,000</td>
+                                        <td><span class="badge bg-info">New</span></td>
+                                        <td>
+                                            <button class="btn btn-primary btn-sm me-1 verify-trans-btn" data-trans-id="TR001"><i class="bi bi-check"></i> Verify</button>
+                                            <button class="btn btn-primary btn-sm view-trans-btn" data-trans-id="TR001"><i class="bi bi-eye"></i> View</button>
+                                        </td>
+                                    </tr>
+                                    <tr data-trans-id="TR002" data-client="Grace Banda" data-type="withdrawal" data-status="new">
+                                        <td>Grace Banda</td>
+                                        <td>Withdrawal</td>
+                                        <td>MK 20,000</td>
+                                        <td><span class="badge bg-info">New</span></td>
+                                        <td>
+                                            <button class="btn btn-primary btn-sm me-1 verify-trans-btn" data-trans-id="TR002"><i class="bi bi-check"></i> Verify</button>
+                                            <button class="btn btn-primary btn-sm view-trans-btn" data-trans-id="TR002"><i class="bi bi-eye"></i> View</button>
+                                        </td>
+                                    </tr>
+                                    <tr data-trans-id="TR005" data-client="Mary Chirwa" data-type="deposit" data-status="new">
+                                        <td>Mary Chirwa</td>
+                                        <td>Deposit</td>
+                                        <td>MK 40,000</td>
+                                        <td><span class="badge bg-info">New</span></td>
+                                        <td>
+                                            <button class="btn btn-primary btn-sm me-1 verify-trans-btn" data-trans-id="TR005"><i class="bi bi-check"></i> Verify</button>
+                                            <button class="btn btn-primary btn-sm view-trans-btn" data-trans-id="TR005"><i class="bi bi-eye"></i> View</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="mb-2"><i class="bi bi-pie-chart me-2"></i>Transaction Statistics</h2>
+                        <div class="row">
+                            <div class="col-6"><small class="text-muted d-block"><i class="bi bi-cash-stack me-1"></i>Total Transactions</small><span class="fw-bold">200</span></div>
+                            <div class="col-6"><small class="text-muted d-block"><i class="bi bi-hourglass-split me-1"></i>New Transactions</small><span class="fw-bold">15</span></div>
+                            <div class="col-6 mt-2"><small class="text-muted d-block"><i class="bi bi-check-circle me-1"></i>Verified Today</small><span class="fw-bold">10</span></div>
+                            <div class="col-6 mt-2"><small class="text-muted d-block"><i class="bi bi-arrow-up-right me-1"></i>Deposits Today</small><span class="fw-bold">MK 120,000</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-2">
+                    <div class="card-body">
+                        <h2 class="mb-2"><i class="bi bi-activity me-2"></i>Transaction Activity Log</h2>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item bg-transparent text-light border-0"><small class="text-muted">2025-04-12 14:30</small> John Mwale initiated a deposit of MK 50,000.</li>
+                            <li class="list-group-item bg-transparent text-light border-0"><small class="text-muted">2025-04-12 10:15</small> Grace Banda initiated a withdrawal of MK 20,000.</li>
+                            <li class="list-group-item bg-transparent text-light border-0"><small class="text-muted">2025-04-11 16:45</small> Peter Kumwenda’s deposit of MK 30,000 verified.</li>
+                            <li class="list-group-item bg-transparent text-light border-0"><small class="text-muted">2025-04-11 09:00</small> James Phiri’s withdrawal of MK 15,000 verified.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="mb-2"><i class="bi bi-gear me-2"></i>Quick Actions</h2>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-primary" id="refreshTransactionsBtn"><i class="bi bi-arrow-clockwise me-1"></i>Refresh Transactions</button>
+                            <button class="btn btn-primary" id="exportTransactionDataBtn"><i class="bi bi-download me-1"></i>Export Transaction Data</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="settings" class="content-section">
+        <div class="loading" id="settings-loading">Loading...</div>
+        <h1 class="mb-2"><i class="bi bi-gear me-2"></i>Settings</h1>
+        <!-- Account Settings Card (Full Width) -->
+        <div class="card mb-2">
+            <div class="card-body">
+                <h2 class="mb-3"><i class="bi bi-person me-2"></i>Account Settings</h2>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="brokerName" class="form-label">Broker Name</label>
+                        <input type="text" class="form-control bg-dark" id="brokerName" value="Broker User" readonly>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="brokerEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control bg-dark" id="brokerEmail" value="broker@mynvestor.mw" readonly>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="brokerPhone" class="form-label">Phone Number</label>
+                        <input type="text" class="form-control bg-dark" id="brokerPhone" value="+265 999 123 456" readonly>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="brokerRole" class="form-label">Role</label>
+                        <input type="text" class="form-control bg-dark" id="brokerRole" value="Broker" readonly>
+                    </div>
+                </div>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editProfileModal"><i class="bi bi-pencil me-1"></i>Edit Profile</button>
+            </div>
+        </div>
+        <!-- Other Settings Cards (Half-Half in Desktop) -->
+        <div class="row">
+            <div class="col-md-6 mb-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="mb-3"><i class="bi bi-bell me-2"></i>Notification Preferences</h2>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="notifyClientActivity" checked>
+                            <label class="form-check-label" for="notifyClientActivity">Client Activity (e.g., new orders, KYC submissions)</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="notifyTransactionVerification" checked>
+                            <label class="form-check-label" for="notifyTransactionVerification">Transaction Verification Requests</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="notifyMarketUpdates">
+                            <label class="form-check-label" for="notifyMarketUpdates">Market Updates (e.g., index changes, top gainers)</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="notifySystemAlerts" checked>
+                            <label class="form-check-label" for="notifySystemAlerts">System Alerts (e.g., platform maintenance)</label>
+                        </div>
+                        <button class="btn btn-success mt-2" id="saveNotificationSettings"><i class="bi bi-save me-1"></i>Save Notification Settings</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="mb-3"><i class="bi bi-shield-lock me-2"></i>Security Settings</h2>
+                        <div class="mb-3">
+                            <label for="twoFactorAuth" class="form-label">Two-Factor Authentication (2FA)</label>
+                            <select class="form-select bg-dark" id="twoFactorAuth">
+                                <option value="disabled">Disabled</option>
+                                <option value="sms">SMS</option>
+                                <option value="email">Email</option>
+                                <option value="app">Authenticator App</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="passwordChange" class="form-label">Change Password</label>
+                            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#changePasswordModal"><i class="bi bi-key me-1"></i>Change Password</button>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="sessionTimeout" checked>
+                            <label class="form-check-label" for="sessionTimeout">Enable Auto-Logout After 15 Minutes of Inactivity</label>
+                        </div>
+                        <button class="btn btn-success mt-2" id="saveSecuritySettings"><i class="bi bi-save me-1"></i>Save Security Settings</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="mb-3"><i class="bi bi-display me-2"></i>Platform Preferences</h2>
+                        <div class="mb-3">
+                            <label for="defaultSection" class="form-label">Default Landing Section</label>
+                            <select class="form-select bg-dark" id="defaultSection">
+                                <option value="dashboard">Dashboard</option>
+                                <option value="market">Market</option>
+                                <option value="clients">Clients</option>
+                                <option value="orders">Orders</option>
+                                <option value="transactions">Transactions</option>
+                                <option value="settings">Settings</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="theme" class="form-label">Theme</label>
+                            <select class="form-select bg-dark" id="theme">
+                                <option value="dark">Dark (Default)</option>
+                                <option value="light">Light</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="currency" class="form-label">Default Currency</label>
+                            <select class="form-select bg-dark" id="currency">
+                                <option value="MWK">Malawi Kwacha (MWK)</option>
+                                <option value="USD">US Dollar (USD)</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-success mt-2" id="savePlatformPreferences"><i class="bi bi-save me-1"></i>Save Platform Preferences</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="mb-3"><i class="bi bi-shield-check me-2"></i>Compliance Settings</h2>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="autoKYCFlagging" checked>
+                            <label class="form-check-label" for="autoKYCFlagging">Auto-Flag Incomplete KYC Submissions</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="pepScreening" checked>
+                            <label class="form-check-label" for="pepScreening">Enable Automatic PEP Screening</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="transactionMonitoring" checked>
+                            <label class="form-check-label" for="transactionMonitoring">Enable Transaction Monitoring for Suspicious Activity</label>
+                        </div>
+                        <div class="mb-3">
+                            <label for="kycReminder" class="form-label">KYC Review Reminder Frequency</label>
+                            <select class="form-select bg-dark" id="kycReminder">
+                                <option value="30">Every 30 Days</option>
+                                <option value="60">Every 60 Days</option>
+                                <option value="90">Every 90 Days</option>
+                                <option value="never">Never</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-success mt-2" id="saveComplianceSettings"><i class="bi bi-save me-1"></i>Save Compliance Settings</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <nav class="footer-nav">
+        <a href="#dashboard" class="nav-item" title="View Dashboard" aria-label="Dashboard">
+            <i class="bi bi-speedometer2 nav-icon"></i>Dashboard
+        </a>
+        <a href="#market" class="nav-item active" title="View Market Data" aria-label="Market">
+            <i class="bi bi-bar-chart-line nav-icon"></i>Market
+        </a>
+        <a href="#clients" class="nav-item" title="Manage Clients" aria-label="Clients">
+            <i class="bi bi-people nav-icon"></i>Clients
+        </a>
+        <a href="#orders" class="nav-item" title="View Orders" aria-label="Orders">
+            <i class="bi bi-arrow-left-right nav-icon"></i>Orders
+        </a>
+        <a href="#transactions" class="nav-item" title="View Transactions" aria-label="Transactions">
+            <i class="bi bi-cash-coin nav-icon"></i>Transactions
+        </a>
+    </nav>    
+    <div class="modal fade" id="stockQuoteModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark">
+                <div class="modal-header">
+                    <h5 class="modal-title"><span id="modalCompanyName"></span> Stock Quote</h5><button type="button"
+                        class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex align-items-center mb-2"><img id="modalCompanyLogo" class="company-logo me-3"
+                            alt="Company Logo">
+                        <div>
+                            <h5 id="modalCompanyFullName" class="mb-0"></h5>
+                            <p id="modalCompanyTicker" class="card-text mb-0"></p>
+                        </div>
+                    </div>
+                    <div class="stock-info-row"><span class="stock-info-label">Current Price</span><span
+                            id="modalCurrentPrice" class="stock-info-value"></span></div>
+                    <div class="stock-info-row"><span class="stock-info-label">Daily Change</span><span
+                            id="modalDailyChange" class="stock-info-value"></span></div>
+                    <div class="stock-info-row"><span class="stock-info-label">Open</span><span id="modalOpen"
+                            class="stock-info-value"></span></div>
+                    <div class="stock-info-row"><span class="stock-info-label">High</span><span id="modalHigh"
+                            class="stock-info-value"></span></div>
+                    <div class="stock-info-row"><span class="stock-info-label">Low</span><span id="modalLow"
+                            class="stock-info-value"></span></div>
+                    <div class="stock-info-row"><span class="stock-info-label">Volume</span><span id="modalVolume"
+                            class="stock-info-value"></span></div>
+                </div>
+                <div class="modal-footer"><button class="btn btn-details text-white"
+                        id="modalDetailsBtn"><i class="bi bi-info-circle me-1"></i>Full Details</button></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="companyDetailsModal" tabindex="-1" aria-labelledby="companyDetailsModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content bg-dark">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="companyDetailsModalLabel"><span id="companyDetailsName"></span></h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <img id="companyDetailsLogo" src="" alt="Company Logo" class="company-logo me-3">
+                        <div>
+                            <h5 id="companyDetailsFullName" class="mb-0"></h5>
+                            <p class="text-muted mb-0" id="companyDetailsSector"></p>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <span id="companyDetailsPrice" class="h5"></span>
+                        <small id="companyDetailsLastUpdate" class="text-muted ms-2"></small>
+                    </div>
+                    <p id="companyDetailsOverview" class="text-muted mb-3"></p>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h6>Key Statistics</h6>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="mb-1"><strong>Day Range:</strong> <span
+                                            id="companyDetailsDayRange"></span></p>
+                                    <p class="mb-1"><strong>52W Range:</strong> <span
+                                            id="companyDetails52WRange"></span></p>
+                                    <p class="mb-1"><strong>Volume:</strong> <span
+                                            id="companyDetailsVolume"></span></p>
+                                    <p class="mb-1"><strong>Market Cap:</strong> <span
+                                            id="companyDetailsMarketCap"></span></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="mb-1"><strong>P/E Ratio:</strong> <span id="companyDetailsPE"></span></p>
+                                    <p class="mb-1"><strong>Dividend Yield:</strong> <span
+                                            id="companyDetailsDivYield"></span></p>
+                                    <p class="mb-1"><strong>EPS:</strong> <span id="companyDetailsEPS"></span></p>
+                                    <p class="mb-1"><strong>P/B Ratio:</strong> <span id="companyDetailsPB"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h6>Technical Indicators</h6>
+                            <p class="mb-1"><strong>RSI (14):</strong> <span id="companyDetailsRSI"></span></p>
+                            <p class="mb-1"><strong>MACD:</strong> <span id="companyDetailsMACD"></span></p>
+                            <p class="mb-1"><strong>50-Day MA:</strong> <span id="companyDetails50DMA"></span></p>
+                            <p class="mb-1"><strong>200-Day MA:</strong> <span id="companyDetails200DMA"></span></p>
+                            <p class="mb-1"><strong>Summary:</strong> <span id="companyDetailsTechSummary"></span></p>
+                        </div>
+                    </div>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h6>Fundamental Metrics</h6>
+                            <p class="mb-1"><strong>ROE:</strong> <span id="companyDetailsROE"></span></p>
+                            <p class="mb-1"><strong>Debt/Equity:</strong> <span id="companyDetailsDebtEquity"></span></p>
+                            <p class="mb-1"><strong>PEG Ratio:</strong> <span id="companyDetailsPEG"></span></p>
+                            <p class="mb-1"><strong>Current Ratio:</strong> <span
+                                    id="companyDetailsCurrentRatio"></span></p>
+                            <p class="mb-1"><strong>ROIC:</strong> <span id="companyDetailsROIC"></span></p>
+                            <p class="mb-1"><strong>EBITDA Margin:</strong> <span id="companyDetailsEBITDA"></span></p>
+                            <p class="mb-1"><strong>Summary:</strong> <span id="companyDetailsFundSummary"></span></p>
+                        </div>
+                    </div>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h6>Ownership Structure</h6>
+                            <div class="progress mb-2">
+                                <div class="progress-bar" id="companyDetailsInst"></div>
+                            </div>
+                            <div class="progress mb-2">
+                                <div class="progress-bar bg-success" id="companyDetailsInsiders"></div>
+                            </div>
+                            <div class="progress mb-2">
+                                <div class="progress-bar bg-info" id="companyDetailsPublic"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h6>Recent News</h6>
+                            <ul id="companyDetailsNews" class="list-unstyled"></ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="clientDetailsModal" tabindex="-1" aria-labelledby="clientDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content bg-dark text-light">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="clientDetailsModalLabel">Client Details</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="clientDetailsContent">
+                    <!-- Content will be dynamically populated based on client status -->
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <div class="d-none" id="pendingVerificationSection">
+                        <div class="input-group me-2" style="max-width: 200px;">
+                            <span class="input-group-text bg-dark border-dark text-light">CSD #</span>
+                            <input type="text" class="form-control bg-dark border-dark text-light" id="csdNumberInput" placeholder="e.g., CSD123456" required>
+                        </div>
+                        <button type="button" class="btn btn-success" id="verifyClientBtn"><i class="bi bi-check"></i> Verify Client</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="messageClientModal" tabindex="-1" aria-labelledby="messageClientModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="messageClientModalLabel">Message Client</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="messageClientForm">
+                        <div class="mb-3">
+                            <label for="messageClientName" class="form-label">Client Name</label>
+                            <input type="text" class="form-control" id="messageClientName" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="messageType" class="form-label">Message Type</label>
+                            <select class="form-select" id="messageType">
+                                <option value="email">Email</option>
+                                <option value="sms">SMS</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="messageContent" class="form-label">Message</label>
+                            <textarea class="form-control" id="messageContent" rows="4" placeholder="Enter your message..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-success">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="transactionDetailsModal" tabindex="-1" aria-labelledby="transactionDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="transactionDetailsModalLabel">Transaction Details</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="stock-info-row"><span class="stock-info-label">Transaction ID</span><span id="transId" class="stock-info-value"></span></div>
+                    <div class="stock-info-row"><span class="stock-info-label">Client</span><span id="transClient" class="stock-info-value"></span></div>
+                    <div class="stock-info-row"><span class="stock-info-label">Type</span><span id="transType" class="stock-info-value"></span></div>
+                    <div class="stock-info-row"><span class="stock-info-label">Amount</span><span id="transAmount" class="stock-info-value"></span></div>
+                    <div class="stock-info-row"><span class="stock-info-label">Date</span><span id="transDate" class="stock-info-value"></span></div>
+                    <div class="stock-info-row"><span class="stock-info-label">Status</span><span id="transStatus" class="stock-info-value"></span></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="exportTransactionDetailsBtn"><i class="bi bi-download me-1"></i>Export</button>
+                    <div id="transactionActions"></div>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="orderDetailsModal" tabindex="-1" aria-labelledby="orderDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="orderDetailsModalLabel">Order Details</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="stock-info-row"><span class="stock-info-label">Order ID</span><span id="orderId" class="stock-info-value"></span></div>
+                    <div class="stock-info-row"><span class="stock-info-label">Client</span><span id="orderClient" class="stock-info-value"></span></div>
+                    <div class="stock-info-row"><span class="stock-info-label">Type</span><span id="orderType" class="stock-info-value"></span></div>
+                    <div class="stock-info-row"><span class="stock-info-label">Stock</span><span id="orderStock" class="stock-info-value"></span></div>
+                    <div class="stock-info-row"><span class="stock-info-label">Quantity</span><span id="orderQuantity" class="stock-info-value"></span></div>
+                    <div class="stock-info-row"><span class="stock-info-label">Price</span><span id="orderPrice" class="stock-info-value"></span></div>
+                    <div class="stock-info-row"><span class="stock-info-label">Status</span><span id="orderStatus" class="stock-info-value"></span></div>
+                    <div class="stock-info-row"><span class="stock-info-label">Date</span><span id="orderDate" class="stock-info-value"></span></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="exportOrderDetailsBtn"><i class="bi bi-download me-1"></i>Export</button>
+                    <div id="orderActions"></div>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editProfileForm">
+                    <div class="mb-3">
+                        <label for="editBrokerName" class="form-label">Broker Name</label>
+                        <input type="text" class="form-control bg-dark" id="editBrokerName" value="Broker User" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editBrokerEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control bg-dark" id="editBrokerEmail" value="broker@mynvestor.mw" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editBrokerPhone" class="form-label">Phone Number</label>
+                        <input type="text" class="form-control bg-dark" id="editBrokerPhone" value="+265 999 123 456" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editProfilePic" class="form-label">Profile Picture</label>
+                        <input type="file" class="form-control bg-dark" id="editProfilePic" accept="image/*">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" id="saveProfileBtn"><i class="bi bi-save me-1"></i>Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="changePasswordForm">
+                    <div class="mb-3">
+                        <label for="currentPassword" class="form-label">Current Password</label>
+                        <input type="password" class="form-control bg-dark" id="currentPassword" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newPassword" class="form-label">New Password</label>
+                        <input type="password" class="form-control bg-dark" id="newPassword" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                        <input type="password" class="form-control bg-dark" id="confirmPassword" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" id="savePasswordBtn"><i class="bi bi-save me-1"></i>Change Password</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="helpModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark">
+            <div class="modal-header">
+                <h5 class="modal-title" id="helpModalLabel">Help & Support</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Welcome to the Help & Support section. How can we assist you today?</p>
+                <ul class="list-group">
+                    <li class="list-group-item bg-dark">
+                        <strong>Contact Support:</strong> Reach out to our team at <a href="mailto:support@mynvestor.com" class="text-success">support@mynvestor.com</a> or call us at <a href="tel:+265123456789" class="text-success">+265 123 456 789</a>.
+                    </li>
+                    <li class="list-group-item bg-dark">
+                        <strong>FAQs:</strong> Visit our <a href="/faq" target="_blank" class="text-success">FAQ page</a> for answers to common questions.
+                    </li>
+                    <li class="list-group-item bg-dark">
+                        <strong>Guides:</strong> Check out our <a href="/guides" target="_blank" class="text-success">User Guides</a> to learn more about using the platform.
+                    </li>
+                    <li class="list-group-item bg-dark">
+                        <strong>Live Chat:</strong> Start a live chat with our support team (available 9 AM - 5 PM GMT).
+                        <button class="btn btn-primary btn-sm float-end">Start Chat</button>
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- User Account Modal -->
+<!-- User Account Modal -->
+<div class="modal fade" id="userAccountModal" tabindex="-1" aria-labelledby="userAccountModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="userAccountModalLabel">Broker Profile</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="user-avatar text-center mb-3">
+                    <div class="profile-pic mx-auto" id="modal-profile-pic">
+                        <div class="profile-initials" id="modal-user-initials">BR</div>
+                    </div>
+                </div>
+                <div class="user-info text-center">
+                    <h5 id="brokerName">Broker Name</h5>
+                    <p class="text-muted" id="brokerEmail">broker@example.com</p>
+                    <p class="text-muted" id="brokerPhone">+265 999 999 999</p>
+                </div>
+                <div class="d-flex flex-column gap-2 mt-3">
+                    <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                        <i class="bi bi-pencil"></i> Edit Profile
+                    </button>
+                    <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
+                        <i class="bi bi-lock"></i> Change Password
+                    </button>
+                    <button class="btn btn-outline-light" onclick="window.location.href='kyc.html'">
+                        <i class="bi bi-file-earmark-text"></i> KYC Details
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const sections = document.querySelectorAll('.content-section');
+        const navItems = document.querySelectorAll('.nav-item');
+        const companyCards = document.querySelectorAll('.company-card');
+        const companyTitles = document.querySelectorAll('.card-title');
+        const stockModal = new bootstrap.Modal(document.getElementById('stockQuoteModal'));
+        const companyDetailsModal = new bootstrap.Modal(document.getElementById('companyDetailsModal'));
+
+        function showSection(sectionId) {
+            sections.forEach(section => {
+                section.classList.remove("active");
+                section.querySelector(".loading").style.display = "none";
+            });
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.querySelector(".loading").style.display = "block";
+                setTimeout(() => {
+                    targetSection.querySelector(".loading").style.display = "none";
+                    targetSection.classList.add("active");
+                    if (sectionId === "market") initializeMarketCharts();
+                }, 300);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+            navItems.forEach(item => item.classList.remove("active"));
+            document.querySelectorAll(`.nav-item[href="#${sectionId}"]`).forEach(item => item.classList.add("active"));
+            localStorage.setItem("lastSectionIndex2", sectionId);
+        }
+
+        function handleNavClick(e) {
+            e.preventDefault();
+            const sectionId = e.target.closest("a").getAttribute("href").substring(1);
+            showSection(sectionId);
+            window.location.hash = sectionId;
+        }
+
+        navItems.forEach(item => item.addEventListener("click", handleNavClick));
+
+        window.addEventListener("load", () => {
+            const sectionId = window.location.hash.substring(1) || localStorage.getItem("lastSectionIndex2") || "dashboard";
+            showSection(sectionId);
+        });
+
+        window.addEventListener("hashchange", () => {
+            showSection(window.location.hash.substring(1) || "dashboard");
+        });
+
+        companyTitles.forEach(title => {
+            if (title.textContent.length > 15) title.classList.add("long-name");
+        });
+
+        const companyData = {
+            "AIRTEL": { name: "Airtel Malawi Ltd", logo: "../logos/airtel.jpg", link: "https://www.airtel.mw" },
+            "BHL": { name: "BHL Ltd", logo: "../logos/Bhl.png", link: "https://example.com/bhl" },
+            "FDH": { name: "FDH Bank Ltd", logo: "../logos/FDHLogo.webp", link: "https://www.fdh.co.mw" },
+            "FMBCH": { name: "FMB Capital Holdings", logo: "../logos/fmbch.jpg", link: "https://www.fmbcapitalgroup.com" },
+            "ICON": { name: "ICON Properties Ltd", logo: "../logos/icon.png", link: "https://example.com/icon" },
+            "ILLOVO": { name: "Illovo Sugar Ltd", logo: "../logos/illovo.png", link: "https://www.illovosugar.co.mw" },
+            "MPICO": { name: "MPICO Ltd", logo: "../logos/mpico.png", link: "https://www.mpico.mw" },
+            "NBM": { name: "National Bank Ltd", logo: "../logos/Nb.png", link: "https://www.natbank.co.mw" },
+            "NBS": { name: "NBS Bank Ltd", logo: "../logos/Nbs.png", link: "https://www.nbs.mw" },
+            "NICO": { name: "NICO Holdings Ltd", logo: "../logos/Nico.png", link: "https://www.nico-holdings.com" },
+            "NITL": { name: "NITL Ltd", logo: "../logos/Nitl.jpg", link: "https://example.com/nitl" },
+            "OMU": { name: "Old Mutual Ltd", logo: "../logos/Omu.jpg", link: "https://www.oldmutual.com" },
+            "PCL": { name: "Press Corp Ltd", logo: "../logos/Pcl.png", link: "https://www.presscorp.com" },
+            "STANDARD": { name: "Standard Bank Ltd", logo: "../logos/Std.jpg", link: "https://www.standardbank.co.mw" },
+            "SUNBIRD": { name: "Sunbird Tourism Ltd", logo: "../logos/Sunbird.svg", link: "https://www.sunbirdmalawi.com" },
+            "TNM": { name: "Telekom Networks Ltd", logo: "../logos/Tnm.png", link: "https://www.tnm.co.mw" },
+            "STANBIC": { name: "Standard Bank", logo: "../logos/Std.jpg", link: "https://www.standardbank.co.mw" }
+        };
+
+        companyCards.forEach(e => {
+            e.addEventListener("click", () => {
+                const t = e.getAttribute("data-company"),
+                      n = e.querySelector(".card-title").textContent,
+                      a = e.querySelector(".card-text").textContent,
+                      l = e.querySelector(".share-price").textContent,
+                      o = e.querySelector(".daily-change").textContent,
+                      i = companyData[t];
+                document.getElementById("modalCompanyName").textContent = a;
+                document.getElementById("modalCompanyFullName").textContent = n;
+                document.getElementById("modalCompanyTicker").textContent = a;
+                document.getElementById("modalCompanyLogo").src = i.logo;
+                document.getElementById("modalCurrentPrice").textContent = l;
+                document.getElementById("modalDailyChange").textContent = o;
+                document.getElementById("modalOpen").textContent = "MK " + (parseFloat(l.replace("MK ", "")) * 0.98).toFixed(2);
+                document.getElementById("modalHigh").textContent = "MK " + (parseFloat(l.replace("MK ", "")) * 1.02).toFixed(2);
+                document.getElementById("modalLow").textContent = "MK " + (parseFloat(l.replace("MK ", "")) * 0.97).toFixed(2);
+                document.getElementById("modalVolume").textContent = a.includes("245,670") ? "245,670" : a.includes("187,450") ? "187,450" : a.includes("156,230") ? "156,230" : (Math.floor(Math.random() * 100000) + 10000).toLocaleString();
+                o.includes("+") ? document.getElementById("modalDailyChange").className = "stock-info-value price-change-up" : document.getElementById("modalDailyChange").className = "stock-info-value price-change-down";
+                document.getElementById("companyDetailsName").textContent = n;
+                document.getElementById("companyDetailsFullName").textContent = `${n} (${a}.mw)`;
+                document.getElementById("companyDetailsLogo").src = i.logo;
+                document.getElementById("companyDetailsSector").textContent = "Technology Sector | Large Cap";
+                document.getElementById("companyDetailsPrice").innerHTML = `${l} <span id="companyDetailsChange" class="badge ${o.includes("+") ? "bg-success" : "bg-danger"}">${o.split(" ")[1]}</span>`;
+                document.getElementById("companyDetailsLastUpdate").textContent = `Last Updated: ${new Date().toLocaleTimeString('en-US', { hour12: false, timeZone: 'GMT' })} GMT`;
+                document.getElementById("companyDetailsOverview").textContent = i.overview || "No overview available.";
+                document.getElementById("companyDetailsDayRange").textContent = `${document.getElementById("modalLow").textContent.replace("MK ", "")} - ${document.getElementById("modalHigh").textContent.replace("MK ", "")}`;
+                document.getElementById("companyDetails52WRange").textContent = `MK ${(parseFloat(l.replace("MK ", "")) * 0.9).toFixed(2)} - MK ${(parseFloat(l.replace("MK ", "")) * 1.1).toFixed(2)}`;
+                document.getElementById("companyDetailsVolume").textContent = document.getElementById("modalVolume").textContent;
+                document.getElementById("companyDetailsMarketCap").textContent = `MK ${(parseFloat(l.replace("MK ", "")) * 100000).toLocaleString().split(".")[0]}B`;
+                document.getElementById("companyDetailsPE").textContent = (Math.random() * 20 + 15).toFixed(1);
+                document.getElementById("companyDetailsDivYield").textContent = (Math.random() * 2 + 0.5).toFixed(1) + "%";
+                document.getElementById("companyDetailsRSI").innerHTML = `${(Math.random() * 40 + 40).toFixed(1)} <span class="text-success">(Neutral)</span>`;
+                document.getElementById("companyDetailsMACD").innerHTML = `${(Math.random() * 2).toFixed(2)} <span class="text-success">(Bullish)</span>`;
+                document.getElementById("companyDetails50DMA").textContent = `MK ${(parseFloat(l.replace("MK ", "")) * 0.95).toFixed(2)}`;
+                document.getElementById("companyDetails200DMA").textContent = `MK ${(parseFloat(l.replace("MK ", "")) * 0.9).toFixed(2)}`;
+                document.getElementById("companyDetailsTechSummary").textContent = "Current price trading above key moving averages with moderate RSI. Short-term bullish trend.";
+                document.getElementById("companyDetailsEPS").textContent = `MK ${(parseFloat(l.replace("MK ", "")) * 0.035).toFixed(2)}`;
+                document.getElementById("companyDetailsROE").textContent = `${(Math.random() * 15 + 10).toFixed(1)}%`;
+                document.getElementById("companyDetailsDebtEquity").textContent = (Math.random() * 0.5 + 0.3).toFixed(2);
+                document.getElementById("companyDetailsPB").textContent = (Math.random() * 3 + 3).toFixed(1);
+                document.getElementById("companyDetailsFundSummary").textContent = "Strong revenue growth (15% YoY) with healthy profit margins. Moderate valuation ratios compared to sector.";
+                document.getElementById("companyDetailsNews").innerHTML = `<li class="mb-2"><small>${new Date().toISOString().split('T')[0]}</small><br><a href="#" class="text-white">${n} announces new partnership</a></li><li class="mb-2"><small>${new Date(Date.now() - 86400000).toISOString().split('T')[0]}</small><br><a href="#" class="text-white">Q4 earnings beat estimates</a></li>`;
+                document.getElementById("companyDetailsPEG").textContent = (Math.random() * 0.8 + 0.8).toFixed(1);
+                document.getElementById("companyDetailsCurrentRatio").textContent = (Math.random() * 1.5 + 1).toFixed(1);
+                document.getElementById("companyDetailsROIC").textContent = `${(Math.random() * 8 + 8).toFixed(1)}%`;
+                document.getElementById("companyDetailsEBITDA").textContent = `${(Math.random() * 15 + 20).toFixed(0)}%`;
+                document.getElementById("companyDetailsInst").style.width = "45%";
+                document.getElementById("companyDetailsInst").textContent = "Institutions 45%";
+                document.getElementById("companyDetailsInsiders").style.width = "30%";
+                document.getElementById("companyDetailsInsiders").textContent = "Insiders 30%";
+                document.getElementById("companyDetailsPublic").style.width = "25%";
+                document.getElementById("companyDetailsPublic").textContent = "Public 25%";
+                document.getElementById("modalDetailsBtn").onclick = () => {
+                    stockModal.hide();
+                    companyDetailsModal.show();
+                };
+                stockModal.show();
+            });
+        });
+
+        function initializeMarketCharts() {
+            const options = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid: { color: "#495057" }, ticks: { color: "#adb5bd" } },
+                    y: { grid: { color: "#495057" }, ticks: { color: "#adb5bd" } }
+                }
+            };
+            const labels = ["6d", "5d", "4d", "3d", "2d", "1d", "Today"];
+            new Chart(document.getElementById("masiChart"), {
+                type: "line",
+                data: { labels, datasets: [{ data: [10500, 10550, 10600, 10620, 10700, 10750, 10800], borderColor: "#28a745", fill: false }] },
+                options
+            });
+            new Chart(document.getElementById("dsiChart"), {
+                type: "line",
+                data: { labels, datasets: [{ data: [8200, 8250, 8300, 8280, 8350, 8400, 8450], borderColor: "#28a745", fill: false }] },
+                options
+            });
+            new Chart(document.getElementById("fsiChart"), {
+                type: "line",
+                data: { labels, datasets: [{ data: [4500, 4550, 4530, 4600, 4650, 4630, 4700], borderColor: "#28a745", fill: false }] },
+                options
+            });
+        }
+
+        // Client Data
+const clientData = {
+    CL001: {
+        name: "John Mwale",
+        status: "active",
+        clientId: "CL001",
+        lastActive: "2025-04-12 14:30",
+        portfolio: { cash: "MK 50,000", value: "MK 250,000", positions: [{ stock: "NBM", shares: 200, value: "MK 100,000" }, { stock: "AIRTEL", shares: 1000, value: "MK 50,000" }] },
+        transactions: [{ id: "TR001", type: "Buy", amount: "MK 100,000", date: "2025-04-12", status: "Completed" }],
+        orders: [{ id: "OR001", type: "Buy", stock: "NBM", quantity: 200, price: "MK 500", status: "Completed", date: "2025-04-12" }],
+        kyc: {
+            personal: { dob: "1985-06-15", address: "123 Main St, Lilongwe", phone: "+265 999 123 456" },
+            id: { type: "National ID", number: "MW123456", file: "id.pdf" },
+            financial: { bank: "NBM", account: "1234567890", income: "MK 1,200,000" },
+            employment: { employer: "Tech Corp", position: "Manager", years: 5 },
+            risk: { level: "Medium", experience: "2 years" },
+            compliance: { pep: "No", sanctions: "None" },
+            verification: { status: "Verified", csd: "CSD001" }
+        }
+    },
+    CL002: {
+        name: "Grace Banda",
+        status: "pending",
+        clientId: "CL002",
+        lastActive: "2025-04-11 09:15",
+        kyc: {
+            personal: { dob: "1990-03-22", address: "456 High St, Blantyre", phone: "+265 888 987 654" },
+            id: { type: "Passport", number: "A123456", file: "passport.pdf" },
+            financial: { bank: "FDH", account: "0987654321", income: "MK 800,000" },
+            employment: { employer: "Finance Ltd", position: "Analyst", years: 3 },
+            risk: { level: "Low", experience: "1 year" },
+            compliance: { pep: "No", sanctions: "None" },
+            verification: { status: "Pending", csd: "" }
+        }
+    },
+    CL003: {
+        name: "Peter Kumwenda",
+        status: "new",
+        clientId: "CL003",
+        lastActive: "2025-04-10 16:45",
+        kyc: {
+            personal: { dob: "1988-11-10", address: "789 Low St, Mzuzu", phone: "+265 777 456 123" },
+            id: { type: "Driver's License", number: "DL789123", file: "license.pdf" },
+            financial: { bank: "Standard", account: "1122334455", income: "MK 600,000" },
+            employment: { employer: "Retail Co", position: "Supervisor", years: 4 },
+            risk: { level: "High", experience: "None" },
+            compliance: { pep: "Yes", sanctions: "None" }
+        }
+    },
+    CL004: {
+        name: "James Phiri",
+        status: "pending",
+        clientId: "CL004",
+        lastActive: "2025-04-09 12:00",
+        kyc: {
+            personal: { dob: "1987-07-19", address: "321 River Rd, Blantyre", phone: "+265 999 654 321" },
+            id: { type: "Passport", number: "B987654", file: "passport2.pdf" },
+            financial: { bank: "NBS", account: "6677889900", income: "MK 900,000" },
+            employment: { employer: "Consulting Ltd", position: "Consultant", years: 6 },
+            risk: { level: "Medium", experience: "3 years" },
+            compliance: { pep: "No", sanctions: "None" },
+            verification: { status: "Pending", csd: "" }
+        }
+    },
+    CL005: {
+        name: "Peter Kumwenda",
+        status: "active",
+        clientId: "CL005",
+        lastActive: "2025-04-08 10:30",
+        portfolio: { cash: "MK 30,000", value: "MK 180,000", positions: [{ stock: "AIRTEL", shares: 1500, value: "MK 75,000" }, { stock: "TNM", shares: 2000, value: "MK 40,000" }] },
+        transactions: [{ id: "TR002", type: "Deposit", amount: "MK 30,000", date: "2025-04-08", status: "Completed" }],
+        orders: [{ id: "OR002", type: "Buy", stock: "AIRTEL", quantity: 1500, price: "MK 50", status: "Completed", date: "2025-04-08" }],
+        kyc: {
+            personal: { dob: "1992-02-14", address: "654 Hill St, Lilongwe", phone: "+265 888 123 789" },
+            id: { type: "National ID", number: "MW789123", file: "id2.pdf" },
+            financial: { bank: "NBM", account: "5544332211", income: "MK 700,000" },
+            employment: { employer: "Agri Corp", position: "Officer", years: 2 },
+            risk: { level: "Low", experience: "1 year" },
+            compliance: { pep: "No", sanctions: "None" },
+            verification: { status: "Verified", csd: "CSD002" }
+        }
+    }
+};
+
+// Client Search
+const clientSearch = document.querySelector('.client-search input');
+clientSearch.addEventListener('input', () => {
+    const query = clientSearch.value.toLowerCase();
+    const rows = document.querySelectorAll('#clientTableBody tr');
+    rows.forEach(row => {
+        const name = row.querySelector('td:nth-child(1)').textContent.toLowerCase();
+        const id = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+        row.style.display = name.includes(query) || id.includes(query) ? '' : 'none';
+    });
+});
+
+// Client Details Modal Population
+function populateClientDetails(clientId) {
+    const client = clientData[clientId];
+    if (!client) return;
+    const modalBody = document.getElementById('clientDetailsContent');
+    const verificationSection = document.getElementById('pendingVerificationSection');
+    verificationSection.classList.toggle('d-none', client.status !== 'pending');
+
+    modalBody.innerHTML = `
+        <ul class="nav nav-tabs mb-3">
+            ${client.status === 'active' ? `
+                <li class="nav-item"><a class="nav-link active" href="#" data-tab="portfolio">Portfolio</a></li>
+                <li class="nav-item"><a class="nav-link" href="#" data-tab="transactions">Transactions</a></li>
+                <li class="nav-item"><a class="nav-link" href="#" data-tab="orders">Orders</a></li>
+            ` : ''}
+            <li class="nav-item"><a class="nav-link ${client.status !== 'active' ? 'active' : ''}" href="#" data-tab="kyc">KYC Details</a></li>
+        </ul>
+        <div class="tab-content">
+            ${client.status === 'active' ? `
+                <div class="tab-pane active" id="portfolio-tab">
+                    <div class="client-info-section">
+                        <canvas id="portfolioChart" class="mb-3"></canvas>
+                        <div class="row">
+                            <div class="col-md-6"><p><strong>Cash Balance:</strong> ${client.portfolio.cash}</p></div>
+                            <div class="col-md-6"><p><strong>Portfolio Value:</strong> ${client.portfolio.value}</p></div>
+                        </div>
+                        <h6>Positions</h6>
+                        <div class="table-responsive">
+                            <table class="table table-dark">
+                                <thead><tr><th>Stock</th><th>Shares</th><th>Value</th></tr></thead>
+                                <tbody>
+                                    ${client.portfolio.positions.map(pos => `
+                                        <tr><td>${pos.stock}</td><td>${pos.shares}</td><td>${pos.value}</td></tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="transactions-tab">
+                    <div class="table-responsive">
+                        <table class="table table-dark">
+                            <thead><tr><th>ID</th><th>Type</th><th>Amount</th><th>Date</th><th>Status</th></tr></thead>
+                            <tbody>
+                                ${client.transactions.map(trans => `
+                                    <tr class="transaction-row" data-trans-id="${trans.id}">
+                                        <td>${trans.id}</td><td>${trans.type}</td><td>${trans.amount}</td><td>${trans.date}</td><td>${trans.status}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane" id="orders-tab">
+                    <div class="table-responsive">
+                        <table class="table table-dark">
+                            <thead><tr><th>ID</th><th>Type</th><th>Stock</th><th>Quantity</th><th>Price</th><th>Status</th></tr></thead>
+                            <tbody>
+                                ${client.orders.map(order => `
+                                    <tr class="order-row" data-order-id="${order.id}">
+                                        <td>${order.id}</td><td>${order.type}</td><td>${order.stock}</td><td>${order.quantity}</td><td>${order.price}</td><td>${order.status}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            ` : ''}
+            <div class="tab-pane ${client.status !== 'active' ? 'active' : ''}" id="kyc-tab">
+                <div class="client-info-section">
+                    <h6>Personal Details</h6>
+                    <p><strong>Date of Birth:</strong> ${client.kyc.personal.dob}</p>
+                    <p><strong>Address:</strong> ${client.kyc.personal.address}</p>
+                    <p><strong>Phone:</strong> ${client.kyc.personal.phone}</p>
+                </div>
+                <div class="client-info-section">
+                    <h6>Identification</h6>
+                    <p><strong>Type:</strong> ${client.kyc.id.type}</p>
+                    <p><strong>Number:</strong> ${client.kyc.id.number}</p>
+                    <p><strong>Document:</strong> <a href="${client.kyc.id.file}" class="text-success" target="_blank">View File</a></p>
+                </div>
+                <div class="client-info-section">
+                    <h6>Financial Information</h6>
+                    <p><strong>Bank:</strong> ${client.kyc.financial.bank}</p>
+                    <p><strong>Account:</strong> ${client.kyc.financial.account}</p>
+                    <p><strong>Annual Income:</strong> ${client.kyc.financial.income}</p>
+                </div>
+                <div class="client-info-section">
+                    <h6>Employment Details</h6>
+                    <p><strong>Employer:</strong> ${client.kyc.employment.employer}</p>
+                    <p><strong>Position:</strong> ${client.kyc.employment.position}</p>
+                    <p><strong>Years Employed:</strong> ${client.kyc.employment.years}</p>
+                </div>
+                <div class="client-info-section">
+                    <h6>Risk Profile</h6>
+                    <p><strong>Risk Level:</strong> ${client.kyc.risk.level}</p>
+                    <p><strong>Investment Experience:</strong> ${client.kyc.risk.experience}</p>
+                </div>
+                <div class="client-info-section">
+                    <h6>Compliance</h6>
+                    <p><strong>PEP Status:</strong> ${client.kyc.compliance.pep}</p>
+                    <p><strong>Sanctions:</strong> ${client.kyc.compliance.sanctions}</p>
+                </div>
+                ${client.status === 'active' || client.status === 'pending' ? `
+                    <div class="client-info-section">
+                        <h6>Verification</h6>
+                        <p><strong>Status:</strong> <span class="status-badge status-${client.kyc.verification.status.toLowerCase()}">${client.kyc.verification.status}</span></p>
+                        <p><strong>CSD Number:</strong> ${client.kyc.verification.csd || 'Not Assigned'}</p>
+                    </div>
+                ` : ''}
+            </div>
+        </div>
+    `;
+
+    // Tab Switching
+    modalBody.querySelectorAll('.nav-link').forEach(tab => {
+        tab.addEventListener('click', (e) => {
+            e.preventDefault();
+            modalBody.querySelectorAll('.nav-link').forEach(t => t.classList.remove('active'));
+            modalBody.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+            tab.classList.add('active');
+            document.getElementById(`${tab.dataset.tab}-tab`).classList.add('active');
+        });
+    });
+
+    // Portfolio Chart
+    if (client.status === 'active') {
+        new Chart(document.getElementById('portfolioChart'), {
+            type: 'pie',
+            data: {
+                labels: client.portfolio.positions.map(p => p.stock),
+                datasets: [{ data: client.portfolio.positions.map(p => parseFloat(p.value.replace('MK ', '').replace(',', ''))), backgroundColor: ['#28a745', '#007bff', '#dc3545'] }]
+            },
+            options: { responsive: true, plugins: { legend: { labels: { color: '#d0d4d6' } } } }
+        });
+    }
+
+    // Transaction Row Clicks
+    modalBody.querySelectorAll('.transaction-row').forEach(row => {
+        row.addEventListener('click', () => {
+            const transId = row.dataset.transId;
+            const trans = client.transactions.find(t => t.id === transId);
+            document.getElementById('transId').textContent = trans.id;
+            document.getElementById('transClient').textContent = client.name;
+            document.getElementById('transType').textContent = trans.type;
+            document.getElementById('transAmount').textContent = trans.amount;
+            document.getElementById('transDate').textContent = trans.date;
+            document.getElementById('transStatus').textContent = trans.status;
+            new bootstrap.Modal(document.getElementById('transactionDetailsModal')).show();
+        });
+    });
+
+    // Order Row Clicks
+    modalBody.querySelectorAll('.order-row').forEach(row => {
+        row.addEventListener('click', () => {
+            const orderId = row.dataset.orderId;
+            const order = client.orders.find(o => o.id === orderId);
+            document.getElementById('orderId').textContent = order.id;
+            document.getElementById('orderClient').textContent = client.name;
+            document.getElementById('orderType').textContent = order.type;
+            document.getElementById('orderStock').textContent = order.stock;
+            document.getElementById('orderQuantity').textContent = order.quantity;
+            document.getElementById('orderPrice').textContent = order.price;
+            document.getElementById('orderStatus').textContent = order.status;
+            document.getElementById('orderDate').textContent = order.date;
+            new bootstrap.Modal(document.getElementById('orderDetailsModal')).show();
+        });
+    });
+}
+
+// View Client Buttons
+document.querySelectorAll('.view-client-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const row = btn.closest('tr');
+        const clientId = row.dataset.clientId;
+        populateClientDetails(clientId);
+    });
+});
+
+// Message Client Buttons
+const messageModal = new bootstrap.Modal(document.getElementById('messageClientModal'));
+document.querySelectorAll('#clientTable .btn-primary:not(.view-client-btn)').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const row = btn.closest('tr');
+        const clientName = row.querySelector('td:nth-child(1)').textContent;
+        document.getElementById('messageClientName').value = clientName;
+        messageModal.show();
+    });
+});
+
+// Message Form Submission
+document.getElementById('messageClientForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const clientName = document.getElementById('messageClientName').value;
+    const messageType = document.getElementById('messageType').value;
+    const messageContent = document.getElementById('messageContent').value;
+    alert(`Message sent to ${clientName} via ${messageType}:\n${messageContent}`);
+    messageModal.hide();
+    document.getElementById('messageClientForm').reset();
+});
+
+// CSD Verification
+document.getElementById('verifyClientBtn').addEventListener('click', () => {
+    const csdInput = document.getElementById('csdNumberInput');
+    const csdNumber = csdInput.value.trim();
+    if (!csdNumber) {
+        csdInput.classList.add('is-invalid');
+        csdInput.nextElementSibling.textContent = 'CSD Number is required.';
+        return;
+    }
+    csdInput.classList.remove('is-invalid');
+    alert(`Client verified with CSD Number: ${csdNumber}`);
+    csdInput.value = '';
+});
+
+// Order Data
+const orderData = {
+    OR001: {
+        id: "OR001",
+        client: "John Mwale",
+        type: "Buy",
+        stock: "NBM",
+        quantity: 200,
+        price: "MK 500",
+        status: "new",
+        date: "2025-04-12 14:30",
+        action: "buy",
+        orderType: "market"
+    },
+    OR002: {
+        id: "OR002",
+        client: "Grace Banda",
+        type: "Sell",
+        stock: "AIRTEL",
+        quantity: 1000,
+        price: "MK 50",
+        status: "pending",
+        date: "2025-04-12 10:15",
+        action: "sell",
+        orderType: "limit"
+    },
+    OR003: {
+        id: "OR003",
+        client: "Peter Kumwenda",
+        type: "Buy",
+        stock: "ILLOVO",
+        quantity: 300,
+        price: "MK 300",
+        status: "executed",
+        date: "2025-04-11 16:45",
+        action: "buy",
+        orderType: "market"
+    },
+    OR004: {
+        id: "OR004",
+        client: "James Phiri",
+        type: "Sell",
+        stock: "SUNBIRD",
+        quantity: 500,
+        price: "MK 200",
+        status: "cancelled",
+        date: "2025-04-11 09:00",
+        action: "sell",
+        orderType: "limit"
+    }
+};
+
+// Export Table to CSV
+function exportTableToCSV(tableId, filename) {
+    const table = document.getElementById(tableId);
+    const rows = table.querySelectorAll('tr');
+    let csv = [];
+    rows.forEach(row => {
+        const cols = row.querySelectorAll('td, th');
+        const rowData = Array.from(cols).map(col => {
+            let text = col.textContent.replace(/"/g, '""');
+            if (col.querySelector('.badge')) {
+                text = col.querySelector('.badge').textContent;
+            } else if (col.querySelector('button')) {
+                text = '';
+            }
+            return `"${text}"`;
+        }).filter(text => text !== '""');
+        csv.push(rowData.join(','));
+    });
+    const csvContent = csv.join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    link.click();
+}
+
+// Export Order Details to CSV
+function exportOrderDetails() {
+    const details = [
+        ['Order ID', document.getElementById('orderId').textContent],
+        ['Client', document.getElementById('orderClient').textContent],
+        ['Type', document.getElementById('orderType').textContent],
+        ['Stock', document.getElementById('orderStock').textContent],
+        ['Quantity', document.getElementById('orderQuantity').textContent],
+        ['Price', document.getElementById('orderPrice').textContent],
+        ['Status', document.getElementById('orderStatus').textContent],
+        ['Date', document.getElementById('orderDate').textContent]
+    ];
+    const csv = details.map(row => row.map(val => `"${val.replace(/"/g, '""')}"`).join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `order_${document.getElementById('orderId').textContent}.csv`;
+    link.click();
+}
+
+// Table Sorting
+function sortTable(tableId, column, type) {
+    const tbody = document.getElementById(tableId + 'Body');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    const isAsc = !tbody.dataset[column] || tbody.dataset[column] === 'desc';
+    tbody.dataset[column] = isAsc ? 'asc' : 'desc';
+
+    rows.sort((a, b) => {
+        let aVal = a.dataset[type] || a.querySelector(`td:nth-child(${type === 'orderId' ? 1 : type === 'client' ? 2 : type === 'order' ? 3 : type === 'status' ? 4 : type === 'action' ? 5 : 6})`).textContent;
+        let bVal = b.dataset[type] || b.querySelector(`td:nth-child(${type === 'orderId' ? 1 : type === 'client' ? 2 : type === 'order' ? 3 : type === 'status' ? 4 : type === 'action' ? 5 : 6})`).textContent;
+        if (type === 'status') {
+            const statusOrder = ['new', 'pending', 'executed', 'cancelled', 'expired'];
+            aVal = statusOrder.indexOf(aVal.toLowerCase());
+            bVal = statusOrder.indexOf(bVal.toLowerCase());
+        } else if (type === 'orderId') {
+            aVal = aVal.toLowerCase();
+            bVal = bVal.toLowerCase();
+        }
+        return isAsc ? (aVal < bVal ? -1 : 1) : (aVal > bVal ? -1 : 1);
+    });
+
+    tbody.innerHTML = '';
+    rows.forEach(row => tbody.appendChild(row));
+
+    document.querySelectorAll(`#${tableId} .sortable`).forEach(th => {
+        th.classList.remove('asc', 'desc');
+        if (th.dataset.sort === column) {
+            th.classList.add(isAsc ? 'asc' : 'desc');
+        }
+    });
+}
+
+// Order Overview Search
+const orderOverviewSearch = document.getElementById('orderOverviewSearch');
+orderOverviewSearch.addEventListener('input', () => {
+    const query = orderOverviewSearch.value.toLowerCase();
+    const rows = document.querySelectorAll('#orderOverviewTableBody tr');
+    rows.forEach(row => {
+        const orderId = row.dataset.orderId.toLowerCase();
+        const client = row.dataset.client.toLowerCase();
+        const order = row.dataset.order.toLowerCase();
+        row.style.display = orderId.includes(query) || client.includes(query) || order.includes(query) ? '' : 'none';
+    });
+});
+
+// Order Management Search and Filters
+const orderManagementSearch = document.getElementById('orderManagementSearch');
+const orderStatusFilter = document.getElementById('orderStatusFilter');
+const orderActionFilter = document.getElementById('orderActionFilter');
+const orderTypeFilter = document.getElementById('orderTypeFilter');
+
+function filterOrderManagementTable() {
+    const query = orderManagementSearch.value.toLowerCase();
+    const status = orderStatusFilter.value.toLowerCase();
+    const action = orderActionFilter.value.toLowerCase();
+    const type = orderTypeFilter.value.toLowerCase();
+    const rows = document.querySelectorAll('#orderManagementTableBody tr');
+    rows.forEach(row => {
+        const orderId = row.dataset.orderId.toLowerCase();
+        const client = row.dataset.client.toLowerCase();
+        const order = row.dataset.order.toLowerCase();
+        const rowStatus = row.dataset.status.toLowerCase();
+        const rowAction = row.dataset.action.toLowerCase();
+        const rowType = row.dataset.type.toLowerCase();
+        const matchesSearch = orderId.includes(query) || client.includes(query) || order.includes(query);
+        const matchesStatus = !status || rowStatus === status;
+        const matchesAction = !action || rowAction === action;
+        const matchesType = !type || rowType === type;
+        row.style.display = matchesSearch && matchesStatus && matchesAction && matchesType ? '' : 'none';
+    });
+}
+
+orderManagementSearch.addEventListener('input', filterOrderManagementTable);
+orderStatusFilter.addEventListener('change', filterOrderManagementTable);
+orderActionFilter.addEventListener('change', filterOrderManagementTable);
+orderTypeFilter.addEventListener('change', filterOrderManagementTable);
+
+// Populate Order Details Modal
+function populateOrderDetails(orderId) {
+    const order = orderData[orderId];
+    if (!order) return;
+    document.getElementById('orderId').textContent = order.id;
+    document.getElementById('orderClient').textContent = order.client;
+    document.getElementById('orderType').textContent = order.type;
+    document.getElementById('orderStock').textContent = order.stock;
+    document.getElementById('orderQuantity').textContent = order.quantity;
+    document.getElementById('orderPrice').textContent = order.price;
+    document.getElementById('orderStatus').textContent = order.status;
+    document.getElementById('orderDate').textContent = order.date;
+
+    const actionsDiv = document.getElementById('orderActions');
+    actionsDiv.innerHTML = '';
+    if (order.status.toLowerCase() === 'new') {
+        actionsDiv.innerHTML = `
+            <button class="btn btn-success btn-sm me-1" onclick="handleOrderAction('${orderId}', 'approve')"><i class="bi bi-check"></i> Approve</button>
+            <button class="btn btn-danger btn-sm" onclick="handleOrderAction('${orderId}', 'cancel')"><i class="bi bi-x"></i> Cancel</button>
+        `;
+    } else if (order.status.toLowerCase() === 'pending') {
+        actionsDiv.innerHTML = `
+            <button class="btn btn-success btn-sm me-1" onclick="handleOrderAction('${orderId}', 'execute')"><i class="bi bi-check-circle"></i> Execute</button>
+            <button class="btn btn-danger btn-sm" onclick="handleOrderAction('${orderId}', 'cancel')"><i class="bi bi-x"></i> Cancel</button>
+        `;
+    }
+}
+
+// Order Action Handling
+function handleOrderAction(orderId, action) {
+    const order = orderData[orderId];
+    if (action === 'approve') {
+        order.status = 'pending';
+        alert(`Order ${orderId} approved.`);
+    } else if (action === 'execute') {
+        order.status = 'executed';
+        alert(`Order ${orderId} executed.`);
+    } else if (action === 'cancel') {
+        order.status = 'cancelled';
+        alert(`Order ${orderId} cancelled.`);
+    }
+    updateOrderTables(orderId);
+    bootstrap.Modal.getInstance(document.getElementById('orderDetailsModal')).hide();
+}
+
+// Update Order Tables
+function updateOrderTables(orderId) {
+    const order = orderData[orderId];
+    const badgeClass = {
+        new: 'bg-info',
+        pending: 'bg-warning',
+        executed: 'bg-success',
+        cancelled: 'bg-danger',
+        expired: 'bg-secondary'
+    };
+    const rows = document.querySelectorAll(`tr[data-order-id="${orderId}"]`);
+    rows.forEach(row => {
+        row.dataset.status = order.status.toLowerCase();
+        const statusCell = row.querySelector('td:nth-child(4)');
+        statusCell.innerHTML = `<span class="badge ${badgeClass[order.status.toLowerCase()]}">${order.status}</span>`;
+    });
+}
+
+// View Order Buttons
+document.querySelectorAll('.view-order-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const row = btn.closest('tr');
+        const orderId = row.dataset.orderId;
+        populateOrderDetails(orderId);
+    });
+});
+
+// Sorting Event Listeners
+document.querySelectorAll('#orderOverviewTable .sortable').forEach(th => {
+    th.addEventListener('click', () => {
+        sortTable('orderOverviewTable', th.dataset.sort, th.dataset.sort);
+    });
+});
+document.querySelectorAll('#orderManagementTable .sortable').forEach(th => {
+    th.addEventListener('click', () => {
+        sortTable('orderManagementTable', th.dataset.sort, th.dataset.sort);
+    });
+});
+
+// Export Buttons
+document.getElementById('exportOverviewBtn').addEventListener('click', () => {
+    exportTableToCSV('orderOverviewTable', 'order_overview.csv');
+});
+document.getElementById('exportManagementBtn').addEventListener('click', () => {
+    exportTableToCSV('orderManagementTable', 'order_management.csv');
+});
+document.getElementById('exportOrderDetailsBtn').addEventListener('click', () => {
+    exportOrderDetails();
+});
+// Transaction Data
+const transactionData = {
+    TR001: {
+        id: "TR001",
+        client: "John Mwale",
+        type: "Deposit",
+        amount: "MK 50,000",
+        status: "new",
+        date: "2025-04-12 14:30",
+        method: "deposit"
+    },
+    TR002: {
+        id: "TR002",
+        client: "Grace Banda",
+        type: "Withdrawal",
+        amount: "MK 20,000",
+        status: "new",
+        date: "2025-04-12 10:15",
+        method: "withdrawal"
+    },
+    TR003: {
+        id: "TR003",
+        client: "Peter Kumwenda",
+        type: "Deposit",
+        amount: "MK 30,000",
+        status: "verified",
+        date: "2025-04-11 16:45",
+        method: "deposit"
+    },
+    TR004: {
+        id: "TR004",
+        client: "James Phiri",
+        type: "Withdrawal",
+        amount: "MK 15,000",
+        status: "verified",
+        date: "2025-04-11 09:00",
+        method: "withdrawal"
+    },
+    TR005: {
+        id: "TR005",
+        client: "Mary Chirwa",
+        type: "Deposit",
+        amount: "MK 40,000",
+        status: "new",
+        date: "2025-04-10 12:30",
+        method: "deposit"
+    }
+};
+
+// Transaction Overview Search
+const transactionOverviewSearch = document.getElementById('transactionOverviewSearch');
+transactionOverviewSearch.addEventListener('input', () => {
+    const query = transactionOverviewSearch.value.toLowerCase();
+    const rows = document.querySelectorAll('#transactionOverviewTableBody tr');
+    rows.forEach(row => {
+        const client = row.dataset.client.toLowerCase();
+        const status = row.dataset.status.toLowerCase();
+        row.style.display = client.includes(query) || status.includes(query) ? '' : 'none';
+    });
+});
+
+// Transaction Verification Search and Filters
+const transactionVerificationSearch = document.getElementById('transactionVerificationSearch');
+const transactionStatusFilter = document.getElementById('transactionStatusFilter');
+const transactionIdFilter = document.getElementById('transactionIdFilter');
+const transactionMethodFilter = document.getElementById('transactionMethodFilter');
+
+function filterTransactionVerificationTable() {
+    const query = transactionVerificationSearch.value.toLowerCase();
+    const status = transactionStatusFilter.value.toLowerCase();
+    const transId = transactionIdFilter.value.toLowerCase();
+    const method = transactionMethodFilter.value.toLowerCase();
+    const rows = document.querySelectorAll('#transactionVerificationTableBody tr');
+    rows.forEach(row => {
+        const client = row.dataset.client.toLowerCase();
+        const rowTransId = row.dataset.transId.toLowerCase();
+        const rowStatus = row.dataset.status.toLowerCase();
+        const rowMethod = row.dataset.type.toLowerCase();
+        const matchesSearch = client.includes(query) || rowTransId.includes(query);
+        const matchesStatus = !status || rowStatus === status;
+        const matchesTransId = !transId || rowTransId.includes(transId);
+        const matchesMethod = !method || rowMethod === method;
+        row.style.display = matchesSearch && matchesStatus && matchesTransId && matchesMethod ? '' : 'none';
+    });
+}
+
+transactionVerificationSearch.addEventListener('input', filterTransactionVerificationTable);
+transactionStatusFilter.addEventListener('change', filterTransactionVerificationTable);
+transactionIdFilter.addEventListener('input', filterTransactionVerificationTable);
+transactionMethodFilter.addEventListener('change', filterTransactionVerificationTable);
+
+// Populate Transaction Details Modal
+function populateTransactionDetails(transId) {
+    const trans = transactionData[transId];
+    if (!trans) return;
+    document.getElementById('transId').textContent = trans.id;
+    document.getElementById('transClient').textContent = trans.client;
+    document.getElementById('transType').textContent = trans.type;
+    document.getElementById('transAmount').textContent = trans.amount;
+    document.getElementById('transDate').textContent = trans.date;
+    document.getElementById('transStatus').textContent = trans.status;
+
+    const actionsDiv = document.getElementById('transactionActions');
+    actionsDiv.innerHTML = '';
+    if (trans.status.toLowerCase() === 'new') {
+        actionsDiv.innerHTML = `
+            <button class="btn btn-success btn-sm me-1 verify-trans-btn" data-trans-id="${transId}"><i class="bi bi-check"></i> Verify</button>
+        `;
+    }
+    new bootstrap.Modal(document.getElementById('transactionDetailsModal')).show();
+}
+
+// Handle Transaction Verification
+function handleTransactionVerification(transId) {
+    const trans = transactionData[transId];
+    trans.status = 'verified';
+    alert(`Transaction ${transId} verified.`);
+    updateTransactionTables(transId);
+    bootstrap.Modal.getInstance(document.getElementById('transactionDetailsModal')).hide();
+}
+
+// Update Transaction Tables
+function updateTransactionTables(transId) {
+    const trans = transactionData[transId];
+    const badgeClass = {
+        new: 'bg-info',
+        verified: 'bg-success'
+    };
+    const rows = document.querySelectorAll(`tr[data-trans-id="${transId}"]`);
+    rows.forEach(row => {
+        row.dataset.status = trans.status.toLowerCase();
+        const statusCell = row.querySelector('td:nth-child(4)');
+        statusCell.innerHTML = `<span class="badge ${badgeClass[trans.status.toLowerCase()]}">${trans.status}</span>`;
+        const actionCell = row.querySelector('td:last-child');
+        if (trans.status.toLowerCase() === 'verified') {
+            actionCell.innerHTML = `<button class="btn btn-primary btn-sm view-trans-btn" data-trans-id="${transId}"><i class="bi bi-eye"></i> View</button>`;
+        }
+    });
+    filterTransactionVerificationTable(); // Reapply filters
+}
+
+// View and Verify Transaction Buttons
+document.addEventListener('click', (e) => {
+    if (e.target.closest('.view-trans-btn')) {
+        const transId = e.target.closest('.view-trans-btn').dataset.transId;
+        populateTransactionDetails(transId);
+    } else if (e.target.closest('.verify-trans-btn')) {
+        const transId = e.target.closest('.verify-trans-btn').dataset.transId;
+        handleTransactionVerification(transId);
+    }
+});
+
+// Sort Transactions Table
+function sortTransactionTable(tableId, column) {
+    const tbody = document.getElementById(tableId + 'Body');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    const isAsc = !tbody.dataset[column] || tbody.dataset[column] === 'desc';
+    tbody.dataset[column] = isAsc ? 'asc' : 'desc';
+
+    rows.sort((a, b) => {
+        let aVal = a.dataset[column];
+        let bVal = b.dataset[column];
+        if (column === 'amount' || column === 'date') {
+            aVal = column === 'amount' ? parseFloat(aVal) : new Date(aVal);
+            bVal = column === 'amount' ? parseFloat(bVal) : new Date(bVal);
+        } else if (column === 'status') {
+            const statusOrder = ['new', 'verified'];
+            aVal = statusOrder.indexOf(aVal.toLowerCase());
+            bVal = statusOrder.indexOf(bVal.toLowerCase());
+        }
+        return isAsc ? (aVal < bVal ? -1 : 1) : (aVal > bVal ? -1 : 1);
+    });
+
+    tbody.innerHTML = '';
+    rows.forEach(row => tbody.appendChild(row));
+
+    document.querySelectorAll(`#${tableId} .sortable`).forEach(th => {
+        th.classList.remove('asc', 'desc');
+        if (th.dataset.sort === column) {
+            th.classList.add(isAsc ? 'asc' : 'desc');
+        }
+    });
+}
+
+// Sorting Event Listeners
+document.querySelectorAll('#transactionOverviewTable .sortable').forEach(th => {
+    th.addEventListener('click', () => {
+        sortTransactionTable('transactionOverviewTable', th.dataset.sort);
+    });
+});
+
+// Export Transaction Details to CSV
+function exportTransactionDetails() {
+    const details = [
+        ['Transaction ID', document.getElementById('transId').textContent],
+        ['Client', document.getElementById('transClient').textContent],
+        ['Type', document.getElementById('transType').textContent],
+        ['Amount', document.getElementById('transAmount').textContent],
+        ['Date', document.getElementById('transDate').textContent],
+        ['Status', document.getElementById('transStatus').textContent]
+    ];
+    const csv = details.map(row => row.map(val => `"${val.replace(/"/g, '""')}"`).join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `transaction_${document.getElementById('transId').textContent}.csv`;
+    link.click();
+}
+
+// Export Buttons
+document.getElementById('exportTransactionOverviewBtn').addEventListener('click', () => {
+    exportTableToCSV('transactionOverviewTable', 'transaction_overview.csv');
+});
+document.getElementById('exportTransactionVerificationBtn').addEventListener('click', () => {
+    exportTableToCSV('transactionVerificationTable', 'transaction_verification.csv');
+});
+document.getElementById('exportTransactionDetailsBtn').addEventListener('click', () => {
+    exportTransactionDetails();
+});
+document.getElementById('exportTransactionDataBtn').addEventListener('click', () => {
+    exportTableToCSV('transactionOverviewTable', 'all_transactions.csv');
+});
+document.getElementById('refreshTransactionsBtn').addEventListener('click', () => {
+    alert('Transactions refreshed.');
+    // Simulate refresh by resetting filters and search
+    transactionOverviewSearch.value = '';
+    transactionVerificationSearch.value = '';
+    transactionStatusFilter.value = '';
+    transactionIdFilter.value = '';
+    transactionMethodFilter.value = '';
+    filterTransactionVerificationTable();
+    transactionOverviewSearch.dispatchEvent(new Event('input'));
+});
+// Settings Section Initialization
+function initializeSettings() {
+    // Load saved preferences (simulated with localStorage)
+    const savedPreferences = {
+        notifyClientActivity: localStorage.getItem('notifyClientActivity') === 'true',
+        notifyTransactionVerification: localStorage.getItem('notifyTransactionVerification') === 'true',
+        notifyMarketUpdates: localStorage.getItem('notifyMarketUpdates') === 'true',
+        notifySystemAlerts: localStorage.getItem('notifySystemAlerts') === 'true',
+        twoFactorAuth: localStorage.getItem('twoFactorAuth') || 'disabled',
+        sessionTimeout: localStorage.getItem('sessionTimeout') === 'true',
+        defaultSection: localStorage.getItem('defaultSection') || 'dashboard',
+        theme: localStorage.getItem('theme') || 'dark',
+        currency: localStorage.getItem('currency') || 'MWK',
+        autoKYCFlagging: localStorage.getItem('autoKYCFlagging') === 'true',
+        pepScreening: localStorage.getItem('pepScreening') === 'true',
+        transactionMonitoring: localStorage.getItem('transactionMonitoring') === 'true',
+        kycReminder: localStorage.getItem('kycReminder') || '30'
+    };
+
+    // Set form values
+    document.getElementById('notifyClientActivity').checked = savedPreferences.notifyClientActivity;
+    document.getElementById('notifyTransactionVerification').checked = savedPreferences.notifyTransactionVerification;
+    document.getElementById('notifyMarketUpdates').checked = savedPreferences.notifyMarketUpdates;
+    document.getElementById('notifySystemAlerts').checked = savedPreferences.notifySystemAlerts;
+    document.getElementById('twoFactorAuth').value = savedPreferences.twoFactorAuth;
+    document.getElementById('sessionTimeout').checked = savedPreferences.sessionTimeout;
+    document.getElementById('defaultSection').value = savedPreferences.defaultSection;
+    document.getElementById('theme').value = savedPreferences.theme;
+    document.getElementById('currency').value = savedPreferences.currency;
+    document.getElementById('autoKYCFlagging').checked = savedPreferences.autoKYCFlagging;
+    document.getElementById('pepScreening').checked = savedPreferences.pepScreening;
+    document.getElementById('transactionMonitoring').checked = savedPreferences.transactionMonitoring;
+    document.getElementById('kycReminder').value = savedPreferences.kycReminder;
+
+    // Apply theme
+    if (savedPreferences.theme === 'light') {
+        document.body.classList.add('light-theme');
+    } else {
+        document.body.classList.remove('light-theme');
+    }
+}
+
+// Save Notification Settings
+document.getElementById('saveNotificationSettings').addEventListener('click', () => {
+    localStorage.setItem('notifyClientActivity', document.getElementById('notifyClientActivity').checked);
+    localStorage.setItem('notifyTransactionVerification', document.getElementById('notifyTransactionVerification').checked);
+    localStorage.setItem('notifyMarketUpdates', document.getElementById('notifyMarketUpdates').checked);
+    localStorage.setItem('notifySystemAlerts', document.getElementById('notifySystemAlerts').checked);
+    alert('Notification settings saved.');
+});
+
+// Save Security Settings
+document.getElementById('saveSecuritySettings').addEventListener('click', () => {
+    const twoFactorAuth = document.getElementById('twoFactorAuth').value;
+    localStorage.setItem('twoFactorAuth', twoFactorAuth);
+    localStorage.setItem('sessionTimeout', document.getElementById('sessionTimeout').checked);
+    alert('Security settings saved.');
+    if (twoFactorAuth !== 'disabled') {
+        alert(`2FA enabled via ${twoFactorAuth}. Please configure your ${twoFactorAuth} settings.`);
+    }
+});
+
+// Save Platform Preferences
+document.getElementById('savePlatformPreferences').addEventListener('click', () => {
+    const defaultSection = document.getElementById('defaultSection').value;
+    const theme = document.getElementById('theme').value;
+    const currency = document.getElementById('currency').value;
+    localStorage.setItem('defaultSection', defaultSection);
+    localStorage.setItem('theme', theme);
+    localStorage.setItem('currency', currency);
+    alert('Platform preferences saved.');
+    if (theme === 'light') {
+        document.body.classList.add('light-theme');
+    } else {
+        document.body.classList.remove('light-theme');
+    }
+    // Update currency display (placeholder for future implementation)
+    document.querySelectorAll('.share-price').forEach(el => {
+        if (currency === 'USD') {
+            el.textContent = `$ ${(parseFloat(el.textContent.replace('MK ', '')) / 1700).toFixed(2)}`;
+        } else {
+            // Revert to MWK (simplified, assumes data is stored in MWK)
+            location.reload();
+        }
+    });
+});
+
+// Save Compliance Settings
+document.getElementById('saveComplianceSettings').addEventListener('click', () => {
+    localStorage.setItem('autoKYCFlagging', document.getElementById('autoKYCFlagging').checked);
+    localStorage.setItem('pepScreening', document.getElementById('pepScreening').checked);
+    localStorage.setItem('transactionMonitoring', document.getElementById('transactionMonitoring').checked);
+    localStorage.setItem('kycReminder', document.getElementById('kycReminder').value);
+    alert('Compliance settings saved.');
+});
+
+// Edit Profile
+document.getElementById('saveProfileBtn').addEventListener('click', () => {
+    const name = document.getElementById('editBrokerName').value;
+    const email = document.getElementById('editBrokerEmail').value;
+    const phone = document.getElementById('editBrokerPhone').value;
+    const profilePic = document.getElementById('editProfilePic').files[0];
+
+    if (!name || !email || !phone) {
+        alert('Please fill in all required fields.');
+        return;
+    }
+
+    // Update profile fields
+    document.getElementById('brokerName').value = name;
+    document.getElementById('brokerEmail').value = email;
+    document.getElementById('brokerPhone').value = phone;
+
+    // Update profile picture
+    if (profilePic) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const userInitials = document.getElementById('user-initials');
+            userInitials.style.backgroundImage = `url(${e.target.result})`;
+            userInitials.textContent = '';
+            userInitials.classList.add('profile-pic-img');
+        };
+        reader.readAsDataURL(profilePic);
+    }
+
+    alert('Profile updated successfully.');
+    bootstrap.Modal.getInstance(document.getElementById('editProfileModal')).hide();
+});
+
+// Change Password
+document.getElementById('savePasswordBtn').addEventListener('click', () => {
+    const currentPassword = document.getElementById('currentPassword').value;
+    const newPassword = document.getElementById('newPassword').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+
+    if (!currentPassword || !newPassword || !confirmPassword) {
+        alert('Please fill in all fields.');
+        return;
+    }
+
+    if (newPassword !== confirmPassword) {
+        alert('New password and confirmation do not match.');
+        return;
+    }
+
+    // Simulate password change (in a real app, this would involve server-side validation)
+    alert('Password changed successfully.');
+    document.getElementById('changePasswordForm').reset();
+    bootstrap.Modal.getInstance(document.getElementById('changePasswordModal')).hide();
+});
+
+// Update showSection to initialize settings
+const originalShowSection = showSection;
+showSection = function(sectionId) {
+    originalShowSection(sectionId);
+    if (sectionId === 'settings') {
+        initializeSettings();
+    }
+};
+
+// Apply saved default section on load
+window.addEventListener('load', () => {
+    const defaultSection = localStorage.getItem('defaultSection') || 'dashboard';
+    const sectionId = window.location.hash.substring(1) || localStorage.getItem('lastSectionIndex2') || defaultSection;
+    showSection(sectionId);
+});
+function initializeDashboard() {
+    // Market Charts
+    const options = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+            x: { grid: { color: "#495057" }, ticks: { color: "#adb5bd" } },
+            y: { grid: { color: "#495057" }, ticks: { color: "#adb5bd" } }
+        }
+    };
+    const labels = ["6d", "5d", "4d", "3d", "2d", "1d", "Today"];
+    new Chart(document.getElementById("dashboardMasiChart"), {
+        type: "line",
+        data: { labels, datasets: [{ data: [10500, 10550, 10600, 10620, 10700, 10750, 10800], borderColor: "#28a745", fill: false }] },
+        options
+    });
+    new Chart(document.getElementById("dashboardDsiChart"), {
+        type: "line",
+        data: { labels, datasets: [{ data: [8200, 8250, 8300, 8280, 8350, 8400, 8450], borderColor: "#28a745", fill: false }] },
+        options
+    });
+    new Chart(document.getElementById("dashboardFsiChart"), {
+        type: "line",
+        data: { labels, datasets: [{ data: [4500, 4550, 4530, 4600, 4650, 4630, 4700], borderColor: "#28a745", fill: false }] },
+        options
+    });
+
+    // Key Statistics
+    const totalPortfolioValue = Object.values(clientData).reduce((sum, client) => {
+        if (client.portfolio?.value) {
+            return sum + parseFloat(client.portfolio.value.replace('MK ', '').replace(',', ''));
+        }
+        return sum;
+    }, 0);
+    document.getElementById('totalPortfolioValue').textContent = `MK ${totalPortfolioValue.toLocaleString()}`;
+
+    const activeClients = Object.values(clientData).filter(client => client.status === 'active').length;
+    document.getElementById('activeClients').textContent = activeClients;
+
+    const pendingVerifications = Object.values(clientData).filter(client => client.status === 'pending').length;
+    document.getElementById('pendingVerifications').textContent = pendingVerifications;
+
+    // Populate Client Table
+    const clientTableBody = document.getElementById('dashboardClientTableBody');
+    Object.values(clientData).slice(0, 5).forEach(client => {
+        const badgeClass = {
+            active: 'bg-success',
+            pending: 'bg-warning',
+            new: 'bg-secondary'
+        };
+        clientTableBody.innerHTML += `
+            <tr data-client-id="${client.clientId}" data-status="${client.status}">
+                <td>${client.name}</td>
+                <td>${client.clientId}</td>
+                <td><span class="badge ${badgeClass[client.status]}">${client.status}</span></td>
+                <td>${client.lastActive}</td>
+                <td>
+                    <button class="btn btn-primary btn-sm me-1 view-client-btn" data-bs-toggle="modal" data-bs-target="#clientDetailsModal"><i class="bi bi-eye"></i> View</button>
+                    <button class="btn btn-primary btn-sm"><i class="bi bi-chat"></i> Message</button>
+                </td>
+            </tr>
+        `;
+    });
+
+    // Populate Order Table
+    const orderTableBody = document.getElementById('dashboardOrderTableBody');
+    Object.values(orderData).slice(0, 5).forEach(order => {
+        const badgeClass = {
+            new: 'bg-info',
+            pending: 'bg-warning',
+            executed: 'bg-success',
+            cancelled: 'bg-danger',
+            expired: 'bg-secondary'
+        };
+        orderTableBody.innerHTML += `
+            <tr data-order-id="${order.id}" data-client="${order.client}" data-order="${order.stock}" data-status="${order.status.toLowerCase()}">
+                <td>${order.id}</td>
+                <td>${order.client}</td>
+                <td>${order.type} ${order.stock}</td>
+                <td><span class="badge ${badgeClass[order.status.toLowerCase()]}">${order.status}</span></td>
+                <td>
+                    <button class="btn btn-primary btn-sm view-order-btn" data-bs-toggle="modal" data-bs-target="#orderDetailsModal"><i class="bi bi-eye"></i> View</button>
+                </td>
+            </tr>
+        `;
+    });
+
+    // Populate Transaction Table
+    const transactionTableBody = document.getElementById('dashboardTransactionTableBody');
+    Object.values(transactionData).slice(0, 5).forEach(trans => {
+        const badgeClass = {
+            new: 'bg-info',
+            verified: 'bg-success'
+        };
+        transactionTableBody.innerHTML += `
+            <tr data-trans-id="${trans.id}" data-client="${trans.client}" data-amount="${parseFloat(trans.amount.replace('MK ', '').replace(',', ''))}" data-status="${trans.status.toLowerCase()}">
+                <td>${trans.client}</td>
+                <td>${trans.id}</td>
+                <td>${trans.amount}</td>
+                <td><span class="badge ${badgeClass[trans.status.toLowerCase()]}">${trans.status}</td>
+                <td>
+                    <button class="btn btn-primary btn-sm view-trans-btn" data-trans-id="${trans.id}"><i class="bi bi-eye"></i> View</button>
+                    ${trans.status.toLowerCase() === 'new' ? `<button class="btn btn-success btn-sm verify-trans-btn" data-trans-id="${trans.id}"><i class="bi bi-check"></i> Verify</button>` : ''}
+                </td>
+            </tr>
+        `;
+    });
+
+    // Client Search
+    const clientSearch = document.getElementById('dashboardClientSearch');
+    clientSearch.addEventListener('input', () => {
+        const query = clientSearch.value.toLowerCase();
+        const rows = document.querySelectorAll('#dashboardClientTableBody tr');
+        rows.forEach(row => {
+            const name = row.querySelector('td:nth-child(1)').textContent.toLowerCase();
+            const id = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+            row.style.display = name.includes(query) || id.includes(query) ? '' : 'none';
+        });
+    });
+
+    // Order Search
+    const orderSearch = document.getElementById('dashboardOrderSearch');
+    orderSearch.addEventListener('input', () => {
+        const query = orderSearch.value.toLowerCase();
+        const rows = document.querySelectorAll('#dashboardOrderTableBody tr');
+        rows.forEach(row => {
+            const orderId = row.dataset.orderId.toLowerCase();
+            const client = row.dataset.client.toLowerCase();
+            const order = row.dataset.order.toLowerCase();
+            row.style.display = orderId.includes(query) || client.includes(query) || order.includes(query) ? '' : 'none';
+        });
+    });
+
+    // Transaction Search
+    const transactionSearch = document.getElementById('dashboardTransactionSearch');
+    transactionSearch.addEventListener('input', () => {
+        const query = transactionSearch.value.toLowerCase();
+        const rows = document.querySelectorAll('#dashboardTransactionTableBody tr');
+        rows.forEach(row => {
+            const client = row.dataset.client.toLowerCase();
+            const transId = row.dataset.transId.toLowerCase();
+            row.style.display = client.includes(query) || transId.includes(query) ? '' : 'none';
+        });
+    });
+
+    // Sorting for Client Table
+    document.querySelectorAll('#dashboardClientTable .sortable').forEach(th => {
+        th.addEventListener('click', () => {
+            sortTable('dashboardClientTable', th.dataset.sort, th.dataset.sort);
+        });
+    });
+
+    // Sorting for Order Table
+    document.querySelectorAll('#dashboardOrderTable .sortable').forEach(th => {
+        th.addEventListener('click', () => {
+            sortTable('dashboardOrderTable', th.dataset.sort, th.dataset.sort);
+        });
+    });
+
+    // Sorting for Transaction Table
+    document.querySelectorAll('#dashboardTransactionTable .sortable').forEach(th => {
+        th.addEventListener('click', () => {
+            sortTable('dashboardTransactionTable', th.dataset.sort, th.dataset.sort);
+        });
+    });
+
+    // Export Buttons
+    document.getElementById('exportDashboardOrdersBtn').addEventListener('click', () => {
+        exportTableToCSV('dashboardOrderTable', 'dashboard_orders.csv');
+    });
+    document.getElementById('exportDashboardTransactionsBtn').addEventListener('click', () => {
+        exportTableToCSV('dashboardTransactionTable', 'dashboard_transactions.csv');
+    });
+
+    // Refresh Transactions
+    document.getElementById('refreshDashboardTransactionsBtn').addEventListener('click', () => {
+        alert('Dashboard transactions refreshed.');
+        transactionSearch.value = '';
+        transactionSearch.dispatchEvent(new Event('input'));
+    });
+
+    // View Client Buttons
+    document.querySelectorAll('#dashboardClientTable .view-client-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const row = btn.closest('tr');
+            const clientId = row.dataset.clientId;
+            populateClientDetails(clientId);
+        });
+    });
+
+    // Message Client Buttons
+    document.querySelectorAll('#dashboardClientTable .btn-primary:not(.view-client-btn)').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const row = btn.closest('tr');
+            const clientName = row.querySelector('td:nth-child(1)').textContent;
+            document.getElementById('messageClientName').value = clientName;
+            messageModal.show();
+        });
+    });
+}
+
+// Override showSection function
+const showSectionOriginal = showSection;
+showSection = function(sectionId) {
+    if (typeof showSectionOriginal === 'function') {
+        showSectionOriginal(sectionId);
+    }
+    if (sectionId === 'dashboard') {
+        initializeDashboard();
+    }
+};
+document.getElementById('profile-pic-container').addEventListener('click', () => {
+    new bootstrap.Modal(document.getElementById('userAccountModal')).show();
+});
+    document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+});
+ </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9387634599d0b05d',t:'MTc0NjAxOTc2NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
