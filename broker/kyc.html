@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mynvestor Broker - KYC Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        body {
+            background: #454e55;
+            padding: 60px 0 80px;
+            min-height: 100vh;
+            color: #d0d4d6;
+        }
+        .top-nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: #001f3f;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #fff;
+            z-index: 1000;
+        }
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid #fff;
+            transition: transform .2s;
+        }
+        .profile-pic:hover {
+            transform: scale(1.1);
+        }
+        .profile-initials {
+            width: 100%;
+            height: 100%;
+            background: #28a745;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        .company-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+        .jon {
+            color: #24ac44;
+        }
+        .notifications-icon {
+            cursor: pointer;
+            padding: 8px;
+            color: #fff;
+            font-size: 24px;
+        }
+        .content-section {
+            padding: 20px 20px 60px;
+            min-height: calc(100vh - 160px);
+            position: relative;
+            top: 60px;
+        }
+        .form-control {
+            background: #212529;
+            border: 1px solid #495057;
+            color: #d0d4d6;
+        }
+        .form-control:focus {
+            background: #212529;
+            border-color: #28a745;
+            box-shadow: none;
+            color: #d0d4d6;
+            outline: 2px solid #28a745;
+            outline-offset: 2px;
+        }
+        .form-control::placeholder {
+            color: #adb5bd;
+        }
+        .form-check-input {
+            background-color: #343a40;
+            border-color: #495057;
+        }
+        .form-check-input:checked {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+        .form-check-label {
+            color: #d0d4d6;
+        }
+        .accordion-button {
+            background: #2c3034;
+            color: #d0d4d6;
+        }
+        .accordion-button:not(.collapsed) {
+            background: #003366;
+            color: #fff;
+        }
+        .accordion-body {
+            color: #d0d4d6;
+            background: #2c3034;
+        }
+        .btn-success {
+            background: #28a745;
+            border: none;
+        }
+        .btn-success:hover {
+            background: #218838;
+        }
+        .btn-outline-secondary {
+            color: #d0d4d6;
+            border-color: #495057;
+        }
+        .btn-outline-secondary:hover {
+            background: #003366;
+            color: #fff;
+        }
+        .text-muted {
+            color: #adb5bd !important;
+        }
+        .accordion-header {
+            position: relative;
+        }
+        .success-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #28a745;
+            font-size: 1.2rem;
+            display: none;
+        }
+        .accordion-item.completed .success-icon {
+            display: block;
+        }
+        .progress-container {
+            margin-bottom: 20px;
+        }
+        .progress-bar {
+            background-color: #28a745;
+        }
+        .form-mode-toggle {
+            margin-bottom: 20px;
+        }
+        .step-section {
+            display: none;
+        }
+        .step-section.active {
+            display: block;
+        }
+        .invalid-feedback {
+            color: #dc3545;
+            font-size: 0.875rem;
+            display: none;
+        }
+        .is-invalid ~ .invalid-feedback {
+            display: block;
+        }
+        .tooltip-icon {
+            cursor: pointer;
+            color: #28a745;
+            margin-left: 5px;
+        }
+        .tooltip {
+            z-index: 1050;
+        }
+    </style>
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="profile-pic" id="profile-pic-container">
+            <div class="profile-initials" id="user-initials">BF</div>
+        </div>
+        <div class="company-name"><span class="jon">Myn</span>vestor Broker</div>
+        <a href="broker.html" class="notifications-icon"><i class="bi bi-arrow-left"></i></a>
+    </nav>
+
+    <section class="content-section">
+        <h1 class="mb-4"><i class="bi bi-building me-2"></i>Update Firm Information (KYC)</h1>
+        
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: 0%;" id="progress-bar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+            </div>
+        </div>
+
+        <!-- Mode Toggle -->
+        <div class="form-mode-toggle">
+            <label class="me-3">Form Mode:</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="formMode" id="accordionMode" value="accordion" checked>
+                <label class="form-check-label" for="accordionMode">Accordion</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="formMode" id="stepMode" value="step">
+                <label class="form-check-label" for="stepMode">Step-by-Step</label>
+            </div>
+        </div>
+
+        <form id="kycForm">
+            <!-- Accordion Mode -->
+            <div class="accordion" id="kycAccordion">
+                <div class="accordion-item bg-dark">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#firmInfo">
+                            <i class="bi bi-building me-2"></i>Firm Information
+                        </button>
+                        <i class="bi bi-check-circle success-icon"></i>
+                    </h2>
+                    <div id="firmInfo" class="accordion-collapse collapse show" data-bs-parent="#kycAccordion">
+                        <div class="accordion-body">
+                            <div class="mb-3">
+                                <label for="firmName" class="form-label">Legal Firm Name <i class="bi bi-info-circle tooltip-icon" id="firmName-tooltip" data-bs-toggle="tooltip" title="Enter the registered name of the brokerage firm"></i></label>
+                                <input type="text" class="form-control" id="firmName" placeholder="e.g., ABC Brokerage Ltd" required aria-describedby="firmName-tooltip" aria-invalid="false">
+                                <div class="invalid-feedback">Please enter the legal firm name.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="registrationNumber" class="form-label">Business Registration Number</label>
+                                <input type="text" class="form-control" id="registrationNumber" placeholder="e.g., BRN123456" required aria-invalid="false">
+                                <div class="invalid-feedback">Please enter a valid registration number.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="hqAddress" class="form-label">Headquarters Address</label>
+                                <textarea class="form-control" id="hqAddress" rows="3" placeholder="e.g., 123 Business Ave, Lilongwe, Central, 12345, Malawi" required aria-invalid="false"></textarea>
+                                <div class="invalid-feedback">Please enter the headquarters address.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="firmEmail" class="form-label">Firm Email Address</label>
+                                <input type="email" class="form-control" id="firmEmail" placeholder="e.g., info@abc brokerage.com" required aria-invalid="false">
+                                <div class="invalid-feedback">Please enter a valid business email address.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="firmPhone" class="form-label">Firm Phone Number</label>
+                                <input type="tel" class="form-control" id="firmPhone" placeholder="e.g., +265 999 123 456" required aria-invalid="false">
+                                <div class="invalid-feedback">Please enter a valid phone number.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item bg-dark">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#licensingInfo">
+                            <i class="bi bi-card-checklist me-2"></i>Licensing and Regulatory Details
+                        </button>
+                        <i class="bi bi-check-circle success-icon"></i>
+                    </h2>
+                    <div id="licensingInfo" class="accordion-collapse collapse" data-bs-parent="#kycAccordion">
+                        <div class="accordion-body">
+                            <div class="mb-3">
+                                <label for="licenseType" class="form-label">Financial Authority License Type</label>
+                                <select class="form-control" id="licenseType" required aria-invalid="false">
+                                    <option value="">Select License Type</option>
+                                    <option value="broker">Broker</option>
+                                    <option value="dealer">Dealer</option>
+                                    <option value="investmentAdvisor">Investment Advisor</option>
+                                    <option value="other">Other</option>
+                                </select>
+                                <div class="invalid-feedback">Please select a license type.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="licenseNumber" class="form-label">License Number</label>
+                                <input type="text" class="form-control" id="licenseNumber" placeholder="e.g., LIC123456" required aria-invalid="false">
+                                <div class="invalid-feedback">Please enter the license number.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="regulatoryAuthority" class="form-label">Regulatory Authority</label>
+                                <input type="text" class="form-control" id="regulatoryAuthority" placeholder="e.g., Reserve Bank of Malawi" required aria-invalid="false">
+                                <div class="invalid-feedback">Please enter the regulatory authority.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="complianceOfficer" class="form-label">Compliance Officer Name</label>
+                                <input type="text" class="form-control" id="complianceOfficer" placeholder="e.g., Jane Smith" required aria-invalid="false">
+                                <div class="invalid-feedback">Please enter the compliance officer's name.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="licenseUpload" class="form-label">License Document Upload <i class="bi bi-info-circle tooltip-icon" id="licenseUpload-tooltip" data-bs-toggle="tooltip" title="Upload a clear image or PDF of your brokerage license"></i></label>
+                                <input type="file" class="form-control" id="licenseUpload" accept=".pdf,.jpg,.png" required aria-describedby="licenseUpload-tooltip" aria-invalid="false">
+                                <div class="invalid-feedback">Please upload the license document.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item bg-dark">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#financialInfo">
+                            <i class="bi bi-wallet2 me-2"></i>Business Financial Information
+                        </button>
+                        <i class="bi bi-check-circle success-icon"></i>
+                    </h2>
+                    <div id="financialInfo" class="accordion-collapse collapse" data-bs-parent="#kycAccordion">
+                        <div class="accordion-body">
+                            <div class="mb-3">
+                                <label for="annualRevenue" class="form-label">Annual Revenue (in Kwacha)</label>
+                                <input type="number" class="form-control" id="annualRevenue" placeholder="e.g., 10000000" required aria-invalid="false">
+                                <div class="invalid-feedback">Please enter the annual revenue.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="sourceFunds" class="form-label">Source of Funds</label>
+                                <select class="form-control" id="sourceFunds" required aria-invalid="false">
+                                    <option value="">Select Source</option>
+                                    <option value="clientFees">Client Fees</option>
+                                    <option value="capitalInvestment">Capital Investment</option>
+                                    <option value="loans">Loans</option>
+                                    <option value="other">Other</option>
+                                </select>
+                                <div class="invalid-feedback">Please select a source of funds.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="financialStatement" class="form-label">Financial Statement Upload <i class="bi bi-info-circle tooltip-icon" id="financialStatement-tooltip" data-bs-toggle="tooltip" title="Upload the latest audited financial statement"></i></label>
+                                <input type="file" class="form-control" id="financialStatement" accept=".pdf,.jpg,.png" required aria-describedby="financialStatement-tooltip" aria-invalid="false">
+                                <div class="invalid-feedback">Please upload a financial statement.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item bg-dark">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#ownershipInfo">
+                            <i class="bi bi-people me-2"></i>Ownership and Control Structure
+                        </button>
+                        <i class="bi bi-check-circle success-icon"></i>
+                    </h2>
+                    <div id="ownershipInfo" class="accordion-collapse collapse" data-bs-parent="#kycAccordion">
+                        <div class="accordion-body">
+                            <div class="mb-3">
+                                <label for="beneficialOwners" class="form-label">Beneficial Owners <i class="bi bi-info-circle tooltip-icon" id="beneficialOwners-tooltip" data-bs-toggle="tooltip" title="List names of individuals owning 25% or more of the firm"></i></label>
+                                <textarea class="form-control" id="beneficialOwners" rows="3" placeholder="e.g., John Doe (30%), Jane Smith (40%)" required aria-describedby="beneficialOwners-tooltip" aria-invalid="false"></textarea>
+                                <div class="invalid-feedback">Please list beneficial owners.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="directors" class="form-label">Directors</label>
+                                <textarea class="form-control" id="directors" rows="3" placeholder="e.g., John Doe, Jane Smith" required aria-invalid="false"></textarea>
+                                <div class="invalid-feedback">Please list directors.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="ownershipUpload" class="form-label">Ownership Structure Document Upload <i class="bi bi-info-circle tooltip-icon" id="ownershipUpload-tooltip" data-bs-toggle="tooltip" title="Upload a document detailing the firm's ownership structure"></i></label>
+                                <input type="file" class="form-control" id="ownershipUpload" accept=".pdf,.jpg,.png" required aria-describedby="ownershipUpload-tooltip" aria-invalid="false">
+                                <div class="invalid-feedback">Please upload the ownership structure document.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item bg-dark">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#regulatoryInfo">
+                            <i class="bi bi-shield-lock me-2"></i>Regulatory Compliance
+                        </button>
+                        <i class="bi bi-check-circle success-icon"></i>
+                    </h2>
+                    <div id="regulatoryInfo" class="accordion-collapse collapse" data-bs-parent="#kycAccordion">
+                        <div class="accordion-body">
+                            <div class="mb-3">
+                                <label for="taxId" class="form-label">Tax Identification Number</label>
+                                <input type="text" class="form-control" id="taxId" placeholder="e.g., TIN123456" required aria-invalid="false">
+                                <div class="invalid-feedback">Please enter the tax ID.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="amlPolicy" class="form-label">AML Policy Document Upload <i class="bi bi-info-circle tooltip-icon" id="amlPolicy-tooltip" data-bs-toggle="tooltip" title="Upload the firm's Anti-Money Laundering policy"></i></label>
+                                <input type="file" class="form-control" id="amlPolicy" accept=".pdf,.jpg,.png" required aria-describedby="amlPolicy-tooltip" aria-invalid="false">
+                                <div class="invalid-feedback">Please upload the AML policy document.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="sanctions" class="form-label">Subject to Sanctions?</label>
+                                <select class="form-control" id="sanctions" required aria-invalid="false">
+                                    <option value="">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                                <div class="invalid-feedback">Please select if the firm is subject to sanctions.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item bg-dark">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#additionalInfo">
+                            <i class="bi bi-check-circle me-2"></i>Additional Verification
+                        </button>
+                        <i class="bi bi-check-circle success-icon"></i>
+                    </h2>
+                    <div id="additionalInfo" class="accordion-collapse collapse" data-bs-parent="#kycAccordion">
+                        <div class="accordion-body">
+                            <div class="mb-3">
+                                <label for="incorporationCert" class="form-label">Certificate of Incorporation Upload <i class="bi bi-info-circle tooltip-icon" id="incorporationCert-tooltip" data-bs-toggle="tooltip" title="Upload the firm's certificate of incorporation"></i></label>
+                                <input type="file" class="form-control" id="incorporationCert" accept=".pdf,.jpg,.png" required aria-describedby="incorporationCert-tooltip" aria-invalid="false">
+                                <div class="invalid-feedback">Please upload the certificate of incorporation.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="referral" class="form-label">Referral Source</label>
+                                <input type="text" class="form-control" id="referral" placeholder="e.g., Partner, Advertisement" required aria-invalid="false">
+                                <div class="invalid-feedback">Please enter the referral source.</div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="consent" required aria-invalid="false">
+                                    <label class="form-check-label" for="consent">I agree to the terms of service, privacy policy, and authorize verification with third parties.</label>
+                                    <div class="invalid-feedback">Please provide consent.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step-by-Step Mode -->
+            <div class="step-sections" id="stepSections">
+                <div class="step-section" id="step-firmInfo">
+                    <h3><i class="bi bi-building me-2"></i>Firm Information</h3>
+                    <div class="mb-3">
+                        <label for="firmName-step" class="form-label">Legal Firm Name <i class="bi bi-info-circle tooltip-icon" id="firmName-step-tooltip" data-bs-toggle="tooltip" title="Enter the registered name of the brokerage firm"></i></label>
+                        <input type="text" class="form-control" id="firmName-step" placeholder="e.g., ABC Brokerage Ltd" required aria-describedby="firmName-step-tooltip" aria-invalid="false">
+                        <div class="invalid-feedback">Please enter the legal firm name.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="registrationNumber-step" class="form-label">Business Registration Number</label>
+                        <input type="text" class="form-control" id="registrationNumber-step" placeholder="e.g., BRN123456" required aria-invalid="false">
+                        <div class="invalid-feedback">Please enter a valid registration number.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="hqAddress-step" class="form-label">Headquarters Address</label>
+                        <textarea class="form-control" id="hqAddress-step" rows="3" placeholder="e.g., 123 Business Ave, Lilongwe, Central, 12345, Malawi" required aria-invalid="false"></textarea>
+                        <div class="invalid-feedback">Please enter the headquarters address.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="firmEmail-step" class="form-label">Firm Email Address</label>
+                        <input type="email" class="form-control" id="firmEmail-step" placeholder="e.g., info@abc brokerage.com" required aria-invalid="false">
+                        <div class="invalid-feedback">Please enter a valid business email address.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="firmPhone-step" class="form-label">Firm Phone Number</label>
+                        <input type="tel" class="form-control" id="firmPhone-step" placeholder="e.g., +265 999 123 456" required aria-invalid="false">
+                        <div class="invalid-feedback">Please enter a valid phone number.</div>
+                    </div>
+                    <div class="mt-3">
+                        <button type="button" class="btn btn-success" onclick="nextStep('firmInfo')">Save and Continue</button>
+                    </div>
+                </div>
+                <div class="step-section" id="step-licensingInfo">
+                    <h3><i class="bi bi-card-checklist me-2"></i>Licensing and Regulatory Details</h3>
+                    <div class="mb-3">
+                        <label for="licenseType-step" class="form-label">Financial Authority License Type</label>
+                        <select class="form-control" id="licenseType-step" required aria-invalid="false">
+                            <option value="">Select License Type</option>
+                            <option value="broker">Broker</option>
+                            <option value="dealer">Dealer</option>
+                            <option value="investmentAdvisor">Investment Advisor</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <div class="invalid-feedback">Please select a license type.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="licenseNumber-step" class="form-label">License Number</label>
+                        <input type="text" class="form-control" id="licenseNumber-step" placeholder="e.g., LIC123456" required aria-invalid="false">
+                        <div class="invalid-feedback">Please enter the license number.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="regulatoryAuthority-step" class="form-label">Regulatory Authority</label>
+                        <input type="text" class="form-control" id="regulatoryAuthority-step" placeholder="e.g., Reserve Bank of Malawi" required aria-invalid="false">
+                        <div class="invalid-feedback">Please enter the regulatory authority.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="complianceOfficer-step" class="form-label">Compliance Officer Name</label>
+                        <input type="text" class="form-control" id="complianceOfficer-step" placeholder="e.g., Jane Smith" required aria-invalid="false">
+                        <div class="invalid-feedback">Please enter the compliance officer's name.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="licenseUpload-step" class="form-label">License Document Upload <i class="bi bi-info-circle tooltip-icon" id="licenseUpload-step-tooltip" data-bs-toggle="tooltip" title="Upload a clear image or PDF of your brokerage license"></i></label>
+                        <input type="file" class="form-control" id="licenseUpload-step" accept=".pdf,.jpg,.png" required aria-describedby="licenseUpload-step-tooltip" aria-invalid="false">
+                        <div class="invalid-feedback">Please upload the license document.</div>
+                    </div>
+                    <div class="mt-3">
+                        <button type="button" class="btn btn-outline-secondary me-2" onclick="prevStep('licensingInfo')">Previous</button>
+                        <button type="button" class="btn btn-success" onclick="nextStep('licensingInfo')">Save and Continue</button>
+                    </div>
+                </div>
+                <div class="step-section" id="step-financialInfo">
+                    <h3><i class="bi bi-wallet2 me-2"></i>Business Financial Information</h3>
+                    <div class="mb-3">
+                        <label for="annualRevenue-step" class="form-label">Annual Revenue (in Kwacha)</label>
+                        <input type="number" class="form-control" id="annualRevenue-step" placeholder="e.g., 10000000" required aria-invalid="false">
+                        <div class="invalid-feedback">Please enter the annual revenue.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="sourceFunds-step" class="form-label">Source of Funds</label>
+                        <select class="form-control" id="sourceFunds-step" required aria-invalid="false">
+                            <option value="">Select Source</option>
+                            <option value="clientFees">Client Fees</option>
+                            <option value="capitalInvestment">Capital Investment</option>
+                            <option value="loans">Loans</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <div class="invalid-feedback">Please select a source of funds.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="financialStatement-step" class="form-label">Financial Statement Upload <i class="bi bi-info-circle tooltip-icon" id="financialStatement-step-tooltip" data-bs-toggle="tooltip" title="Upload the latest audited financial statement"></i></label>
+                        <input type="file" class="form-control" id="financialStatement-step" accept=".pdf,.jpg,.png" required aria-describedby="financialStatement-step-tooltip" aria-invalid="false">
+                        <div class="invalid-feedback">Please upload a financial statement.</div>
+                    </div>
+                    <div class="mt-3">
+                        <button type="button" class="btn btn-outline-secondary me-2" onclick="prevStep('financialInfo')">Previous</button>
+                        <button type="button" class="btn btn-success" onclick="nextStep('financialInfo')">Save and Continue</button>
+                    </div>
+                </div>
+                <div class="step-section" id="step-ownershipInfo">
+                    <h3><i class="bi bi-people me-2"></i>Ownership and Control Structure</h3>
+                    <div class="mb-3">
+                        <label for="beneficialOwners-step" class="form-label">Beneficial Owners <i class="bi bi-info-circle tooltip-icon" id="beneficialOwners-step-tooltip" data-bs-toggle="tooltip" title="List names of individuals owning 25% or more of the firm"></i></label>
+                        <textarea class="form-control" id="beneficialOwners-step" rows="3" placeholder="e.g., John Doe (30%), Jane Smith (40%)" required aria-describedby="beneficialOwners-step-tooltip" aria-invalid="false"></textarea>
+                        <div class="invalid-feedback">Please list beneficial owners.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="directors-step" class="form-label">Directors</label>
+                        <textarea class="form-control" id="directors-step" rows="3" placeholder="e.g., John Doe, Jane Smith" required aria-invalid="false"></textarea>
+                        <div class="invalid-feedback">Please list directors.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="ownershipUpload-step" class="form-label">Ownership Structure Document Upload <i class="bi bi-info-circle tooltip-icon" id="ownershipUpload-step-tooltip" data-bs-toggle="tooltip" title="Upload a document detailing the firm's ownership structure"></i></label>
+                        <input type="file" class="form-control" id="ownershipUpload-step" accept=".pdf,.jpg,.png" required aria-describedby="ownershipUpload-step-tooltip" aria-invalid="false">
+                        <div class="invalid-feedback">Please upload the ownership structure document.</div>
+                    </div>
+                    <div class="mt-3">
+                        <button type="button" class="btn btn-outline-secondary me-2" onclick="prevStep('ownershipInfo')">Previous</button>
+                        <button type="button" class="btn btn-success" onclick="nextStep('ownershipInfo')">Save and Continue</button>
+                    </div>
+                </div>
+                <div class="step-section" id="step-regulatoryInfo">
+                    <h3><i class="bi bi-shield-lock me-2"></i>Regulatory Compliance</h3>
+                    <div class="mb-3">
+                        <label for="taxId-step" class="form-label">Tax Identification Number</label>
+                        <input type="text" class="form-control" id="taxId-step" placeholder="e.g., TIN123456" required aria-invalid="false">
+                        <div class="invalid-feedback">Please enter the tax ID.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="amlPolicy-step" class="form-label">AML Policy Document Upload <i class="bi bi-info-circle tooltip-icon" id="amlPolicy-step-tooltip" data-bs-toggle="tooltip" title="Upload the firm's Anti-Money Laundering policy"></i></label>
+                        <input type="file" class="form-control" id="amlPolicy-step" accept=".pdf,.jpg,.png" required aria-describedby="amlPolicy-step-tooltip" aria-invalid="false">
+                        <div class="invalid-feedback">Please upload the AML policy document.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="sanctions-step" class="form-label">Subject to Sanctions?</label>
+                        <select class="form-control" id="sanctions-step" required aria-invalid="false">
+                            <option value="">Select</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                        <div class="invalid-feedback">Please select if the firm is subject to sanctions.</div>
+                    </div>
+                    <div class="mt-3">
+                        <button type="button" class="btn btn-outline-secondary me-2" onclick="prevStep('regulatoryInfo')">Previous</button>
+                        <button type="button" class="btn btn-success" onclick="nextStep('regulatoryInfo')">Save and Continue</button>
+                    </div>
+                </div>
+                <div class="step-section" id="step-additionalInfo">
+                    <h3><i class="bi bi-check-circle me-2"></i>Additional Verification</h3>
+                    <div class="mb-3">
+                        <label for="incorporationCert-step" class="form-label">Certificate of Incorporation Upload <i class="bi bi-info-circle tooltip-icon" id="incorporationCert-step-tooltip" data-bs-toggle="tooltip" title="Upload the firm's certificate of incorporation"></i></label>
+                        <input type="file" class="form-control" id="incorporationCert-step" accept=".pdf,.jpg,.png" required aria-describedby="incorporationCert-step-tooltip" aria-invalid="false">
+                        <div class="invalid-feedback">Please upload the certificate of incorporation.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="referral-step" class="form-label">Referral Source</label>
+                        <input type="text" class="form-control" id="referral-step" placeholder="e.g., Partner, Advertisement" required aria-invalid="false">
+                        <div class="invalid-feedback">Please enter the referral source.</div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="consent-step" required aria-invalid="false">
+                            <label class="form-check-label" for="consent-step">I agree to the terms of service, privacy policy, and authorize verification with third parties.</label>
+                            <div class="invalid-feedback">Please provide consent.</div>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <button type="button" class="btn btn-outline-secondary me-2" onclick="prevStep('additionalInfo')">Previous</button>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <h6 class="text-muted">Why We Collect This Information</h6>
+                <p class="text-muted small">We collect this information to comply with Know Your Customer (KYC) and Anti-Money Laundering (AML) regulations, ensure the legitimacy of your brokerage firm, and maintain a secure trading environment. Your data helps us verify your firm's identity, assess its financial and regulatory compliance, and meet legal and regulatory requirements. All information is securely stored and handled in accordance with our privacy policy.</p>
+            </div>
+            <div class="mt-3" id="form-buttons">
+                <a href="broker.html" class="btn btn-outline-secondary">Cancel</a>
+                <button type="submit" class="btn btn-success">Save Changes</button>
+            </div>
+        </form>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Debounce function to optimize input event handling
+        function debounce(func, wait) {
+            let timeout;
+            return function (...args) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, args), wait);
+            };
+        }
+
+        const firm = { name: "Broker Firm", profilePic: null };
+        const profilePicContainer = document.getElementById("profile-pic-container");
+        if (firm.profilePic) {
+            profilePicContainer.innerHTML = `<img src="${firm.profilePic}" alt="Firm Profile">`;
+        } else {
+            document.getElementById("user-initials").textContent = firm.name
+                .split(" ")
+                .map(e => e[0])
+                .join("")
+                .toUpperCase();
+        }
+
+        const kycForm = document.getElementById("kycForm");
+        const accordionItems = document.querySelectorAll(".accordion-item");
+        const stepSections = document.querySelectorAll(".step-section");
+        const progressBar = document.getElementById("progress-bar");
+        const accordionContainer = document.getElementById("kycAccordion");
+        const stepContainer = document.getElementById("stepSections");
+        const formButtons = document.getElementById("form-buttons");
+        const accordionMode = document.getElementById("accordionMode");
+        const stepMode = document.getElementById("stepMode");
+
+        const sections = [
+            "firmInfo",
+            "licensingInfo",
+            "financialInfo",
+            "ownershipInfo",
+            "regulatoryInfo",
+            "additionalInfo"
+        ];
+
+        let currentStep = 0;
+
+        function validateSection(sectionId, isSubmit = false) {
+            const section = document.getElementById(sectionId);
+            if (!section) return true; // Skip if section doesn't exist
+            const inputs = section.querySelectorAll("input[required], select[required], textarea[required]");
+            let isValid = true;
+
+            inputs.forEach(input => {
+                let invalid = false;
+                if (input.type === "file") {
+                    invalid = !input.files.length;
+                } else if (input.type === "checkbox") {
+                    invalid = !input.checked;
+                } else if (input.type === "select-one") {
+                    invalid = !input.value || input.value === "";
+                } else if (input.type === "email") {
+                    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                    invalid = !input.value.trim() || !emailRegex.test(input.value) || input.value.includes('gmail.com') || input.value.includes('yahoo.com') || input.value.includes('hotmail.com');
+                } else if (input.type === "tel") {
+                    const phoneRegex = /^(\+265|0)[1-9]\d{8}$/;
+                    invalid = !input.value.trim() || !phoneRegex.test(input.value);
+                } else if (input.id.includes("registrationNumber") || input.id.includes("licenseNumber") || input.id.includes("taxId")) {
+                    invalid = !input.value.trim() || !/^[A-Za-z0-9-\s]{5,50}$/.test(input.value);
+                } else if (input.id.includes("firmName") || input.id.includes("complianceOfficer") || input.id.includes("regulatoryAuthority")) {
+                    invalid = !input.value.trim() || !/^[A-Za-z0-9\s&-.]{2,100}$/.test(input.value);
+                } else {
+                    invalid = !input.value.trim();
+                }
+
+                if (invalid && isSubmit) {
+                    isValid = false;
+                    input.classList.add("is-invalid");
+                    input.setAttribute("aria-invalid", "true");
+                    if (!input.nextElementSibling?.classList.contains("invalid-feedback")) {
+                        input.focus();
+                    }
+                } else if (!invalid) {
+                    input.classList.remove("is-invalid");
+                    input.setAttribute("aria-invalid", "false");
+                } else {
+                    input.classList.remove("is-invalid");
+                    input.setAttribute("aria-invalid", "false");
+                }
+            });
+
+            return isValid;
+        }
+
+        function updateProgress() {
+            const completedSections = sections.filter(section => validateSection(section)).length;
+            const progress = (completedSections / sections.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            progressBar.setAttribute("aria-valuenow", progress);
+            progressBar.textContent = `${Math.round(progress)}%`;
+        }
+
+        function updateSectionStatus(sectionId, accordionItem) {
+            if (validateSection(sectionId)) {
+                accordionItem.classList.add("completed");
+            } else {
+                accordionItem.classList.remove("completed");
+            }
+            updateProgress();
+        }
+
+        function syncFields(sectionId) {
+            const accordionInputs = document.querySelectorAll(`#${sectionId} input, #${sectionId} select, #${sectionId} textarea`);
+            const stepInputs = document.querySelectorAll(`#step-${sectionId} input, #step-${sectionId} select, #step-${sectionId} textarea`);
+            
+            accordionInputs.forEach((input, index) => {
+                if (index >= stepInputs.length) return; // Prevent index out of bounds
+                if (input.type === "file") {
+                    // File inputs can't be synced; skip
+                } else if (input.type === "checkbox") {
+                    stepInputs[index].checked = input.checked;
+                } else {
+                    stepInputs[index].value = input.value;
+                }
+            });
+
+            stepInputs.forEach((input, index) => {
+                if (index >= accordionInputs.length) return; // Prevent index out of bounds
+                if (input.type === "file") {
+                    // File inputs can't be synced
+                } else if (input.type === "checkbox") {
+                    accordionInputs[index].checked = input.checked;
+                } else {
+                    accordionInputs[index].value = input.value;
+                }
+            });
+        }
+
+        function showStep(index) {
+            stepSections.forEach((section, i) => {
+                section.classList.toggle("active", i === index);
+            });
+            syncFields(sections[currentStep]);
+            updateProgress();
+            // Reinitialize tooltips for the active step
+            const tooltipTriggerList = document.querySelectorAll(`#step-${sections[index]} [data-bs-toggle="tooltip"]`);
+            tooltipTriggerList.forEach(tooltipTriggerEl => {
+                bootstrap.Tooltip.getInstance(tooltipTriggerEl)?.dispose();
+                new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        }
+
+        function nextStep(sectionId) {
+            if (validateSection(`step-${sectionId}`, true)) {
+                currentStep++;
+                if (currentStep < sections.length) {
+                    showStep(currentStep);
+                }
+            } else {
+                alert("Please complete all required fields in this section.");
+            }
+        }
+
+        function prevStep(sectionId) {
+            currentStep--;
+            showStep(currentStep);
+        }
+
+        function toggleMode() {
+            if (accordionMode.checked) {
+                accordionContainer.style.display = "block";
+                stepContainer.style.display = "none";
+                formButtons.style.display = "block";
+            } else {
+                accordionContainer.style.display = "none";
+                stepContainer.style.display = "block";
+                formButtons.style.display = "none";
+                showStep(currentStep);
+            }
+            sections.forEach(section => syncFields(section));
+            updateProgress();
+            // Reinitialize tooltips for Accordion mode
+            if (accordionMode.checked) {
+                const tooltipTriggerList = document.querySelectorAll('#kycAccordion [data-bs-toggle="tooltip"]');
+                tooltipTriggerList.forEach(tooltipTriggerEl => {
+                    bootstrap.Tooltip.getInstance(tooltipTriggerEl)?.dispose();
+                    new bootstrap.Tooltip(tooltipTriggerEl);
+                });
+            }
+        }
+
+        accordionItems.forEach(item => {
+            const sectionId = item.querySelector(".accordion-collapse").id;
+            const inputs = item.querySelectorAll("input, select, textarea");
+
+            inputs.forEach(input => {
+                input.addEventListener("change", debounce(() => {
+                    updateSectionStatus(sectionId, item);
+                    syncFields(sectionId);
+                }, 200));
+                input.addEventListener("blur", () => {
+                    validateSection(sectionId, true);
+                    updateSectionStatus(sectionId, item);
+                    syncFields(sectionId);
+                });
+            });
+
+            updateSectionStatus(sectionId, item);
+        });
+
+        stepSections.forEach(section => {
+            const sectionId = section.id.replace("step-", "");
+            const inputs = section.querySelectorAll("input, select, textarea");
+
+            inputs.forEach(input => {
+                input.addEventListener("change", debounce(() => {
+                    syncFields(sectionId);
+                    updateSectionStatus(sectionId, accordionItems[sections.indexOf(sectionId)]);
+                }, 200));
+                input.addEventListener("blur", () => {
+                    validateSection(`step-${sectionId}`, true);
+                    syncFields(sectionId);
+                    updateSectionStatus(sectionId, accordionItems[sections.indexOf(sectionId)]);
+                });
+            });
+        });
+
+        kycForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            const consent = document.getElementById("consent").checked || document.getElementById("consent-step").checked;
+            let allSectionsValid = true;
+
+            sections.forEach(section => {
+                if (!validateSection(section, true) || !validateSection(`step-${section}`, true)) {
+                    allSectionsValid = false;
+                }
+            });
+
+            if (!consent) {
+                alert("Please provide consent to proceed.");
+                document.getElementById("consent").classList.add("is-invalid");
+                document.getElementById("consent-step").classList.add("is-invalid");
+                document.getElementById("consent").setAttribute("aria-invalid", "true");
+                document.getElementById("consent-step").setAttribute("aria-invalid", "true");
+                return;
+            }
+
+            if (!allSectionsValid) {
+                alert("Please complete all required fields in each section.");
+                return;
+            }
+
+            alert("KYC information submitted successfully!");
+            this.reset();
+            accordionItems.forEach(item => item.classList.remove("completed"));
+            currentStep = 0;
+            showStep(currentStep);
+            updateProgress();
+            window.location.href = "broker.html";
+        });
+
+        accordionMode.addEventListener("change", toggleMode);
+        stepMode.addEventListener("change", toggleMode);
+
+        // Initialize tooltips
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+        tooltipTriggerList.forEach(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+
+        // Initial mode setup
+        toggleMode();
+        updateProgress();
+    </script>
+</body>
+</html>

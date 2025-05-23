@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mynvestor - Your Malawi Stock Exchange Platform</title>
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
+            font-family: 'Inter', sans-serif;
+            color: #333;
+            scroll-behavior: smooth;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #27a844;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(100px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 100;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .toast .bi-check-circle {
+            margin-right: 0.5rem;
+            font-size: 1.25rem;
+        }
+
+        #open-account img,
+        #place-order img,
+        #portfolio img {
+            max-height: 850px;
+            width: auto;
+            height: auto;
+        }
+
+        /* Modal Transitions */
+        #contactModal {
+            transition: opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        #contactModal.show {
+            opacity: 1;
+        }
+
+        #contactModal .bg-gray-100 {
+            transition: transform 0.3s ease;
+            transform: scale(0.8);
+        }
+
+        #contactModal.show .bg-gray-100 {
+            transform: scale(1);
+        }
+
+        .highlight {
+            color: #27a844;
+        }
+
+        .nav-link {
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #27a844;
+        }
+
+        .auth-button {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .auth-button.login {
+            background-color: transparent;
+            border: 1px solid #333;
+            color: #333;
+        }
+
+        .auth-button.signup {
+            background-color: #27a844;
+            border: none;
+            color: white;
+        }
+
+        .auth-button.login:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .auth-button.signup:hover {
+            background-color: #1f8836;
+        }
+
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-button {
+            transition: background-color 0.3s ease;
+            background-color: #27a844 !important;
+            color: white;
+        }
+
+        .cta-button:hover {
+            background-color: #1f8836 !important;
+        }
+
+        .social-icon {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .social-icon:hover {
+            opacity: 0.8;
+            transform: scale(1.1);
+        }
+
+        .bi-twitter-x {
+            color: #000000;
+        }
+
+        .bi-facebook {
+            color: #1877F2;
+        }
+
+        .bi-instagram {
+            color: #E1306C;
+        }
+
+        .text-green {
+            color: #27a844;
+        }
+
+        section {
+            min-height: 100vh;
+            padding: 4rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #home {
+            background-image: url('Dist/images/bakgraund.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        #home::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.6);
+            z-index: 1;
+        }
+
+        #home .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .hamburger.active {
+            transform: rotate(90deg);
+        }
+
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #ffffff;
+            flex-direction: column;
+            padding: 1rem;
+            z-index: 50;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .mobile-menu.active {
+            display: flex;
+            transform: translateY(0);
+        }
+
+        .mobile-menu a {
+            padding: 0.5rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            color: #333;
+        }
+
+        .mobile-menu a:hover {
+            background-color: #f0f4f8;
+            color: #27a844;
+        }
+
+        /* Fidelity-inspired card styling */
+        .fidelity-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            text-align: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .fidelity-card h1 {
+            font-size: 2.25rem;
+            line-height: 1.2;
+            color: #1a202c;
+        }
+
+        .fidelity-card h2 {
+            font-size: 1.75rem;
+            color: #1a202c;
+        }
+
+        .fidelity-card p {
+            font-size: 1rem;
+            color: #4a5568;
+            line-height: 1.5;
+        }
+
+        .fidelity-card .cta-button {
+            background-color: #27a844;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .fidelity-card .cta-button:hover {
+            background-color: #1f8836;
+        }
+
+        .fidelity-card .solution-item,
+        .fidelity-card .account-item {
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .fidelity-card .solution-item h3,
+        .fidelity-card .account-item h3 {
+            font-size: 1.25rem;
+            color: #1a202c;
+        }
+
+        .fidelity-card .solution-item p,
+        .fidelity-card .account-item p {
+            font-size: 0.875rem;
+            color: #4a5568;
+        }
+
+        /* Benefits and Support card styling */
+        .benefit-card,
+        .support-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .benefit-card:hover,
+        .support-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .benefit-card i,
+        .support-card i {
+            font-size: 2.5rem;
+            color: #27a844;
+            margin-bottom: 1rem;
+        }
+
+        .benefit-card h3,
+        .support-card h3 {
+            font-size: 1.25rem;
+            color: #1a202c;
+            margin-bottom: 0.5rem;
+        }
+
+        .benefit-card p,
+        .support-card p {
+            font-size: 0.875rem;
+            color: #4a5568;
+            line-height: 1.5;
+        }
+
+        /* Schwab-inspired image styling */
+        .schwab-image {
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            object-fit: cover;
+            max-height: 400px;
+            width: 100%;
+        }
+
+        /* Schwab-inspired text styling */
+        section h2 {
+            font-size: 2.25rem;
+            color: #333;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        section p {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            background-color: #27a844 !important;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 9999px;
+            transition: background-color 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #1f8836 !important;
+        }
+
+        /* FAQ and Contact card styling */
+        .faq-card,
+        .contact-card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            text-align: left;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .faq-card:hover,
+        .contact-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .faq-card h3,
+        .contact-card h3 {
+            font-size: 1.25rem;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .faq-card p,
+        .contact-card p {
+            font-size: 0.875rem;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .contact-card i {
+            font-size: 2.5rem;
+            color: #27a844;
+            margin-bottom: 1rem;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .schwab-image {
+                max-height: 300px;
+            }
+
+            section h2 {
+                font-size: 1.75rem;
+            }
+
+            section p {
+                font-size: 0.875rem;
+            }
+
+            .faq-card,
+            .contact-card {
+                padding: 1rem;
+            }
+
+            .faq-card h3,
+            .contact-card h3 {
+                font-size: 1.125rem;
+            }
+
+            .faq-card p,
+            .contact-card p {
+                font-size: 0.75rem;
+            }
+
+            .fidelity-card {
+                padding: 1.5rem;
+            }
+
+            .fidelity-card h1 {
+                font-size: 1.75rem;
+            }
+
+            .fidelity-card h2 {
+                font-size: 1.5rem;
+            }
+
+            .fidelity-card p {
+                font-size: 0.875rem;
+            }
+
+            .benefit-card,
+            .support-card {
+                padding: 1rem;
+            }
+
+            .benefit-card h3,
+            .support-card h3 {
+                font-size: 1.125rem;
+            }
+
+            .benefit-card p,
+            .support-card p {
+                font-size: 0.75rem;
+            }
+        }
+
+        @media (max-width: 1013px) {
+            section {
+                min-height: auto;
+                padding: 2rem 1rem;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .auth-button.login {
+                display: none;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .auth-buttons {
+                display: flex;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+   
+    <nav class="fixed top-0 left-0 right-0 bg-white bg-opacity-90 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="#home" class="flex items-center">
+                    <img src="Dist/images/omni.png" alt="Mynvestor Logo" class="w-12 mr-3">
+                    <span class="text-2xl font-bold"><span class="highlight">Myn</span>vestor</span>
+                </a>
+                <div class="nav-links ml-8 flex space-x-6">
+                    <a href="#open-account" class="nav-link text-gray-800">Open Account</a>
+                    <a href="#place-order" class="nav-link text-gray-800">Trade</a>
+                    <a href="#portfolio" class="nav-link text-gray-800">Portfolio</a>
+                    <a href="#support" class="nav-link text-gray-800">Support</a>
+                    <a href="#learn" class="nav-link text-gray-800">Learn</a>
+                </div>
+            </div>
+            <div class="auth-buttons flex items-center space-x-4">
+                <a href="investor/login.html" class="auth-button login text-gray-800 font-semibold py-2 px-4 rounded-full">Log
+                    In</a>
+                <a href="investor/disclaimer.html"
+                    class="auth-button signup text-white font-semibold py-2 px-4 rounded-full">Sign Up</a>
+                <div class="hamburger">
+                    <i class="bi bi-list text-3xl text-gray-800"></i>
+                </div>
+            </div>
+        </div>
+        <div class="mobile-menu">
+            <a href="#open-account" class="nav-link text-gray-800 py-2">Open Account</a>
+            <a href="#place-order" class="nav-link text-gray-800 py-2">Trade</a>
+            <a href="#portfolio" class="nav-link text-gray-800 py-2">Portfolio</a>
+            <a href="#support" class="nav-link text-gray-800 py-2">Support</a>
+            <a href="#learn" class="nav-link text-gray-800 py-2">Learn</a>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="text-center">
+        <div class="container mx-auto px-4">
+            <div class="fidelity-card bg-white rounded-lg shadow-lg p-8 max-w-4xl mx-auto">
+                <img src="Dist/images/omni.png" alt="Mynvestor Logo" class="mx-auto w-32 mb-6">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">
+                    Investing made <span class="highlight">Simple</span> & <span class="highlight">Clear</span>
+                </h1>
+
+                <p class="text-gray-600 mb-8 text-lg">
+                    <b><span class="highlight">Myn</span>vestor</b> is your gateway to the Malawi Stock Exchange. <br>
+                    Trade stocks with ease, access real-time market data, and join a new generation of Malawian
+                    investors.
+                </p>
+                <div class="flex flex-col md:flex-row justify-center gap-4 mb-10">
+                    <a href="investor/disclaimer.html"
+                        class="cta-button inline-block bg-green-600 text-white font-semibold py-3 px-6 rounded-full hover:bg-green-700 transition">
+                        Open an account
+                    </a>
+                    <a href="investor/login.html"
+                        class="inline-block bg-transparent border border-gray-800 text-gray-800 font-semibold py-3 px-6 rounded-full hover:bg-gray-100 transition">
+                        Log in
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="benefits" class="bg-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-800"> How<span class="highlight"> You</span>
+                Benefit</h2>
+            <p class="text-gray-600 mb-8 text-lg">What's in it for you</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div
+                    class="benefit-card bg-white rounded-lg shadow-lg p-6 transform hover:-translate-y-2 transition-transform duration-300">
+                    <i class="bi bi-universal-access text-4xl text-green-600 mb-4"></i>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Accessibility</h3>
+                    <p class="text-gray-600">Trade on the Malawi Stock Exchange from anywhere, anytime, with our web
+                        platform.</p>
+                </div>
+                <div
+                    class="benefit-card bg-white rounded-lg shadow-lg p-6 transform hover:-translate-y-2 transition-transform duration-300">
+                    <i class="bi bi-eye text-4xl text-green-600 mb-4"></i>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Clarity</h3>
+                    <p class="text-gray-600">Navigate the market with clear, real-time data and intuitive tools designed
+                        for all investors.</p>
+                </div>
+                <div
+                    class="benefit-card bg-white rounded-lg shadow-lg p-6 transform hover:-translate-y-2 transition-transform duration-300">
+                    <i class="bi bi-clock text-4xl text-green-600 mb-4"></i>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Convenience</h3>
+                    <p class="text-gray-600">Open accounts, place orders, and manage your portfolio with a seamless,
+                        user-friendly experience.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Open Account Section -->
+    <section id="open-account" class="bg-gray-100 bg-opacity-80">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 text-center md:text-left">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Open an Account in <span
+                            class="highlight">Minutes</span></h2>
+                    <p class="text-gray-600 mb-6">
+                        Start investing on the Malawi Stock Exchange with a seamless account setup. Sign up online,
+                        verify your identity, and fund your account effortlessly via bank transfers or mobile money
+                        services.
+                    </p>
+                    <a href="investor/intro.html"
+                        class="cta-button inline-block text-white font-semibold py-3 px-8 rounded-full">
+                        Sign Up Now <i class="bi bi-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                <div class="md:w-1/2 mt-6 md:mt-0">
+                    <img src="Dist/images/shots/screenshot1.png" alt="Man working on computer with financial data" class="">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Place Order Section -->
+    <section id="place-order" class="bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row-reverse items-center">
+                <div class="md:w-1/2 text-center md:text-left">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Place Orders with <span
+                            class="highlight">Ease</span></h2>
+                    <p class="text-gray-600 mb-6">
+                        Buy and sell stocks on the Malawi Stock Exchange with a few clicks. Our intuitive platform,
+                        powered by real-time MSE data, makes trading simple for beginners and pros alike.
+                    </p>
+                    <a href="investor/login.html"
+                        class="cta-button inline-block text-white font-semibold py-3 px-8 rounded-full">
+                        Start Trading <i class="bi bi-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                <div class="md:w-1/2 mt-6 md:mt-0">
+                    <img src="Dist/images/shots/screenshot2.png" alt="Digital chart with financial data" class="">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Tracking Section -->
+    <section id="portfolio" class="bg-gray-100 bg-opacity-80">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 text-center md:text-left">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Track & Manage Your <span
+                            class="highlight">Portfolio</span></h2>
+                    <p class="text-gray-600 mb-6">
+                        Monitor your investments seamlessly with real-time updates and powerful analytics. Mynvestor’s
+                        portfolio tools help you stay in control, anytime, anywhere.
+                    </p>
+                    <a href="investor/intro.html"
+                        class="cta-button inline-block text-white font-semibold py-3 px-8 rounded-full">
+                        Explore Portfolio Tools <i class="bi bi-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                <div class="md:w-1/2 mt-6 md:mt-0">
+                    <img src="Dist/images/shots/screenshot3.png" alt="Team discussing financial documents" class="">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="difference" class="bg-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8 text-gray-800">Discover the <span
+                    class="highlight">Myn</span>vestor Difference</h2>
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 text-center md:text-left">
+                    <p class="text-gray-600 mb-6">
+                        Everything we do is focused on helping Malawian investors take ownership of their financial
+                        future—and that's just the beginning of what sets us apart.
+                    </p>
+                    <a href="investor/intro.html"
+                        class="cta-button inline-block text-white font-semibold py-3 px-8 rounded-full bg-green-600 hover:bg-green-700">
+                        Learn More <i class="bi bi-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                <div class="md:w-1/2 mt-6 md:mt-0">
+                    <img src="Dist/images/diffrence.jpg"
+                        alt="Family sitting together" class="schwab-image rounded-lg shadow-md w-full">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="questions" class="bg-gray-100 bg-opacity-80">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8 text-gray-800">Common <span
+                    class="highlight">Questions</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="faq-card bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">What are the fees for trading?</h3>
+                    <p class="text-gray-600">
+                        Online listed equity trades are commission-free, and there is no charge to work with a Mynvestor
+                        Financial Consultant. Other account fees or fund expenses may apply. <a href="#support"
+                            class="text-green-600 underline">Contact us for details</a>.
+                    </p>
+                </div>
+                <div class="faq-card bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">How do I open an account?</h3>
+                    <p class="text-gray-600">
+                        Prepare the required documents and complete the online account opening process. Once
+                        established, fund your account and start investing. <a href="investor/intro.html"
+                            class="text-green-600 underline">Start now</a>.
+                    </p>
+                </div>
+                <div class="faq-card bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">How can I fund my account?</h3>
+                    <p class="text-gray-600">
+                        Fund your account via bank transfers, mobile money services, or check deposits. Full
+                        instructions are provided after account opening.
+                    </p>
+                </div>
+                <div class="faq-card bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">What about taxes for Malawian investors?</h3>
+                    <p class="text-gray-600">
+                        Malawian investors typically face no tax obligations on Malawi Stock Exchange trades, but
+                        consult your tax advisor for personalized advice.
+                    </p>
+                </div>
+                <div class="faq-card bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">What educational resources are available?</h3>
+                    <p class="text-gray-600">
+                        Access free workshops, webinars, and market insights to support your investment decisions. Visit
+                        our <a href="#learn" class="text-green-600 underline">Learn section</a> for more.
+                    </p>
+                </div>
+                <div class="faq-card bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">How secure is my information?</h3>
+                    <p class="text-gray-600">
+                        We use advanced security measures, including encryption and multi-factor authentication, to
+                        protect your data. Our Security Guarantee covers unauthorized activity losses.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Support Section -->
+    <section id="support" class="bg-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8 text-gray-800">Have <span class="highlight">Questions</span>?
+                We Can Help</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto mb-12">
+                Our dedicated team is available 24/7 to assist with your investment needs. Contact us via phone, email,
+                or visit our office in Blantyre.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <div class="contact-card bg-white rounded-lg shadow-lg p-6">
+                    <i class="bi bi-telephone text-4xl text-green-600 mb-4"></i>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Call</h3>
+                    <p class="text-gray-600">
+                        Malawi: +265-887235642<br>
+                        International: +265-996486143<br>
+                        24/5 Customer Service (8:00 AM Monday to 8:00 AM Saturday, CAT)
+                    </p>
+                </div>
+                <div class="contact-card bg-white rounded-lg shadow-lg p-6">
+                    <i class="bi bi-envelope text-4xl text-green-600 mb-4"></i>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Email</h3>
+                    <p class="text-gray-600">
+                        Reach out to us at <a href="mailto:joengalonde@gmail.com"
+                            class="text-green-600 underline">joengalonde@gmail.com</a>.
+                    </p>
+                </div>
+                <div class="contact-card bg-white rounded-lg shadow-lg p-6">
+                    <i class="bi bi-geo-alt text-4xl text-green-600 mb-4"></i>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Visit</h3>
+                    <p class="text-gray-600">
+                        Mynvestor<br>
+                        K/S 225<br>
+                        Blantyre, Malawi
+                    </p>
+                </div>
+            </div>
+            <button id="openContactModal"
+                class="cta-button inline-block text-white font-semibold py-3 px-8 rounded-full bg-green-600 hover:bg-green-700">
+                Contact Support <i class="bi bi-arrow-right ml-2"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- Learn Section -->
+    <section id="learn" class="bg-gray-100 bg-opacity-80">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8">Empowering Malawians Through <span
+                    class="highlight">Education</span></h2>
+            <p class="text-gray-600 max-w-2xl mx-auto mb-12">
+                Master the Malawi Stock Exchange with our free educational resources. Learn stock trading, market
+                analysis, and financial planning to grow your wealth.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="card bg-white rounded-xl p-6">
+                    <i class="bi bi-book text-4xl text-green mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Stock Basics</h3>
+                    <p class="text-gray-600">Understand the fundamentals of investing.</p>
+                </div>
+                <div class="card bg-white rounded-xl p-6">
+                    <i class="bi bi-graph-up text-4xl text-green mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Market Analysis</h3>
+                    <p class="text-gray-600">Learn to read trends and make smart decisions.</p>
+                </div>
+                <div class="card bg-white rounded-xl p-6">
+                    <i class="bi bi-wallet text-4xl text-green mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Financial Planning</h3>
+                    <p class="text-gray-600">Build strategies for long-term wealth.</p>
+                </div>
+            </div>
+            <a href="investor/intro.html" class="cta-button inline-block text-white font-semibold py-3 px-8 rounded-full mt-12">
+                Start Learning <i class="bi bi-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Affiliations Section -->
+    <section id="affiliations" class="bg-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8">Trusted by <span class="highlight">Malawi</span></h2>
+            <p class="text-gray-600 max-w-2xl mx-auto mb-12">
+                Mynvestor is licensed and recommended by the Reserve Bank of Malawi. We’re proudly affiliated with
+                leading banks, mobile money services, and financial institutions across Malawi.
+            </p>
+            <div class="flex flex-wrap justify-center gap-6">
+                <img src="Dist/images/logo1.png" alt="Partner Logo" class="h-12">
+                <img src="Dist/images/logo2.png" alt="Partner Logo" class="h-12">
+                <img src="Dist/images/logo4.png" alt="Partner Logo" class="h-12">
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="bg-gray-100 bg-opacity-80">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8 | text-gray-800">About <span
+                    class="highlight">Myn</span>vestor</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto mb-12">
+                Mynvestor empowers Malawian investors with simple, clear, and accessible tools for trading on the Malawi
+                Stock Exchange. Our mission is to make investing on the Malawi Stock Exchange Simple and Clear.
+            </p>
+            <p class="text-gray-500 text-sm max-w-2xl mx-auto">
+                All investing involves risk. Brokerage services offered through Mynvestor Financial, a registered
+                broker-dealer. For more details, see our <a href="investor/disclaimer.html"
+                    class="text-green underline">disclaimer</a>.
+            </p>
+            <div class="mt-8 flex justify-center space-x-6">
+                <a href="https://x.com/joe_fueg0" target="_blank" class="social-icon">
+                    <i class="bi bi-twitter-x text-2xl"></i>
+                </a>
+                <a href="https://www.facebook.com/jo.fuego.1000/" target="_blank" class="social-icon">
+                    <i class="bi bi-facebook text-2xl"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/jofuego/" target="_blank" class="social-icon">
+                    <i class="bi bi-linkedin text-2xl"></i>
+                </a>
+            </div>
+            <p class="text-gray-500 text-sm mt-8">
+                Mynvestor, Blantyre, Malawi. © 2025 Mynvestor. All rights reserved.
+            </p>
+            <button id="openContactModalBottom"
+                class="cta-button inline-block text-white font-semibold py-3 px-8 rounded-full mt-8">
+                Reach Out Today <i class="bi bi-arrow-right ml-2"></i>
+            </button>
+        </div>
+    </section>
+
+    <div id="contactModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-gray-100 rounded-xl p-8 w-full max-w-md">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-800">Contact Us</h3>
+                <button id="closeModal" class="text-gray-600 hover:text-gray-800">
+                    <i class="bi bi-x text-3xl"></i>
+                </button>
+            </div>
+            <form id="contactForm" action="https://formspree.io/f/xzzrgopq" method="POST">
+                <div class="mb-4">
+                    <label for="name" class="block text-gray-600 mb-2">Name</label>
+                    <input type="text" id="name" name="name"
+                        class="w-full p-3 rounded-lg bg-white text-gray-800 border border-gray-300 focus:outline-none focus:border-green-500"
+                        required>
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="block text-gray-600 mb-2">Email</label>
+                    <input type="email" id="email" name="_replyto"
+                        class="w-full p-3 rounded-lg bg-white text-gray-800 border border-gray-300 focus:outline-none focus:border-green-500"
+                        required>
+                </div>
+                <div class="mb-4">
+                    <label for="subject" class="block text-gray-600 mb-2">Subject</label>
+                    <input type="text" id="subject" name="subject"
+                        class="w-full p-3 rounded-lg bg-white text-gray-800 border border-gray-300 focus:outline-none focus:border-green-500"
+                        required>
+                </div>
+                <div class="mb-4">
+                    <label for="message" class="block text-gray-600 mb-2">Message</label>
+                    <textarea id="message" name="message" rows="5"
+                        class="w-full p-3 rounded-lg bg-white text-gray-800 border border-gray-300 focus:outline-none focus:border-green-500"
+                        required></textarea>
+                </div>
+                <input type="hidden" name="_subject" value="New Contact Form Submission from Mynvestor">
+                <input type="hidden" name="_next" value="thank-you.html">
+                <button type="submit" class="w-full cta-button text-white font-semibold py-3 rounded-full">Send Message
+                    <i class="bi bi-arrow-right ml-2"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <i class="bi bi-check-circle"></i>
+        <span>Message Sent Successfully!</span>
+    </div>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Hamburger menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const hamburgerIcon = hamburger.querySelector('i');
+
+        hamburger.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+            hamburgerIcon.classList.toggle('bi-list');
+            hamburgerIcon.classList.toggle('bi-x');
+        });
+
+        // Close mobile menu when a link is clicked
+        const mobileLinks = document.querySelectorAll('.mobile-menu a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                hamburger.classList.remove('active');
+                hamburgerIcon.classList.add('bi-list');
+                hamburgerIcon.classList.remove('bi-x');
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+                mobileMenu.classList.remove('active');
+                hamburger.classList.remove('active');
+                hamburgerIcon.classList.add('bi-list');
+                hamburgerIcon.classList.remove('bi-x');
+            }
+        });
+
+        // Contact Modal Functionality
+        const openModalButton = document.querySelector('#openContactModal');
+        const openModalButtonBottom = document.querySelector('#openContactModalBottom');
+        const contactModal = document.querySelector('#contactModal');
+        const closeModalButton = document.querySelector('#closeModal');
+        const contactForm = document.querySelector('#contactForm');
+        const toast = document.querySelector('#toast');
+
+        openModalButton.addEventListener('click', () => {
+            contactModal.classList.remove('hidden');
+            contactModal.classList.add('show');
+        });
+
+        openModalButtonBottom.addEventListener('click', () => {
+            contactModal.classList.remove('hidden');
+            contactModal.classList.add('show');
+        });
+
+        closeModalButton.addEventListener('click', () => {
+            contactModal.classList.remove('show');
+            setTimeout(() => contactModal.classList.add('hidden'), 300);
+        });
+
+        // Close modal when clicking outside
+        contactModal.addEventListener('click', (e) => {
+            if (e.target === contactModal) {
+                contactModal.classList.remove('show');
+                setTimeout(() => contactModal.classList.add('hidden'), 300);
+            }
+        });
+
+        // Handle form submission
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault(); // Prevent default form submission
+
+            try {
+                const formData = new FormData(contactForm);
+                const response = await fetch('https://formspree.io/f/xzzrgopq', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json',
+                    },
+                });
+
+                if (response.ok) {
+                    // Show toast notification
+                    toast.classList.add('show');
+                    setTimeout(() => {
+                        toast.classList.remove('show');
+                    }, 3000); // Hide toast after 3 seconds
+
+                    // Reset form and close modal
+                    contactForm.reset();
+                    contactModal.classList.remove('show');
+                    setTimeout(() => contactModal.classList.add('hidden'), 300);
+                } else {
+                    console.error('Form submission failed:', response.statusText);
+                    alert('There was an error sending your message. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('There was an error sending your message. Please try again.');
+            }
+        });
+
+    </script>
+    <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'93d935701afd73e6',t:'MTc0Njg3NzcxOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
+</body>
+
+</html>
