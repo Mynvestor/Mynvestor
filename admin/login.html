@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Mynvestor Admin - Login</title>
+        <!-- Tailwind CSS -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+            rel="stylesheet">
+        <!-- Bootstrap Icons -->
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <style>
+        body {
+            background: linear-gradient(135deg, #001f3f 0%, #003087 100%);
+            font-family: 'Inter', sans-serif;
+        }
+        .highlight {
+            color: #34d399;
+        }
+        .login-container {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .login-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .form-input {
+            background: #2c3034;
+            border: 1px solid #4b5563;
+            color: #fff;
+            font-weight: 500;
+        }
+        .form-input::placeholder {
+            color: #9ca3af;
+        }
+        .form-input:focus {
+            border-color: #34d399;
+            box-shadow: none;
+            background: #2c3034;
+            color: #fff;
+        }
+        .error-message {
+            color: #ef4444;
+            font-size: 0.75rem;
+            display: none;
+            margin-top: 0.25rem;
+        }
+        .secure-note i {
+            color: #34d399;
+        }
+    </style>
+    </head>
+
+    <body class="min-h-screen flex items-center justify-center text-white">
+        <div
+            class="login-container bg-gray-800 bg-opacity-80 rounded-2xl p-6 md:p-8 shadow-2xl max-w-md w-full mx-4">
+            <!-- Logo and Header -->
+            <div class="text-center mb-6">
+                <img src="../Dist/images/omni.png" alt="Mynvestor Broker Logo"
+                    class="mx-auto w-24 mb-4">
+                <h1 class="text-3xl font-bold"><span
+                        class="highlight">Ad</span>min</h1>
+                <p class="text-gray-300 mt-2">Log in to your Admin account</p>
+            </div>
+
+            <!-- Form -->
+            <form id="loginForm">
+                <div class="mb-4">
+                    <label for="username"
+                        class="block text-sm font-medium">Username</label>
+                    <input type="text"
+                        class="form-input w-full mt-1 p-2 rounded-lg"
+                        id="username" placeholder="Enter username" required>
+                    <div class="error-message" id="usernameError">Please enter a
+                        valid username</div>
+                </div>
+                <div class="mb-4">
+                    <label for="password"
+                        class="block text-sm font-medium">Password</label>
+                    <input type="password"
+                        class="form-input w-full mt-1 p-2 rounded-lg"
+                        id="password" placeholder="Enter password" required>
+                    <div class="error-message" id="passwordError">Password must
+                        be at least 6 characters.</div>
+                </div>
+                <div class="flex justify-between items-center mb-4">
+                    <div class="flex items-center">
+                        <input type="checkbox"
+                            class="form-checkbox h-4 w-4 text-green-500"
+                            id="rememberMe">
+                        <label for="rememberMe"
+                            class="ml-2 text-sm text-gray-300">Remember
+                            Me</label>
+                    </div>
+                    <a href="forgot_password.html"
+                        class="text-green-400 hover:text-green-300 text-sm">Forgot
+                        Password?</a>
+                </div>
+                <button type="submit"
+                    class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 w-full flex items-center justify-center text-sm">
+                    Log In <i class="bi bi-box-arrow-in-right ml-2"></i>
+                </button>
+                <p class="secure-note text-gray-400 text-center mt-4 text-sm"><i
+                        class="bi bi-shield-lock mr-1"></i>Your data is
+                    protected with advanced encryption.</p>
+            </form>
+
+        </div>
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const usernameError = document.getElementById('usernameError');
+            const passwordError = document.getElementById('passwordError');
+
+            // Reset error messages
+            usernameError.style.display = 'none';
+            passwordError.style.display = 'none';
+
+            // Validation
+            let isValid = true;
+
+            // Username: 5-30 characters, letters, numbers, underscores, or a valid business email
+            const usernameRegex = /^[A-Za-z0-9_]{5,30}$/;
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!usernameRegex.test(username) && (!emailRegex.test(username) || username.includes('gmail.com') || username.includes('yahoo.com') || username.includes('hotmail.com'))) {
+                usernameError.style.display = 'block';
+                isValid = false;
+            }
+
+            // Password: at least 6 characters
+            if (password.length < 6) {
+                passwordError.style.display = 'block';
+                isValid = false;
+            }
+
+            if (isValid) {
+                // Simulate login success (replace with actual backend API call)
+                window.location.href = 'admin.html';
+            }
+        });
+    </script>
+    </body>
+    
+</html>

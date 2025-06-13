@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Mynvestor - Sign Up (Step 1)</title>
+        <!-- Tailwind CSS -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+            rel="stylesheet">
+        <!-- Bootstrap Icons -->
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <link rel="stylesheet" href="../Dist/styles/signupStyles.css">
+
+    </head>
+
+    <body class="min-h-screen flex items-center justify-center text-gray-800">
+
+        <div
+            class="bg-white bg-opacity-80 rounded-2xl p-6 md:p-8 shadow-2xl max-w-md w-full mx-4 transform transition-transform hover:-translate-y-1 hover:shadow-2xl">
+            <!-- Logo and Header -->
+            <div class="text-center mb-6">
+                <img src="../Dist/images/omni.png" alt="Mynvestor Logo"
+                    class="mx-auto w-24 mb-4">
+                <h1 class="text-3xl font-bold"><span
+                        class="highlight">Myn</span>vestor</h1>
+                <p class="text-gray-600 mt-2">Step 1: Personal Information</p>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="w-full bg-gray-200 rounded-full h-2 mb-6">
+                <div class="bg-green-600 h-2 rounded-full"
+                    style="width: 33%;"></div>
+            </div>
+
+            <!-- Form -->
+            <form id="signupStep1Form" action="https://formspree.io/f/xkgrbyng"
+                method="POST">
+                <div class="mb-4">
+                    <label for="firstName"
+                        class="block text-sm font-medium text-gray-600">First
+                        Name</label>
+                    <input type="text"
+                        class="form-input w-full mt-1 p-2 rounded-lg"
+                        id="firstName" name="firstName"
+                        placeholder="Enter first name" required>
+                    <div class="error-message" id="firstNameError">Please enter
+                        a valid first name.</div>
+                </div>
+                <div class="mb-4">
+                    <label for="lastName"
+                        class="block text-sm font-medium text-gray-600">Last
+                        Name</label>
+                    <input type="text"
+                        class="form-input w-full mt-1 p-2 rounded-lg"
+                        id="lastName" name="lastName"
+                        placeholder="Enter last name" required>
+                    <div class="error-message" id="lastNameError">Please enter a
+                        valid last name.</div>
+                </div>
+                <div class="mb-4">
+                    <label for="dob"
+                        class="block text-sm font-medium text-gray-600">Date of
+                        Birth</label>
+                    <input type="date"
+                        class="form-input w-full mt-1 p-2 rounded-lg" id="dob"
+                        name="dob" required>
+                    <div class="error-message" id="dobError">You must be at
+                        least 18 years old.</div>
+                </div>
+                <input type="hidden" name="_subject"
+                    value="Signup Step 1 Submission from Mynvestor">
+                <input type="hidden" name="_next"
+                    value="https://mynvestor.netlify.app/signup_step2.html">
+                <button type="submit"
+                    class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-full transition duration-300 w-full flex items-center justify-center text-sm">
+                    Continue to Step 2 <i class="bi bi-arrow-right ml-2"></i>
+                </button>
+                <p class="secure-note text-gray-600 text-center mt-4 text-sm"><i
+                        class="bi bi-shield-lock mr-1"></i>Your data is
+                    protected with advanced encryption.</p>
+            </form>
+
+            <!-- Login Link -->
+            <p class="text-center mt-4 text-sm">
+                <a href="login.html"
+                    class="text-green-600 hover:text-green-700">Already have an
+                    account? Log in</a>
+            </p>
+        </div>
+
+        <!-- Toast Notification -->
+        <div id="toast" class="toast">
+            <i id="toastIcon" class="bi"></i>
+            <span id="toastMessage"></span>
+        </div>
+
+        <script>
+        // Function to show toast notification
+        function showToast(message, type = 'success', duration = 3000) {
+            const toast = document.getElementById('toast');
+            const toastIcon = document.getElementById('toastIcon');
+            const toastMessage = document.getElementById('toastMessage');
+
+            // Set message and icon
+            toastMessage.textContent = message;
+            toastIcon.className = `bi ${type === 'success' ? 'bi-check-circle' : 'bi-exclamation-circle'}`;
+
+            // Set toast type (success or error)
+            toast.className = `toast ${type} show`;
+
+            // Hide toast after duration
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, duration);
+        }
+
+        document.getElementById('signupStep1Form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // Get form inputs
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const dob = document.getElementById('dob').value;
+
+            // Error elements
+            const firstNameError = document.getElementById('firstNameError');
+            const lastNameError = document.getElementById('lastNameError');
+            const dobError = document.getElementById('dobError');
+
+            // Reset error messages
+            firstNameError.style.display = 'none';
+            lastNameError.style.display = 'none';
+            dobError.style.display = 'none';
+
+            // Validation
+            let isValid = true;
+
+            // First Name: letters and spaces only
+            if (!/^[A-Za-z\s]{1,50}$/.test(firstName)) {
+                firstNameError.style.display = 'block';
+                isValid = false;
+            }
+
+            // Last Name: letters and spaces only
+            if (!/^[A-Za-z\s]{1,50}$/.test(lastName)) {
+                lastNameError.style.display = 'block';
+                isValid = false;
+            }
+
+            // DOB: must be 18 or older
+            const today = new Date();
+            const birthDate = new Date(dob);
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const monthDiff = today.getMonth() - birthDate.getMonth();
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            if (age < 18 || isNaN(birthDate)) {
+                dobError.style.display = 'block';
+                isValid = false;
+            }
+
+            if (isValid) {
+                try {
+                    const formData = new FormData(document.getElementById('signupStep1Form'));
+                    const response = await fetch('https://formspree.io/f/xkgrbyng', {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json',
+                        },
+                    });
+
+                    if (response.ok) {
+                        // Store data in sessionStorage
+                        sessionStorage.setItem('signupData', JSON.stringify({
+                            firstName,
+                            lastName,
+                            dob
+                        }));
+
+                        // Show success toast
+                        showToast('Form Submitted Successfully!', 'success');
+
+                        // Redirect to Step 2 after toast
+                        setTimeout(() => {
+                            window.location.href = 'signup_step2.html';
+                        }, 1000);
+                    } else {
+                        console.error('Form submission failed:', response.statusText);
+                        showToast('Form submission failed. Please try again.', 'error');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    showToast('An error occurred. Please try again.', 'error');
+                }
+            }
+        });
+
+    </script>
+    </body>
+
+</html>
