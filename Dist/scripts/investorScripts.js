@@ -25,7 +25,7 @@ document.getElementById("email-settings")?.addEventListener("change", (e) => {
 });
 
 document.getElementById("logout-btn")?.addEventListener("click", () => {
-    window.location.href = "login.html";
+    window.location.href = "/Authentication/investor/login.html";
 });
 
 const sections = document.querySelectorAll(".content-section");
@@ -562,3 +562,4 @@ document.getElementById("feedbackForm").addEventListener("submit", function (e) 
         alert("Please select a type and enter feedback.");
     }
 });
+
