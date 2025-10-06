@@ -1,0 +1,111 @@
+        body {
+            background: linear-gradient(135deg, rgba(240, 244, 248, 0.9) 0%, rgba(217, 226, 236, 0.9) 100%),
+                url('../images/bakgraund.jpeg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Inter', sans-serif;
+            color: #333;
+        }
+
+        .highlight {
+            color: #27a844;
+        }
+
+        .forgot-password-container {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .forgot-password-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .secure-note i {
+            color: #27a844;
+        }
+
+        .note {
+            color: #9ca3af;
+            font-size: 0.75rem;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .form-input {
+            background: #ffffff;
+            border: 1px solid #d1d5db;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-input::placeholder {
+            color: #9ca3af;
+        }
+
+        .form-input:focus {
+            border-color: #27a844;
+            box-shadow: none;
+            background: #ffffff;
+            color: #333;
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 0.75rem;
+            display: none;
+            margin-top: 0.25rem;
+        }
+
+        .secure-note i {
+            color: #27a844;
+        }
+
+        .kyc-note {
+            color: #666;
+            font-size: 0.75rem;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .kyc-note a {
+            color: #27a844;
+        }
+
+        .kyc-note a:hover {
+            color: #1f8836;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(100px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 100;
+        }
+
+        .toast.success {
+            background-color: #27a844;
+        }
+
+        .toast.error {
+            background-color: #ef4444;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .toast .bi-check-circle,
+        .toast .bi-exclamation-circle {
+            margin-right: 0.5rem;
+            font-size: 1.25rem;
+        }

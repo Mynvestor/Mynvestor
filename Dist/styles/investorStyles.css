@@ -1,0 +1,1374 @@
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+        background: linear-gradient(135deg, rgba(240, 244, 248, 0.9) 0%, rgba(217, 226, 236, 0.9) 100%),
+            url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+        background-size: cover;
+        padding: 60px 0 80px;
+        min-height: 100vh;
+        color: #333;
+    }
+
+    /* Sidebar */
+    .sidebar {
+        position: fixed;
+        top: 60px;
+        left: 0;
+        width: 200px;
+        height: calc(100vh - 60px);
+        background: #ffffff;
+        border-right: 1px solid #d1d5db;
+        padding: 20px;
+        z-index: 999;
+        transition: transform 0.3s ease;
+    }
+
+    .sidebar-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .sidebar .nav-item {
+        display: flex;
+        align-items: center;
+        color: #333;
+        text-decoration: none;
+        font-size: 1rem;
+        padding: 10px;
+        border-radius: 5px;
+        transition: background 0.2s, transform 0.2s;
+    }
+
+    .sidebar .nav-item:hover {
+        background: #f0f4f8;
+        transform: translateX(5px);
+    }
+
+    .sidebar .nav-item.active {
+        background: #27a844;
+        color: #ffffff;
+    }
+
+    .sidebar .nav-icon {
+        font-size: 20px;
+        margin-right: 10px;
+    }
+
+    /* Top Navigation */
+    .top-nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: #ffffff;
+        border-bottom: 1px solid #d1d5db;
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: #333;
+        z-index: 1000;
+    }
+
+    .company-name {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #333;
+    }
+
+    .jon {
+        color: #27a844;
+    }
+
+    .profile-pic {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 2px solid #d1d5db;
+        transition: transform 0.2s;
+    }
+
+    .profile-pic:hover {
+        transform: scale(1.1);
+    }
+
+    .profile-pic img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .profile-initials {
+        width: 100%;
+        height: 100%;
+        background: #27a844;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        font-weight: 700;
+    }
+
+    .notifications-icon,
+    .help-icon {
+        cursor: pointer;
+        padding: 8px;
+        color: #333;
+        font-size: 24px;
+        transition: transform 0.2s;
+    }
+
+    .help-icon:hover {
+        transform: scale(1.1);
+    }
+
+    /* Footer Navigation */
+    .footer-nav {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background: #ffffff;
+        padding: 10px 0;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        border-top: 1px solid #d1d5db;
+    }
+
+    .footer-nav .nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #333 !important;
+        text-decoration: none;
+        font-size: 0.8rem;
+        transition: transform 0.2s;
+        padding: 5px;
+    }
+
+    .footer-nav .nav-item:hover {
+        transform: translateY(-3px);
+    }
+
+    .footer-nav .nav-item.active {
+        color: #27a844 !important;
+        background: #f0f4f8;
+        border-radius: 5px;
+    }
+
+    .nav-icon {
+        font-size: 20px;
+        margin-bottom: 6px;
+        color: inherit;
+    }
+
+    /* Content Sections */
+    .content-section {
+        display: none;
+        padding: 20px 20px 80px;
+        min-height: calc(100vh - 160px);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.5s ease;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+    }
+
+    .content-section.active {
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .loading {
+        color: #27a844;
+        font-style: italic;
+        display: none;
+    }
+
+    /* Cards */
+    .balance-card,
+    .company-card,
+    .portfolio-summary,
+    .chart-card,
+    .portfolio-card,
+    .card {
+        background: #ffffff;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        margin: 0.5rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        color: #333;
+    }
+
+    .balance-card .card-body {
+        padding: 0.75rem;
+    }
+
+    .balance-card small {
+        font-size: 0.75rem;
+        color: #666;
+    }
+
+    .balance-card .fw-bold {
+        font-size: 0.9rem;
+    }
+
+    .company-card {
+        padding: 10px;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 70px;
+    }
+
+    .company-card:hover {
+        background: #f0f4f8;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .portfolio-summary {
+        padding: 15px;
+    }
+
+    .portfolio-summary h2 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+
+    .portfolio-summary .row div {
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .portfolio-summary .fw-bold {
+        font-size: 1.25rem;
+    }
+
+    .chart-card {
+        padding: 15px;
+        position: relative;
+        width: 100%;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        overflow: hidden;
+    }
+
+    .chart-card h3 {
+        font-size: 1.25rem;
+        margin-bottom: 10px;
+    }
+
+    .chart-card canvas {
+        width: 100% !important;
+        height: 200px !important;
+        max-height: 200px;
+    }
+
+    .portfolio-card {
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        min-height: 90px;
+        transition: all 0.2s;
+        width: 100%;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .portfolio-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Text Styles */
+    .card-title,
+    .card-text,
+    .index-name,
+    .index-points,
+    .stock-info-label,
+    .stock-info-value,
+    .portfolio-details h5,
+    .portfolio-details p,
+    .company-info h5,
+    .company-info p,
+    .modal-body p,
+    .modal-body span,
+    .modal-body h5,
+    .modal-body h6,
+    .table th,
+    .table td,
+    .form-label,
+    .form-check-label {
+        color: #333 !important;
+    }
+
+    .text-muted,
+    .card-text small,
+    .portfolio-summary .text-muted,
+    #transfers .card-text,
+    #learn .quiz-card .form-check-label {
+        color: #666 !important;
+    }
+
+    .card-title {
+        text-align: center;
+        white-space: normal;
+        overflow: visible;
+        text-overflow: initial;
+        max-width: 100%;
+        font-size: 0.9rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .card-title.long-name {
+        font-size: 0.75rem;
+    }
+
+    .card-text {
+        font-size: 0.85rem;
+        margin: 0;
+    }
+
+    .share-price {
+        font-size: 0.95rem;
+        font-weight: 700;
+        text-align: right;
+    }
+
+    .daily-change {
+        font-size: 0.85rem;
+        text-align: right;
+    }
+
+    /* Price Changes */
+    .price-change-up {
+        color: #27a844 !important;
+    }
+
+    .price-change-down {
+        color: #ef4444 !important;
+    }
+
+    /* Company Info */
+    .company-info {
+        display: flex;
+        align-items: center;
+        flex-grow: 1;
+        overflow: hidden;
+    }
+
+    .company-logo {
+        width: 40px;
+        height: 40px;
+        object-fit: contain;
+        border-radius: 50%;
+        flex-shrink: 0;
+    }
+
+    .price-info {
+        flex-shrink: 0;
+        text-align: right;
+        min-width: 120px;
+    }
+
+    .portfolio-info {
+        display: flex;
+        align-items: center;
+        flex-grow: 1;
+        overflow: hidden;
+    }
+
+    .portfolio-details {
+        flex-grow: 1;
+        margin-left: 12px;
+    }
+
+    .portfolio-details .card-text {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+    }
+
+    .portfolio-actions {
+        flex-shrink: 0;
+        display: flex;
+        gap: 8px;
+    }
+
+    /* Index Charts */
+    .index-chart {
+        height: 200px;
+        background: #ffffff;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        padding: 15px;
+        position: relative;
+        padding-top: 40px;
+    }
+
+    .index-name {
+        position: absolute;
+        top: 10px;
+        left: 15px;
+        font-size: 1rem;
+        font-weight: 700;
+    }
+
+    .index-points {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 1rem;
+        font-weight: 700;
+        color: #27a844;
+    }
+
+    /* Buttons */
+    .btn-buy,
+    #trade .btn-group .btn:not(.btn-danger) {
+        background: #27a844;
+        border-color: #27a844;
+        color: #ffffff;
+        font-size: 0.85rem;
+        padding: 5px 10px;
+        border-radius: 6px;
+        transition: background-color 0.2s;
+    }
+
+    .btn-buy:hover,
+    #trade .btn-group .btn:not(.btn-danger):hover {
+        background: #1f8836;
+        border-color: #1f8836;
+    }
+
+    .btn-sell,
+    #trade .btn-group .btn-danger {
+        background: #ef4444;
+        border-color: #ef4444;
+        color: #ffffff;
+        font-size: 0.85rem;
+        padding: 5px 10px;
+        border-radius: 6px;
+        transition: background-color 0.2s;
+    }
+
+    .btn-sell:hover,
+    #trade .btn-group .btn-danger:hover {
+        background: #dc2626;
+        border-color: #dc2626;
+    }
+
+    .btn-details {
+        background: #0284c7;
+        border-color: #0284c7;
+        color: #ffffff;
+    }
+
+    .btn-details:hover {
+        background: #026ba6;
+        border-color: #026ba6;
+    }
+
+    .btn-outline-danger {
+        border-color: #ef4444;
+        color: #ef4444;
+    }
+
+    .btn-outline-danger:hover {
+        background-color: #ef4444;
+        color: #ffffff;
+    }
+
+    /* Form Elements */
+    .form-control.bg-dark,
+    .form-select.bg-dark {
+        background: #ffffff;
+        border: 1px solid #d1d5db;
+        color: #333 !important;
+    }
+
+    .form-control.bg-dark::placeholder {
+        color: #9ca3af !important;
+    }
+
+    .form-control.bg-dark:focus {
+        background: #ffffff;
+        border-color: #27a844;
+        box-shadow: none;
+        color: #333;
+    }
+
+    .form-select.bg-dark option {
+        background: #ffffff;
+        color: #333;
+    }
+
+    .form-check-input:checked {
+        background-color: #27a844;
+        border-color: #27a844;
+    }
+
+    .form-check-label {
+        color: #333;
+    }
+
+    /* Tables */
+    .table,
+    .table-dark {
+        background: #ffffff !important;
+        border: 1px solid #d1d5db !important;
+        color: #333 !important;
+    }
+
+    .table th,
+    .table-dark th {
+        background: #f0f4f8 !important;
+        color: #333 !important;
+        border-bottom: 1px solid #d1d5db !important;
+    }
+
+    .table td,
+    .table-dark td {
+        background: #ffffff !important;
+        color: #333 !important;
+        border-top: 1px solid #d1d5db !important;
+    }
+
+    .table-dark tr,
+    .table-dark tbody,
+    .table-dark thead {
+        background: #ffffff !important;
+        color: #333 !important;
+    }
+
+    /* Specific to #trade section tables */
+    #trade .table,
+    #trade .table-dark {
+        background: #ffffff !important;
+        border: 1px solid #d1d5db !important;
+        border-radius: 12px !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    #trade .table th,
+    #trade .table-dark th {
+        background: #f0f4f8 !important;
+        color: #333 !important;
+    }
+
+    #trade .table td,
+    #trade .table-dark td {
+        background: #ffffff !important;
+        color: #333 !important;
+    }
+
+    /* Ensure nested text in tables */
+    .table-dark .text-muted,
+    .table .text-muted {
+        color: #666 !important;
+    }
+
+    /* Modals */
+    .modal-content,
+    .modal-content.bg-dark,
+    #userAccountModal .modal-content,
+    #companyDetailsModal .modal-content {
+        background: #ffffff !important;
+        color: #333 !important;
+        border: 1px solid #d1d5db !important;
+        border-radius: 10px !important;
+    }
+
+    .modal-header,
+    .modal-content.bg-dark .modal-header,
+    #userAccountModal .modal-header,
+    #companyDetailsModal .modal-header {
+        background: #ffffff !important;
+        color: #333 !important;
+        border-bottom: 1px solid #d1d5db !important;
+    }
+
+    .modal-body,
+    .modal-content.bg-dark .modal-body,
+    #userAccountModal .modal-body,
+    #companyDetailsModal .modal-body {
+        background: #ffffff !important;
+        color: #333 !important;
+    }
+
+    .modal-footer,
+    .modal-content.bg-dark .modal-footer,
+    #userAccountModal .modal-footer,
+    #companyDetailsModal .modal-footer {
+        background: #ffffff !important;
+        color: #333 !important;
+        border-top: 1px solid #d1d5db !important;
+    }
+
+    /* Modal text and elements */
+    .modal-content .text-muted,
+    .modal-content.bg-dark .text-muted,
+    #userAccountModal .text-muted,
+    #companyDetailsModal .text-muted {
+        color: #666 !important;
+    }
+
+    .modal-content h1,
+    .modal-content h2,
+    .modal-content h5,
+    .modal-content h6,
+    #userAccountModal h1,
+    #userAccountModal h5,
+    #userAccountModal h6,
+    #companyDetailsModal h1,
+    #companyDetailsModal h2,
+    #companyDetailsModal h5,
+    #companyDetailsModal h6 {
+        color: #333 !important;
+    }
+
+    .modal-content .btn-close,
+    .modal-content.bg-dark .btn-close {
+        filter: none !important;
+        background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23333'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707A1 1 0 01.293.293z'/%3e%3c/svg%3e") !important;
+    }
+
+    /* Specific to #companyDetailsModal */
+    #companyDetailsModal .card {
+        background: #ffffff !important;
+        border: 1px solid #d1d5db !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    #companyDetailsModal .card-body {
+        background: #ffffff !important;
+        color: #333 !important;
+    }
+
+    #companyDetailsModal .table,
+    #companyDetailsModal .table-dark {
+        background: #ffffff !important;
+        border: 1px solid #d1d5db !important;
+    }
+
+    #companyDetailsModal .table td,
+    #companyDetailsModal .table-dark td {
+        color: #666 !important;
+    }
+
+    #companyDetailsModal .text-success {
+        color: #27a844 !important;
+    }
+
+    #companyDetailsModal a.text-white {
+        color: #333 !important;
+    }
+
+    #companyDetailsModal a.text-white:hover {
+        text-decoration: underline !important;
+    }
+
+    /* Specific to #userAccountModal */
+    #userAccountModal .user-avatar .profile-pic {
+        background-color: #27a844 !important;
+        color: #ffffff !important;
+    }
+
+    #userAccountModal .btn-outline-deposit {
+        border-color: #27a844 !important;
+        color: #27a844 !important;
+    }
+
+    #userAccountModal .btn-outline-deposit:hover {
+        background-color: #27a844 !important;
+        color: #ffffff !important;
+    }
+
+    #userAccountModal .btn-outline-withdraw {
+        border-color: #ef4444 !important;
+        color: #ef4444 !important;
+    }
+
+    #userAccountModal .btn-outline-withdraw:hover {
+        background-color: #ef4444 !important;
+        color: #ffffff !important;
+    }
+
+    #userAccountModal .btn-outline-light {
+        border-color: #d1d5db !important;
+        color: #333 !important;
+    }
+
+    #userAccountModal .btn-outline-light:hover {
+        background-color: #f0f4f8 !important;
+        color: #333 !important;
+    }
+
+    [class*="bg-dark"] {
+        background: #ffffff !important;
+        color: #333 !important;
+    }
+
+    /* Badges */
+    .badge {
+        padding: 0.5em 0.75em;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        color: #ffffff;
+    }
+
+    .badge.bg-success {
+        background: #27a844 !important;
+    }
+
+    .badge.bg-danger {
+        background: #ef4444 !important;
+    }
+
+    .badge.bg-warning {
+        background: #f59e0b !important;
+    }
+
+    /* Modals */
+    .modal-content.bg-dark,
+    #userAccountModal .modal-content,
+    #companyDetailsModal .modal-content {
+        background: #ffffff;
+        color: #333 !important;
+        border: 1px solid #d1d5db;
+        border-radius: 10px;
+    }
+
+    .modal-content.bg-dark .modal-header,
+    .modal-content.bg-dark .modal-footer {
+        border-color: #d1d5db;
+        padding: 0.75rem;
+    }
+
+    .modal-content.bg-dark .text-muted,
+    #companyDetailsModal .text-muted {
+        color: #666 !important;
+    }
+
+    .modal-content.bg-dark .btn-close {
+        filter: none;
+        background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23333'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707A1 1 0 01.293.293z'/%3e%3c/svg%3e");
+    }
+
+    #userAccountModal .modal-body {
+        padding: 20px;
+    }
+
+    #userAccountModal .user-avatar .profile-pic {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-color: #27a844;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        font-size: 24px;
+        font-weight: bold;
+        color: #ffffff;
+    }
+
+    #userAccountModal .user-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+    #userAccountModal .btn-outline-deposit {
+        border-color: #27a844;
+        color: #27a844;
+    }
+
+    #userAccountModal .btn-outline-deposit:hover {
+        background-color: #27a844;
+        color: #ffffff;
+    }
+
+    #userAccountModal .btn-outline-withdraw {
+        border-color: #ef4444;
+        color: #ef4444;
+    }
+
+    #userAccountModal .btn-outline-withdraw:hover {
+        background-color: #ef4444;
+        color: #ffffff;
+    }
+
+    #userAccountModal .btn-outline-light {
+        border-color: #d1d5db;
+        color: #333;
+        text-decoration: none;
+    }
+
+    #userAccountModal .btn-outline-light:hover {
+        background-color: #f0f4f8;
+        color: #333;
+    }
+
+    #userAccountModal .d-flex .btn {
+        flex: 1;
+        font-size: 0.85rem;
+        padding: 8px;
+    }
+
+    /* Company Details Modal */
+    #companyDetailsModal .modal-content {
+        border-radius: 12px;
+    }
+
+    #companyDetailsModal .modal-header {
+        border-bottom: 1px solid #d1d5db;
+        padding: 1rem;
+    }
+
+    #companyDetailsModal .modal-body {
+        padding: 1.5rem;
+    }
+
+    #companyDetailsModal h1 {
+        font-size: 1.8rem;
+        color: #333;
+    }
+
+    #companyDetailsModal h2 {
+        font-size: 1.5rem;
+        color: #333;
+    }
+
+    #companyDetailsModal h5 {
+        font-size: 1.25rem;
+        color: #333;
+    }
+
+    #companyDetailsModal h6 {
+        font-size: 1rem;
+        color: #666;
+        font-weight: 600;
+    }
+
+    #companyDetailsModal .card {
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    #companyDetailsModal .card-body {
+        padding: 1rem;
+    }
+
+    #companyDetailsModal .text-success {
+        color: #27a844 !important;
+    }
+
+    #companyDetailsModal .progress {
+        background: #f0f4f8;
+    }
+
+    #companyDetailsModal .progress-bar {
+        background: #027bff;
+        color: #ffffff;
+        text-align: left;
+        padding-left: 5px;
+    }
+
+    #companyDetailsModal .table td {
+        color: #666;
+    }
+
+    #companyDetailsModal a.text-white {
+        color: #333;
+        text-decoration: none;
+    }
+
+    #companyDetailsModal a.text-white:hover {
+        text-decoration: underline;
+    }
+
+    /* Stock Info */
+    .stock-info-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #d1d5db;
+    }
+
+    .stock-info-label {
+        color: #666;
+    }
+
+    .stock-info-value {
+        font-weight: 500;
+    }
+
+    /* Accordions (Learn Section) */
+    #learn .accordion-button {
+        background: #ffffff !important;
+        color: #333 !important;
+        border: 1px solid #d1d5db;
+    }
+
+    #learn .accordion-button:not(.collapsed) {
+        background: #f0f4f8 !important;
+        color: #27a844 !important;
+    }
+
+    #learn .accordion-body {
+        background: #ffffff !important;
+        color: #333 !important;
+        border: 1px solid #d1d5db;
+    }
+
+    #learn .accordion-button:focus {
+        box-shadow: 0 0 0 2px rgba(39, 168, 68, 0.5) !important;
+        border-color: #27a844 !important;
+    }
+
+    #learn .list-group-item {
+        background: #ffffff;
+        border: 1px solid #d1d5db;
+        color: #333 !important;
+        margin-bottom: 0.5rem;
+    }
+
+    #learn .list-group-item:hover {
+        background: #f0f4f8;
+        color: #333 !important;
+    }
+
+    #learn .quiz-card {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    /* Trade Section */
+    #trade .card {
+        background: #ffffff;
+        border: 1px solid #d1d5db;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+        margin-bottom: 1rem;
+        transition: transform 0.2s;
+    }
+
+    #trade .card:hover {
+        transform: translateY(-5px);
+    }
+
+    #trade .card-body {
+        padding: 0;
+    }
+
+    #trade h1 {
+        color: #333;
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+    }
+
+    #trade .form-control.bg-dark {
+        background: #ffffff;
+        border: 1px solid #d1d5db;
+        color: #333;
+        font-weight: 500;
+    }
+
+    #trade .form-control.bg-dark:focus {
+        background: #ffffff;
+        border-color: #27a844;
+        color: #333;
+    }
+
+    #trade .list-group-item.bg-dark {
+        background: #ffffff;
+        border: 1px solid #d1d5db;
+        color: #333;
+        font-weight: 500;
+        transition: background 0.2s;
+    }
+
+    #trade .list-group-item.bg-dark:hover {
+        background: #f0f4f8;
+        color: #333;
+    }
+
+    #trade .card.bg-dark.selected-company {
+        background: #f0f4f8;
+        border: 1px solid #d1d5db;
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 1rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    #trade h4 {
+        color: #333;
+        font-size: 1.4rem;
+        margin-bottom: 0.5rem;
+    }
+
+    #trade .h5 {
+        color: #666;
+        font-weight: 600;
+    }
+
+    #trade .text-success {
+        color: #27a844 !important;
+        font-weight: 600;
+    }
+
+    #trade .btn-group .btn.active {
+        background: #1f8836;
+    }
+
+    #trade .btn-group .btn-danger.active {
+        background: #dc2626;
+    }
+
+    #trade .form-select.bg-dark {
+        background: #ffffff;
+        border: 1px solid #d1d5db;
+        color: #333;
+        font-weight: 500;
+    }
+
+    #trade .card.bg-dark.totals {
+        background: #ffffff;
+        border: 1px solid #d1d5db;
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    #trade .card.bg-dark.totals .small {
+        color: #666;
+        font-weight: 500;
+    }
+
+    #trade .card.bg-dark.totals .fw-bold {
+        color: #333;
+        font-weight: 600;
+    }
+
+    #trade .btn-primary {
+        background: #0284c7;
+        border: none;
+        color: #ffffff;
+        font-weight: 500;
+        border-radius: 8px;
+        padding: 10px;
+        transition: background 0.2s;
+    }
+
+    #trade .btn-primary:hover {
+        background: #026ba6;
+    }
+
+    #trade .table-dark {
+        background: #ffffff;
+        border: 1px solid #d1d5db;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    #trade .table-dark th {
+        background: #f0f4f8;
+        color: #333;
+        font-weight: 600;
+    }
+
+    #trade .table-dark td {
+        color: #333;
+        font-weight: 500;
+    }
+
+    /* Transfers Section */
+    #transfers .card {
+        background: #ffffff;
+        border: 1px solid #d1d5db;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        transition: transform 0.2s;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    #transfers .card:hover {
+        transform: scale(1.05);
+    }
+
+    #transfers .card-body {
+        text-align: center;
+        padding: 10px;
+    }
+
+    #transfers .card-title {
+        color: #333;
+        font-size: 1.2rem;
+        margin-bottom: 0.75rem;
+    }
+
+    #transfers .card-text {
+        color: #666;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        font-weight: 500;
+    }
+
+    #transfers .btn-outline-warning {
+        background: #f59e0b;
+        border: none;
+        color: #ffffff;
+        font-weight: 500;
+    }
+
+    #transfers .btn-outline-primary {
+        background: #0284c7;
+        border: none;
+        color: #ffffff;
+        font-weight: 500;
+    }
+
+    #transfers .btn-outline-success {
+        background: #27a844;
+        border: none;
+        color: #ffffff;
+        font-weight: 500;
+    }
+
+    #transfers .btn-outline-success:hover {
+        background: #1f8836;
+    }
+
+    /* Learn Section */
+    #learn .card {
+        background: #ffffff;
+        border: 1px solid #d1d5db;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        margin-bottom: 1rem;
+    }
+
+    #learn .card-header {
+        background: #f0f4f8;
+        border-bottom: 1px solid #d1d5db;
+        padding: 1rem;
+        color: #333;
+        font-weight: 600;
+    }
+
+    #learn .card-body {
+        padding: 1.5rem;
+        color: #333;
+    }
+
+    #learn .btn-primary {
+        background: #0284c7;
+        border: none;
+    }
+
+    #learn .btn-primary:hover {
+        background: #026ba6;
+    }
+
+    /* Toast */
+    .toast-container .toast.bg-success {
+        background-color: #27a844 !important;
+        color: #ffffff;
+    }
+
+    .toast-container .toast.bg-danger {
+        background-color: #ef4444 !important;
+        color: #ffffff;
+    }
+
+    .toast-container .toast.bg-info {
+        background-color: #0284c7 !important;
+        color: #ffffff;
+    }
+
+    /* Responsive Design */
+    @media (min-width: 769px) {
+        nav.footer-nav {
+            display: none !important;
+        }
+
+        .sidebar {
+            transform: translateX(0);
+        }
+
+        .content-section {
+            margin-left: 200px;
+            width: calc(100% - 200px);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .sidebar {
+            display: none;
+        }
+
+        .content-section {
+            margin-left: 0;
+            width: 100%;
+        }
+
+        nav.footer-nav {
+            display: flex;
+        }
+
+        .footer-nav {
+            padding: 5px 0;
+        }
+
+        .nav-item {
+            font-size: 0.7rem;
+        }
+
+        .nav-icon {
+            font-size: 18px;
+        }
+
+        .index-chart {
+            height: 150px;
+        }
+
+        .company-card {
+            padding: 10px;
+            min-height: 70px;
+        }
+
+        .portfolio-card {
+            padding: 10px;
+            min-height: 80px;
+        }
+
+        .card-title {
+            max-width: 120px;
+        }
+
+        .chart-card {
+            max-width: 100%;
+        }
+
+        .chart-card canvas {
+            height: 180px !important;
+        }
+
+        .portfolio-summary .row div {
+            font-size: 0.9rem;
+        }
+
+        .portfolio-summary .fw-bold {
+            font-size: 1.1rem;
+        }
+
+        .card-body {
+            padding: 0.5rem;
+        }
+
+        #learn .card-body {
+            padding: 1rem;
+        }
+
+        #learn .quiz-card {
+            max-width: 100%;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .card-title {
+            max-width: 100px;
+        }
+
+        .company-card {
+            padding: 10px;
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .portfolio-card {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 8px;
+            min-height: 120px;
+        }
+
+        .company-info {
+            flex-grow: 1;
+        }
+
+        .portfolio-info {
+            width: 100%;
+        }
+
+        .portfolio-details .card-text {
+            font-size: 0.8rem;
+        }
+
+        .price-info {
+            min-width: 100px;
+            text-align: right;
+        }
+
+        .portfolio-actions {
+            width: 100%;
+            margin-top: 8px;
+            justify-content: flex-start;
+        }
+
+        .chart-card canvas {
+            height: 160px !important;
+        }
+
+        .portfolio-summary .row div {
+            font-size: 0.85rem;
+        }
+
+        .portfolio-summary .fw-bold {
+            font-size: 1rem;
+        }
+
+        .card-body {
+            padding: 0.5rem;
+        }
+
+        .btn-group {
+            flex-direction: column;
+        }
+
+        .btn-group .btn {
+            width: 100%;
+            margin-bottom: 5px;
+        }
+
+        #learn .card-body {
+            padding: 0.75rem;
+        }
+    }
