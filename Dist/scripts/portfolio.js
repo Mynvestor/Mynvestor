@@ -44,7 +44,7 @@ function updatePortfolioSection() {
                 userAccountModal.hide();
                 
                 // Redirect to login page
-                window.location.href = "Mynvestor/Authentication/investor/login.html";
+                window.location.href = "../Authentication/investor/login.html";
             });
         }
     });
@@ -164,3 +164,4 @@ function updatePortfolioSection() {
 
 
 export { updatePortfolioSection };
+
