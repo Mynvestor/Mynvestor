@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
     </script>
@@ -39,11 +39,10 @@
             <div class="profile-initials" id="user-initials">JD</div>
         </div>
         <div class="company-name"><span class="jon">Myn</span>vestor</div>
-        <i class="bi bi-question-circle help-icon notifications-icon" data-bs-toggle="modal" data-bs-target="#helpModal"
+           <i class="bi bi-question-circle help-icon notifications-icon" data-bs-toggle="modal" data-bs-target="#helpModal"
             aria-label="Open Help"></i>
     </nav>
 
-    <!-- market first lets make it dynamic -->
     <section id="market" class="content-section active">
         <div class="loading" id="market-loading">Loading...</div>
         <h1 class="mb-2"><i class="bi bi-bar-chart-line me-2"></i>Market</h1>
@@ -51,55 +50,42 @@
 
         <div class="row mb-2">
             <!-- Top Gainers -->
-            <div class="col-md-4 col-xl-4 mb-1">
-                <h2 class="mb-2"><i class="bi bi-arrow-up-circle me-2"></i>Top Gainers</h2>
-                <div class="row mb-2"></div>
-            </div>
+            <div class="col-md-4 col-xl-4 mb-1"><h2 class="mb-2"><i class="bi bi-arrow-up-circle me-2"></i>Top Gainers</h2><div class="row mb-2"></div></div>
             <!-- Top Losers -->
-            <div class="col-md-4 col-xl-4 mb-1">
-                <h2 class="mb-2"><i class="bi bi-arrow-down-circle me-2"></i>Top Losers</h2>
-                <div class="row mb-2"></div>
-            </div>
+            <div class="col-md-4 col-xl-4 mb-1"><h2 class="mb-2"><i class="bi bi-arrow-down-circle me-2"></i>Top Losers</h2><div class="row mb-2"></div></div>
             <!-- Volume Gainers -->
-            <div class="col-md-4 col-xl-4 mb-1">
-                <h2 class="mb-2"><i class="bi bi-graph-up me-2"></i>Volume Gainers</h2>
-                <div class="row mb-2"></div>
-            </div>
+            <div class="col-md-4 col-xl-4 mb-1"><h2 class="mb-2"><i class="bi bi-graph-up me-2"></i>Volume Gainers</h2><div class="row mb-2"></div></div>
         </div>
 
         <h2 class="mb-2"><i class="bi bi-buildings me-2"></i>Main Board</h2>
-        <div class="row" id="companyCards">
-
-        </div>
+        <div class="row" id="companyCards"></div>
     </section>
-    <!-- main boaerd ends here they is alot of repeated code wecan reduce  -->
+
     <section id="portfolio" class="content-section">
         <div class="loading" id="portfolio-loading">Loading...</div>
         <h1 class="mb-2"><i class="bi bi-wallet2 me-2"></i>Portfolio</h1>
         <div class="portfolio-summary">
             <h2><i class="bi bi-pie-chart me-2"></i>Portfolio Overview</h2>
-            <div class="row">
-                <div class="col-md-4"><small class="text-muted d-block"><i class="bi bi-wallet me-1"></i>Total Value</small><span class="fw-bold"></span></div>
-                <div class="col-md-4"><small class="text-muted d-block"><i class="bi bi-cash-stack me-1"></i>Cash Balance</small><span class="fw-bold text-success"></span></div>
-                <div class="col-md-4"><small class="text-muted d-block"><i class="bi bi-graph-up me-1"></i>Daily Change</small><span class="fw-bold"></span></div>
-            </div>
+            <div class="row here"></div>
         </div>
         <div class="row mb-2">
             <div class="col-md-6 col-xl-6 mb-1">
                 <div class="chart-card">
-                    <h3><i class="bi bi-line-chart me-2"></i>Portfolio Performance</h3><canvas id="performanceChart"></canvas>
+                    <h3><i class="bi bi-line-chart me-2"></i>Portfolio Performance</h3>
+                    <canvas id="performanceChart"></canvas>
                 </div>
             </div>
             <div class="col-md-6 col-xl-6 mb-1">
                 <div class="chart-card">
-                    <h3><i class="bi bi-pie-chart-fill me-2"></i>Asset Allocation</h3><canvas id="allocationChart"></canvas>
+                    <h3><i class="bi bi-pie-chart-fill me-2"></i>Asset Allocation</h3>
+                    <canvas id="allocationChart"></canvas>
                 </div>
             </div>
         </div>
         <h2 class="mb-2"><i class="bi bi-list-ul me-2"></i>Your Positions</h2>
-        <div id="positions-container"></div>
+        <!-- Portfolio cards will be dynamically inserted here -->
     </section>
-     
+
     <section id="learn" class="content-section">
         <div class="loading" id="learn-loading">Loading...</div>
         <h1 class="mb-4"><i class="bi bi-book me-2"></i>Learn About Investing</h1>
@@ -226,146 +212,126 @@
                     <div class="card-body">
                         <p>Explore these resources to deepen your understanding of investing:</p>
                         <ul class="list-group">
-                            <li class="list-group-item bg-dark"><a href="https://www.investopedia.com" target="_blank"
-                                    class="text-white">Investopedia</a> - Comprehensive articles on investing basics.
+                            <li class="list-group-item "><a href="https://www.investopedia.com" target="_blank"
+                                    class="text-black">Investopedia</a> - Comprehensive articles on investing basics.
                             </li>
-                            <li class="list-group-item bg-dark"><a href="https://www.bloomberg.com" target="_blank"
-                                    class="text-white">Bloomberg</a> - Market news and analysis.</li>
-                            <li class="list-group-item bg-dark"><a href="https://www.morningstar.com" target="_blank"
-                                    class="text-white">Morningstar</a> - Stock and fund research tools.</li>
+                            <li class="list-group-item"><a href="https://www.bloomberg.com" target="_blank"
+                                    class="text-black">Bloomberg</a> - Market news and analysis.</li>
+                            <li class="list-group-item"><a href="https://www.morningstar.com" target="_blank"
+                                    class="text-black">Morningstar</a> - Stock and fund research tools.</li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-
-
-
-
     </section>
+    
     <section id="trade" class="content-section">
         <div class="loading" id="trade-loading">Loading...</div>
         <h1><i class="bi bi-arrow-left-right me-2"></i>Trade</h1>
-
-
         <div class="row mb-2">
             <div class="col-md-6 col-xl-6 mb-1">
-                <div class="card bg-dark">
+                <div class="card">
                     <div class="card-body">
                         <h1 class="mb-4"><i class="bi bi-cart-plus me-2"></i>Place an Order</h1>
-                        <div class="mb-2"><input type="text" class="form-control bg-dark text-white"
-                                placeholder="Search companies..." id="companySearch">
-                            <div class="list-group mt-1" id="searchResults" style="display:none"><a href="#"
-                                    class="list-group-item list-group-item-action bg-dark text-white company-item">AIRTEL</a><a
-                                    href="#"
-                                    class="list-group-item list-group-item-action bg-dark text-white company-item">BHL</a><a
-                                    href="#"
-                                    class="list-group-item list-group-item-action bg-dark text-white company-item">FDH</a><a
-                                    href="#"
-                                    class="list-group-item list-group-item-action bg-dark text-white company-item">FMBCH</a><a
-                                    href="#"
-                                    class="list-group-item list-group-item-action bg-dark text-white company-item">ICON</a><a
-                                    href="#"
-                                    class="list-group-item list-group-item-action bg-dark text-white company-item">ILLOVO</a><a
-                                    href="#"
-                                    class="list-group-item list-group-item-action bg-dark text-white company-item">MPICO</a><a
-                                    href="#"
-                                    class="list-group-item list-group-item-action bg-dark text-white company-item">NBM</a><a
-                                    href="#"
-                                    class="list-group-item list-group-item-action bg-dark text-white company-item">NBS</a><a
-                                    href="#"
-                                    class="list-group-item list-group-item-action bg-dark text-white company-item">NICO</a><a
-                                    href="#"
-                                    class="list-group-item list-group-item-action bg-dark text-white company-item">NITL</a><a
-                                    href="#"
-                                    class="list-group-item list-group-item-action bg-dark text-white company-item">OMU</a><a
-                                    href="#"
-                                    class="list-group-item list-group-item-action bg-dark text-white company-item">PCL</a><a
-                                    href="#"
-                                    class="list-group-item list-group-item-action bg-dark text-white company-item">STANDARD</a><a
-                                    href="#"
-                                    class="list-group-item list-group-item-action bg-dark text-white company-item">SUNBIRD</a><a
-                                    href="#"
-                                    class="list-group-item list-group-item-action bg-dark text-white company-item">TNM</a>
-                            </div>
+                        <div class="mb-2">
+                            <input type="text" class="form-control" placeholder="Search companies..." id="companySearch">
+                            <div class="list-group mt-1" id="searchResults" style="display:none"></div>
                         </div>
-                        <div class="card bg-dark selected-company mb-2">
+                        <div class="card selected-company mb-2">
                             <div class="card-body">
                                 <div class="row align-items-center">
                                     <div class="col-8">
                                         <h4 id="selectedCompany">AIRTEL</h4>
-                                        <div class="d-flex align-items-center"><span class="h5 me-3"
-                                                id="stockPrice">MK128.11</span><span class="text-success"
-                                                id="priceChange">+2.56%</span></div>
+                                        <div class="d-flex align-items-center">
+                                            <span class="h5 me-3" id="stockPrice">MK128.11</span>
+                                            <span class="text-success" id="priceChange">+2.56%</span>
+                                        </div>
                                     </div>
-                                    <div class="col-4"><canvas id="miniChart" width="100" height="40"></canvas></div>
+                                    <div class="col-4">
+                                        <canvas id="miniChart" width="100" height="40"></canvas>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row g-2">
                             <div class="col-12">
-                                <div class="btn-group w-100"><button class="btn btn-success active"
-                                        id="btnBuy">Buy</button>           <button class="btn btn-danger"
-                                        id="btnSell">Sell</button>
+                                <div class="btn-group w-100">
+                                    <button class="btn btn-success active" id="btnBuy">Buy</button>
+                                    <button class="btn btn-danger" id="btnSell">Sell</button>
                                 </div>
                             </div>
-                            <div class="col-12"><select class="form-select bg-dark text-white" id="orderType">
+                            <div class="col-12">
+                                <select class="form-select" id="orderType">
                                     <option>Market Order</option>
                                     <option>Limit Order</option>
                                     <option>Stop Order</option>
-                                </select></div>
-                            <div class="col-12"><input type="number" class="form-control bg-dark text-white"
-                                    placeholder="Quantity" id="quantity"></div>
+                                </select>
+                            </div>
                             <div class="col-12">
-                                <div class="card bg-dark totals p-2">
-                                    <div class="d-flex justify-content-between small mb-1"><span>Total Shares
-                                            Value:</span><span id="sharesValue">MK0.00</span></div>
-                                    <div class="d-flex justify-content-between small mb-1"><span>Commission (1 -
-                                            2%):</span><span id="commission">MK0.00</span></div>
-                                    <div class="d-flex justify-content-between small mb-1"><span>Transaction
-                                            Fee:</span><span id="transactionFee">MK550</span></div>
+                                <input type="number" class="form-control" placeholder="Quantity" id="quantity">
+                            </div>
+                            <div class="col-12">
+                                <div class="card totals p-2">
+                                    <div class="d-flex justify-content-between small mb-1">
+                                        <span>Total Shares Value:</span>
+                                        <span id="sharesValue">MK0.00</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between small mb-1">
+                                        <span>Commission (1 - 2%):</span>
+                                        <span id="commission">MK0.00</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between small mb-1">
+                                        <span>Transaction Fee:</span>
+                                        <span id="transactionFee">MK550</span>
+                                    </div>
                                     <hr class="my-1">
-                                    <div class="d-flex justify-content-between fw-bold"><span>Total Cost:</span><span
-                                            id="totalCost">MK550</span></div>
+                                    <div class="d-flex justify-content-between fw-bold">
+                                        <span>Total Cost:</span>
+                                        <span id="totalCost">MK550</span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-12"><button class="btn btn-primary w-100" data-bs-toggle="modal"
-                                    data-bs-target="#orderModal">Preview Order</button></div>
+                            <div class="col-12">
+                                <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#orderModal">Preview Order</button>
+                            </div>
                         </div>
                     </div>
-
                 </div>
             </div>
-
             <div class="col-md-6 col-xl-6 mb-1">
                 <div class="mt-3">
                     <h2 class="mb-2"><i class="bi bi-clock-history me-2"></i>Orders History</h2>
                     <div class="row g-1 mb-2">
-                        <div class="col-md-3"><select class="form-select bg-dark text-white border-secondary"
-                                id="orderTypeFilter">
+                        <div class="col-md-3">
+                            <select class="form-select border-secondary" id="orderTypeFilter">
                                 <option value="">All Order Types</option>
                                 <option value="Market Order">Market Order</option>
                                 <option value="Limit Order">Limit Order</option>
                                 <option value="Stop Order">Stop Order</option>
-                            </select></div>
-                        <div class="col-md-3"><select class="form-select bg-dark text-white border-secondary"
-                                id="actionFilter">
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select border-secondary" id="actionFilter">
                                 <option value="">All Actions</option>
                                 <option value="Buy">Buy</option>
                                 <option value="Sell">Sell</option>
-                            </select></div>
-                        <div class="col-md-3"><select class="form-select bg-dark text-white border-secondary"
-                                id="statusFilter">
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select border-secondary" id="statusFilter">
                                 <option value="">All Status</option>
                                 <option value="Completed">Completed</option>
                                 <option value="Pending">Pending</option>
                                 <option value="Cancelled">Cancelled</option>
-                            </select></div>
-                        <div class="col-md-3"><input type="date"
-                                class="form-control bg-dark text-white border-secondary" id="dateFilter"></div>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="date" class="form-control border-secondary" id="dateFilter">
+                        </div>
                     </div>
                     <div class="table-responsive">
-                        <table class="table table-light table-hover">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th>Date</th>
@@ -377,50 +343,14 @@
                                     <th>Status</th>
                                 </tr>
                             </thead>
-                            <tbody id="ordersTable">
-                                <tr>
-                                    <td>2025-03-20</td>
-                                    <td>AIRTEL</td>
-                                    <td>Buy</td>
-                                    <td>Market Order</td>
-                                    <td>100</td>
-                                    <td>MK12,911.00</td>
-                                    <td><span class="badge bg-success">Completed</span></td>
-                                </tr>
-                                <tr>
-                                    <td>2025-03-19</td>
-                                    <td>NBM</td>
-                                    <td>Sell</td>
-                                    <td>Limit Order</td>
-                                    <td>5</td>
-                                    <td>MK31,556.55</td>
-                                    <td><span class="badge bg-warning">Pending</span></td>
-                                </tr>
-                                <tr>
-                                    <td>2025-03-18</td>
-                                    <td>FDH</td>
-                                    <td>Buy</td>
-                                    <td>Stop Order</td>
-                                    <td>50</td>
-                                    <td>MK16,314.50</td>
-                                    <td><span class="badge bg-success">Completed</span></td>
-                                </tr>
-                                <tr>
-                                    <td>2025-03-17</td>
-                                    <td>TNM</td>
-                                    <td>Sell</td>
-                                    <td>Market Order</td>
-                                    <td>200</td>
-                                    <td>MK5,555.00</td>
-                                    <td><span class="badge bg-danger">Cancelled</span></td>
-                                </tr>
-                            </tbody>
+                            <tbody id="ordersTable"></tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
     <section id="transfers" class="content-section">
         <div class="loading" id="transfers-loading">Loading...</div>
         <h1 class="mb-2"><i class="bi bi-cash-coin me-2"></i>Transfers</h1>
@@ -428,67 +358,73 @@
             <div class="col-md-6 col-xl-6 mb-1">
                 <div class="row g-2">
                     <div class="col-md-6 col-xl-6 mb-1">
-                        <div class="card ">
-                            <div class="card-body"><img src="../../Dist/images/airtelmoney.png" alt="Airtel Logo"
-                                    class="company-logo me-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <img src="../../Dist/images/airtelmoney.png" alt="Airtel Logo" class="company-logo me-3">
                                 <h5 class="card-title">Airtel Money</h5>
                                 <p class="card-text">Instant transfers via Airtel Money</p>
-                                <div class="d-flex gap-2 justify-content-center"><button class="btn btn-outline-danger"
-                                        data-bs-toggle="modal" data-bs-target="#mobileMoneyDepositModal"><i
-                                            class="bi bi-arrow-down-circle me-1"></i>Deposit</button><button
-                                        class="btn btn-outline-danger" data-bs-toggle="modal"
-                                        data-bs-target="#mobileMoneyWithdrawModal"><i
-                                            class="bi bi-arrow-up-circle me-1"></i>Withdraw</button></div>
+                                <div class="d-flex gap-2 justify-content-center">
+                                    <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#mobileMoneyDepositModal">
+                                        <i class="bi bi-arrow-down-circle me-1"></i>Deposit
+                                    </button>
+                                    <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#mobileMoneyWithdrawModal">
+                                        <i class="bi bi-arrow-up-circle me-1"></i>Withdraw
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-
                     <div class="col-md-6 col-xl-6 mb-1">
-                        <div class="card ">
-                            <div class="card-body"><img src="../../Dist/images/mpamba.png" alt="Airtel Logo"
-                                    class="company-logo me-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <img src="../../Dist/images/mpamba.png" alt="Mpamba Logo" class="company-logo me-3">
                                 <h5 class="card-title">TNM Mpamba</h5>
                                 <p class="card-text">Instant transfers via Mpamba</p>
-                                <div class="d-flex gap-2 justify-content-center"><button class="btn btn-outline-success"
-                                        data-bs-toggle="modal" data-bs-target="#mobileMoneyDepositModal"><i
-                                            class="bi bi-arrow-down-circle me-1"></i>Deposit</button><button
-                                        class="btn btn-outline-success" data-bs-toggle="modal"
-                                        data-bs-target="#mobileMoneyWithdrawModal"><i
-                                            class="bi bi-arrow-up-circle me-1"></i>Withdraw</button></div>
+                                <div class="d-flex gap-2 justify-content-center">
+                                    <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#mobileMoneyDepositModal">
+                                        <i class="bi bi-arrow-down-circle me-1"></i>Deposit
+                                    </button>
+                                    <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#mobileMoneyWithdrawModal">
+                                        <i class="bi bi-arrow-up-circle me-1"></i>Withdraw
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
             <div class="col-md-6 col-xl-6 mb-1">
                 <div class="mt-3">
                     <h2 class="mb-2"><i class="bi bi-clock-history me-2"></i>Transaction History</h2>
                     <div class="row g-1 mb-2">
-                        <div class="col-md-3"><select class="form-select bg-dark text-white border-secondary"
-                                id="methodFilter">
+                        <div class="col-md-3">
+                            <select class="form-select border-secondary" id="methodFilter">
                                 <option value="">All Methods</option>
-                                <option value="Bank Transfer">Airtel Money</option>
-                                <option value="Credit/Debit Card">Mpamba</option>
-                            </select></div>
-                        <div class="col-md-3"><select class="form-select bg-dark text-white border-secondary"
-                                id="typeFilter">
+                                <option value="Airtel Money">Airtel Money</option>
+                                <option value="Mpamba">Mpamba</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select border-secondary" id="typeFilter">
                                 <option value="">All Types</option>
                                 <option value="Deposit">Deposit</option>
                                 <option value="Withdrawal">Withdrawal</option>
-                            </select></div>
-                        <div class="col-md-3"><select class="form-select bg-dark text-white border-secondary"
-                                id="statusFilter">
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select border-secondary" id="statusFilter">
                                 <option value="">All Status</option>
                                 <option value="Completed">Completed</option>
                                 <option value="Pending">Pending</option>
                                 <option value="Failed">Failed</option>
-                            </select></div>
-                        <div class="col-md-3"><input type="date"
-                                class="form-control bg-dark text-white border-secondary" id="dateFilter"></div>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="date" class="form-control border-secondary" id="dateFilter">
+                        </div>
                     </div>
                     <div class="table-responsive">
-                        <table class="table table-light table-hover">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th>Date</th>
@@ -498,44 +434,14 @@
                                     <th>Status</th>
                                 </tr>
                             </thead>
-                            <tbody id="transactionTable">
-                                <tr>
-                                    <td>2025-03-20</td>
-                                    <td>Mpamba</td>
-                                    <td>Deposit</td>
-                                    <td>MK50,000</td>
-                                    <td><span class="badge bg-success">Completed</span></td>
-                                </tr>
-                                <tr>
-                                    <td>2025-03-19</td>
-                                    <td>Airtel Money</td>
-                                    <td>Withdrawal</td>
-                                    <td>MK30,000</td>
-                                    <td><span class="badge bg-warning">Pending</span></td>
-                                </tr>
-                                <tr>
-                                    <td>2025-03-18</td>
-                                    <td>Mpamba</td>
-                                    <td>Deposit</td>
-                                    <td>MK25,000</td>
-                                    <td><span class="badge bg-success">Completed</span></td>
-                                </tr>
-                                <tr>
-                                    <td>2025-03-17</td>
-                                    <td>Airtel Money</td>
-                                    <td>Withdrawal</td>
-                                    <td>MK15,000</td>
-                                    <td><span class="badge bg-danger">Failed</span></td>
-                                </tr>
-                            </tbody>
+                            <tbody id="transactionTable"></tbody>
                         </table>
                     </div>
                 </div>
             </div>
-
         </div>
-
     </section>
+    
     <nav class="footer-nav">
         <a href="#market" class="nav-item active" title="View Market Data" aria-label="Market">
             <i class="bi bi-bar-chart-line nav-icon"></i>Market
@@ -553,392 +459,10 @@
             <i class="bi bi-cash-coin nav-icon"></i>Transfers
         </a>
     </nav>
-    <div id="toast" class="toast">
-        <i id="toastIcon" class="bi"></i>
-        <span id="toastMessage"></span>
-    </div>
 
-
-    <!-- modals start here we cant touch them they stay like that  -->
-        <div class="modal fade" id="companyDetailsModal" tabindex="-1">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content bg-dark text-white">
-                <div class="modal-header">
-                    <h5 class="modal-title">
-                        <i class="bi bi-building me-2"></i>
-                        <span id="companyDetailsName"></span>
-                    </h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- Company Basic Info -->
-                    <div class="d-flex align-items-center mb-3">
-                        <img id="companyDetailsLogo" src="" alt="Company Logo" class="company-logo me-3">
-                        <div>
-                            <h5 id="companyDetailsFullName" class="mb-0"></h5>
-                            <p class="text-muted mb-0" id="companyDetailsSector"></p>
-                        </div>
-                    </div>
-                    <!-- Stock Info -->
-                    <div class="mb-3">
-                        <span id="companyDetailsPrice" class="h5"></span>
-                        <small id="companyDetailsDailyChange" class="ms-2"></small>
-                    </div>
-                    <!-- Company Details -->
-                    <div class="row">
-                        <div class="col-md-6">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item bg-dark text-white"><strong>Ticker:</strong> <span id="companyDetailsTicker"></span></li>
-                                <li class="list-group-item bg-dark text-white"><strong>Open:</strong> <span id="companyDetailsOpen"></span></li>
-                                <li class="list-group-item bg-dark text-white"><strong>High:</strong> <span id="companyDetailsHigh"></span></li>
-                                <li class="list-group-item bg-dark text-white"><strong>Low:</strong> <span id="companyDetailsLow"></span></li>
-                                <li class="list-group-item bg-dark text-white"><strong>Volume:</strong> <span id="companyDetailsVolume"></span></li>
-                                <li class="list-group-item bg-dark text-white"><strong>Market Cap:</strong> <span id="companyDetailsMarketCap"></span></li>
-                                <li class="list-group-item bg-dark text-white"><strong>Listing Date:</strong> <span id="companyDetailsListingDate"></span></li>
-                                <li class="list-group-item bg-dark text-white"><strong>Listing Price:</strong> <span id="companyDetailsListingPrice"></span></li>
-                                <li class="list-group-item bg-dark text-white"><strong>Shares in Issue:</strong> <span id="companyDetailsShares"></span></li>
-                            </ul>
-                        </div>
-                        <div class="col-md-6">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item bg-dark text-white"><strong>CEO:</strong> <span id="companyDetailsCEO"></span></li>
-                                <li class="list-group-item bg-dark text-white"><strong>CFO:</strong> <span id="companyDetailsCFO"></span></li>
-                                <li class="list-group-item bg-dark text-white"><strong>Company Secretary:</strong> <span id="companyDetailsSecretary"></span></li>
-                                <li class="list-group-item bg-dark text-white"><strong>Transfer Secretary:</strong> <span id="companyDetailsTransferSecretary"></span></li>
-                                <li class="list-group-item bg-dark text-white"><strong>Address:</strong> <span id="companyDetailsAddress"></span></li>
-                                <li class="list-group-item bg-dark text-white"><strong>Phone:</strong> <span id="companyDetailsTel"></span></li>
-                                <li class="list-group-item bg-dark text-white"><strong>Website:</strong> <a href="#" target="_blank" id="companyDetailsWebsite" class="text-info"></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- Additional Fields from investorScripts.js -->
-                    <div class="row mt-3">
-                        <div class="col-md-6">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item bg-dark text-white"><strong>Last Updated:</strong> <span id="companyDetailsLastUpdate"></span></li>
-                                <li class="list-group-item bg-dark text-white"><strong>Overview:</strong> <span id="companyDetailsOverview"></span></li>
-                                <li class="list-group-item bg-dark text-white"><strong>Day Range:</strong> <span id="companyDetailsDayRange"></span></li>
-                                <li class="list-group-item bg-dark text-white"><strong>52 Week Range:</strong> <span id="companyDetails52WRange"></span></li>
-                                <li class="list-group-item bg-dark text-white"><strong>P/E Ratio:</strong> <span id="companyDetailsPE"></span></li>
-                                <li class="list-group-item bg-dark text-white"><strong>Dividend Yield:</strong> <span id="companyDetailsDivYield"></span></li>
-                                <li class="list-group-item bg-dark text-white"><strong>RSI:</strong> <span id="companyDetailsRSI"></span></li>
-                                <li class="list-group-item bg-dark text-white"><strong>MACD:</strong> <span id="companyDetailsMACD"></span></li>
-                                <li class="list-group-item bg-dark text-white"><strong>50 DMA:</strong> <span id="companyDetails50DMA"></span></li>
-                                <li class="list-group-item bg-dark text-white"><strong>200 DMA:</strong> <span id="companyDetails200DMA"></span></li>
-                            </ul>
-                        </div>
-                        <div class="col-md-6">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item bg-dark text-white"><strong>Technical Summary:</strong> <span id="companyDetailsTechSummary"></span></li>
-                                <li class="list-group-item bg-dark text-white"><strong>EPS:</strong> <span id="companyDetailsEPS"></span></li>
-                                <li class="list-group-item bg-dark text-white"><strong>ROE:</strong> <span id="companyDetailsROE"></span></li>
-                                <li class="list-group-item bg-dark text-white"><strong>Debt/Equity:</strong> <span id="companyDetailsDebtEquity"></span></li>
-                                <li class="list-group-item bg-dark text-white"><strong>P/B Ratio:</strong> <span id="companyDetailsPB"></span></li>
-                                <li class="list-group-item bg-dark text-white"><strong>Fundamental Summary:</strong> <span id="companyDetailsFundSummary"></span></li>
-                                <li class="list-group-item bg-dark text-white"><strong>PEG Ratio:</strong> <span id="companyDetailsPEG"></span></li>
-                                <li class="list-group-item bg-dark text-white"><strong>Current Ratio:</strong> <span id="companyDetailsCurrentRatio"></span></li>
-                                <li class="list-group-item bg-dark text-white"><strong>ROIC:</strong> <span id="companyDetailsROIC"></span></li>
-                                <li class="list-group-item bg-dark text-white"><strong>EBITDA Margin:</strong> <span id="companyDetailsEBITDA"></span></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- News -->
-                    <div class="mt-3">
-                        <h6>Recent News</h6>
-                        <ul id="companyDetailsNews" class="list-unstyled"></ul>
-                    </div>
-                    <!-- Ownership -->
-                    <div class="mt-3">
-                        <h6>Ownership Structure</h6>
-                        <div class="progress">
-                            <div class="progress-bar bg-primary" id="companyDetailsInst" style="width: 0%"></div>
-                            <div class="progress-bar bg-secondary" id="companyDetailsInsiders" style="width: 0%"></div>
-                            <div class="progress-bar bg-info" id="companyDetailsPublic" style="width: 0%"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="stockQuoteModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content bg-dark">
-                <div class="modal-header">
-                    <h5 class="modal-title"><span id="modalCompanyName"></span> Stock Quote</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="d-flex align-items-center mb-2">
-                        <img id="modalCompanyLogo" class="company-logo me-3" alt="Company Logo">
-                        <div>
-                            <h5 id="modalCompanyFullName" class="mb-0"></h5>
-                            <p id="modalCompanyTicker" class="card-text mb-0"></p>
-                        </div>
-                    </div>
-                    <div class="stock-info-row"><span class="stock-info-label">Current Price</span><span id="modalCurrentPrice" class="stock-info-value"></span></div>
-                    <div class="stock-info-row"><span class="stock-info-label">Daily Change</span><span id="modalDailyChange" class="stock-info-value"></span></div>
-                    <div class="stock-info-row"><span class="stock-info-label">Open</span><span id="modalOpen" class="stock-info-value"></span></div>
-                    <div class="stock-info-row"><span class="stock-info-label">High</span><span id="modalHigh" class="stock-info-value"></span></div>
-                    <div class="stock-info-row"><span class="stock-info-label">Low</span><span id="modalLow" class="stock-info-value"></span></div>
-                    <div class="stock-info-row"><span class="stock-info-label">Volume</span><span id="modalVolume" class="stock-info-value"></span></div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-buy text-white" onclick="alert('Buy functionality to be implemented')"><i class="bi bi-plus-circle me-1"></i>Buy</button>
-                    <button class="btn btn-sell text-white" onclick="alert('Sell functionality to be implemented')"><i class="bi bi-dash-circle me-1"></i>Sell</button>
-                    <button class="btn btn-details text-white" id="modalDetailsBtn"><i class="bi bi-info-circle me-1"></i>Full Details</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="userAccountModal" tabindex="-1" aria-labelledby="userAccountModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content bg-dark text-light">
-                <div class="modal-header border-0">
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body text-center">
-                    <div class="user-avatar mb-3">
-                        <div id="modal-profile-pic-container" class="profile-pic">
-                            <!-- Image will be dynamically inserted if user.profilePic exists -->
-                        </div>
-                    </div>
-                    <h5 id="user-name" class="mb-2"></h5>
-                    <p class="mb-1">Cash Balance: <span id="cash-balance" class="text-success"></span></p>
-                    <p class="mb-4">Portfolio Value: <span id="portfolio-value" class="text-success"></span></p>
-                    <div class="form-check text-start mb-3">
-                        <input class="form-check-input" type="checkbox" id="email-settings">
-                        <label class="form-check-label" for="email-settings">
-                            Receive emails for account activity
-                        </label>
-                    </div>
-                    <div class="d-flex gap-2 mb-2">
-                        <button class="btn btn-outline-success flex-fill" data-bs-toggle="modal" data-bs-target="#mobileMoneyDepositModal" title="Deposit Funds" aria-label="Deposit Funds">
-                            <i class="bi bi-arrow-down-circle me-2"></i>Deposit
-                        </button>
-                        <button class="btn btn-outline-danger flex-fill" data-bs-toggle="modal" data-bs-target="#mobileMoneyWithdrawModal" title="Withdraw Funds" aria-label="Withdraw Funds">
-                            <i class="bi bi-arrow-up-circle me-2"></i>Withdraw
-                        </button>
-                    </div>
-                    <button id="logout-btn" class="btn btn-outline-danger w-100" title="Log Out" aria-label="Log Out">
-                        <i class="bi bi-box-arrow-right me-2"></i>Log Out
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="orderModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content bg-dark">
-                <div class="modal-header">
-                    <h5 class="modal-title">Order Confirmation</h5><button type="button"
-                        class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row small mb-1">
-                        <div class="col-6">Action:</div>
-                        <div class="col-6 text-end text-success" id="modalAction">Buy</div>
-                        <div class="col-6">Company:</div>
-                        <div class="col-6 text-end" id="modalCompany">AIRTEL</div>
-                        <div class="col-6">Order Type:</div>
-                        <div class="col-6 text-end" id="modalType">Market Order</div>
-                        <div class="col-6">Quantity:</div>
-                        <div class="col-6 text-end" id="modalQty">0</div>
-                        <div class="col-6">Price per Share:</div>
-                        <div class="col-6 text-end" id="modalPrice">MK0.00</div>
-                        <div class="col-6">Total Cost:</div>
-                        <div class="col-6 text-end fw-bold" id="modalTotal">MK0.00</div>
-                    </div>
-                </div>
-                <div class="modal-footer"><button type="button" class="btn btn-secondary"
-                        data-bs-dismiss="modal">Cancel</button><button type="button" class="btn btn-primary"
-                        id="confirmOrder">Confirm Order</button></div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="mobileMoneyDepositModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content bg-dark">
-                <div class="modal-header">
-                    <h5 class="modal-title"><i class="bi bi-arrow-down-circle me-2"></i>Mobile Money Deposit</h5><button
-                        type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <p class="text-muted mb-2">Instantly deposit funds using Mpamba or Airtel Money.</p>
-                    <form id="mobileMoneyDepositForm">
-                        <div class="mb-2"><label for="depositProvider" class="form-label">Select Provider</label><select
-                                class="form-select bg-dark text-white" id="depositProvider" required>
-                                <option value="" disabled selected>Select a provider</option>
-                                <option value="mpamba">Mpamba</option>
-                                <option value="airtel">Airtel Money</option>
-                            </select></div>
-                        <div class="mb-2"><label for="depositPhoneNumber" class="form-label">Phone Number</label><input
-                                type="tel" class="form-control bg-dark text-white" id="depositPhoneNumber"
-                                placeholder="+265 XXX XXX XXX" required></div>
-                        <div class="mb-2"><label for="depositAmount" class="form-label">Amount (MK)</label><input
-                                type="number" class="form-control bg-dark text-white" id="depositAmount"
-                                placeholder="Enter amount in MK" min="100" required></div><button type="submit"
-                            class="btn btn-success w-100">Deposit Funds</button>
-                    </form>
-                    <p class="text-muted mt-2 small"><strong>Note:</strong> Ensure your mobile money account has
-                        sufficient funds.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="mobileMoneyWithdrawModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content bg-dark">
-                <div class="modal-header">
-                    <h5 class="modal-title"><i class="bi bi-arrow-up-circle me-2"></i>Mobile Money Withdrawal</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <p class="text-muted mb-2">Withdraw funds to your mobile money account.</p>
-                    <form id="mobileMoneyWithdrawForm">
-                        <div class="mb-2"><label for="withdrawProvider" class="form-label">Select
-                                Provider</label><select class="form-select bg-dark text-white" id="withdrawProvider"
-                                required>
-                                <option value="" disabled selected>Select a provider</option>
-                                <option value="mpamba">Mpamba</option>
-                                <option value="airtel">Airtel Money</option>
-                            </select></div>
-                        <div class="mb-2"><label for="withdrawPhoneNumber" class="form-label">Phone Number</label><input
-                                type="tel" class="form-control bg-dark text-white" id="withdrawPhoneNumber"
-                                placeholder="+265 XXX XXX XXX" required></div>
-                        <div class="mb-2"><label for="withdrawAmount" class="form-label">Amount (MK)</label><input
-                                type="number" class="form-control bg-dark text-white" id="withdrawAmount"
-                                placeholder="Enter amount in MK" min="100" max="4364.26" required></div><button
-                            type="submit" class="btn btn-danger w-100">Withdraw Funds</button>
-                    </form>
-                    <p class="text-muted mt-2 small"><strong>Note:</strong> Available balance: MK 4,364.26</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="transactionDetailsModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content bg-dark">
-                <div class="modal-header">
-                    <h5 class="modal-title"><i class="bi bi-receipt me-2"></i>Transaction Details</h5><button
-                        type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="stock-info-row"><span class="stock-info-label">Date</span><span id="modalTransDate"
-                            class="stock-info-value"></span></div>
-                    <div class="stock-info-row"><span class="stock-info-label">Method</span><span id="modalTransMethod"
-                            class="stock-info-value"></span></div>
-                    <div class="stock-info-row"><span class="stock-info-label">Type</span><span id="modalTransType"
-                            class="stock-info-value"></span></div>
-                    <div class="stock-info-row"><span class="stock-info-label">Amount</span><span id="modalTransAmount"
-                            class="stock-info-value"></span></div>
-                    <div class="stock-info-row"><span class="stock-info-label">Status</span><span id="modalTransStatus"
-                            class="stock-info-value"></span></div>
-                    <div class="stock-info-row"><span class="stock-info-label">Transaction ID</span><span
-                            id="modalTransID" class="stock-info-value"></span></div>
-                </div>
-                <div class="modal-footer"><button type="button" class="btn btn-secondary"
-                        data-bs-dismiss="modal">Close</button></div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="bankDepositModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content bg-dark">
-                <div class="modal-header">
-                    <h5 class="modal-title"><i class="bi bi-arrow-down-circle me-2"></i>Bank Deposit</h5><button
-                        type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <p class="text-muted mb-2">Deposit funds directly from your bank account.</p>
-                    <form id="bankDepositForm">
-                        <div class="mb-2"><label for="bankAccount" class="form-label">Select Bank Account</label><select
-                                class="form-select bg-dark text-white" id="bankAccount" required>
-                                <option value="" disabled selected>Select a bank account</option>
-                                <option value="nbm">National Bank (**** 1234)</option>
-                                <option value="standard">Standard Bank (**** 5678)</option>
-                                <option value="fdh">FDH Bank (**** 9012)</option>
-                            </select></div>
-                        <div class="mb-2"><label for="bankDepositAmount" class="form-label">Amount (MK)</label><input
-                                type="number" class="form-control bg-dark text-white" id="bankDepositAmount"
-                                placeholder="Enter amount in MK" min="100" required></div><button type="submit"
-                            class="btn btn-primary w-100">Deposit Funds</button>
-                    </form>
-                    <p class="text-muted mt-2 small"><strong>Note:</strong> Deposits may take 1-3 business days to
-                        process.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="bankWithdrawModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content bg-dark">
-                <div class="modal-header">
-                    <h5 class="modal-title"><i class="bi bi-arrow-up-circle me-2"></i>Bank Withdrawal</h5><button
-                        type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <p class="text-muted mb-2">Withdraw funds to your registered bank account.</p>
-                    <form id="bankWithdrawForm">
-                        <div class="mb-2"><label for="withdrawBankAccount" class="form-label">Select Bank
-                                Account</label><select class="form-select bg-dark text-white" id="withdrawBankAccount"
-                                required>
-                                <option value="" disabled selected>Select a bank account</option>
-                                <option value="nbm">National Bank (**** 1234)</option>
-                                <option value="standard">Standard Bank (**** 5678)</option>
-                                <option value="fdh">FDH Bank (**** 9012)</option>
-                            </select></div>
-                        <div class="mb-2"><label for="bankWithdrawAmount" class="form-label">Amount (MK)</label><input
-                                type="number" class="form-control bg-dark text-white" id="bankWithdrawAmount"
-                                placeholder="Enter amount in MK" min="100" max="4364.26" required></div><button
-                            type="submit" class="btn btn-danger w-100">Withdraw Funds</button>
-                    </form>
-                    <p class="text-muted mt-2 small"><strong>Note:</strong> Available balance: MK 4,364.26. Withdrawals
-                        may take 1-3 business days.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="creditCardDepositModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content bg-dark">
-                <div class="modal-header">
-                    <h5 class="modal-title"><i class="bi bi-credit-card me-2"></i>Credit/Debit Card Deposit</h5><button
-                        type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <p class="text-muted mb-2">Instantly deposit funds using your Visa or Mastercard.</p>
-                    <form id="creditCardDepositForm">
-                        <div class="mb-2"><label for="cardNumber" class="form-label">Card Number</label><input
-                                type="text" class="form-control bg-dark text-white" id="cardNumber"
-                                placeholder="XXXX XXXX XXXX XXXX" maxlength="19" required></div>
-                        <div class="row g-2 mb-2">
-                            <div class="col-6"><label for="expiryDate" class="form-label">Expiry Date</label><input
-                                    type="text" class="form-control bg-dark text-white" id="expiryDate"
-                                    placeholder="MM/YY" maxlength="5" required></div>
-                            <div class="col-6"><label for="cvv" class="form-label">CVV</label><input type="text"
-                                    class="form-control bg-dark text-white" id="cvv" placeholder="XXX" maxlength="3"
-                                    required></div>
-                        </div>
-                        <div class="mb-2"><label for="cardDepositAmount" class="form-label">Amount (MK)</label><input
-                                type="number" class="form-control bg-dark text-white" id="cardDepositAmount"
-                                placeholder="Enter amount in MK" min="100" required></div><button type="submit"
-                            class="btn btn-success w-100">Deposit Funds</button>
-                    </form>
-                    <p class="text-muted mt-2 small"><strong>Note:</strong> Ensure your card is enabled for online
-                        transactions.</p>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="helpModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content bg-dark">
+            <div class="modal-content ">
                 <div class="modal-header">
                     <h5 class="modal-title" id="helpModalLabel"><i class="bi bi-question-circle me-2"></i>Help & FAQs
                     </h5>
@@ -1018,7 +542,7 @@
                         <h6>Feedback</h6>
                         <form id="feedbackForm">
                             <div class="mb-2">
-                                <select class="form-select bg-dark text-white" id="feedbackType" required>
+                                <select class="form-select  text-white" id="feedbackType" required>
                                     <option value="" disabled selected>Type</option>
                                     <option value="suggestion">Suggestion</option>
                                     <option value="issue">Issue</option>
@@ -1026,7 +550,7 @@
                                 </select>
                             </div>
                             <div class="mb-2">
-                                <textarea class="form-control bg-dark text-white" id="feedbackMessage" rows="3"
+                                <textarea class="form-control  text-white" id="feedbackMessage" rows="3"
                                     placeholder="Your feedback" required></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary w-100">Submit</button>
@@ -1039,44 +563,323 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="orderDetailsModal" tabindex="-1">
+    <div class="modal fade" id="userAccountModal" tabindex="-1" aria-labelledby="userAccountModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+              <div class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                    <i class="bi bi-sun"></i>
+                    <i class="bi bi-moon"></i>
+                </div>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="user-avatar mb-3">
+                        <div id="modal-profile-pic-container" class="profile-pic">
+                            <div id="modal-user-initials"></div>
+                        </div>
+                    </div>
+                    <h5 id="user-name" class="mb-2"></h5>
+                    <p class="mb-1">Cash Balance: <span id="cash-balance" class="text-success"></span></p>
+                    <p class="mb-4">Portfolio Value: <span id="portfolio-value" class="text-success"></span></p>
+
+                    <div class="d-flex gap-2 mb-2">
+                        <button class="btn btn-outline-success flex-fill" data-bs-toggle="modal" data-bs-target="#mobileMoneyDepositModal" title="Deposit Funds" aria-label="Deposit Funds">
+                            <i class="bi bi-arrow-down-circle me-2"></i>Deposit
+                        </button>
+                        <button class="btn btn-outline-danger flex-fill" data-bs-toggle="modal" data-bs-target="#mobileMoneyWithdrawModal" title="Withdraw Funds" aria-label="Withdraw Funds">
+                            <i class="bi bi-arrow-up-circle me-2"></i>Withdraw
+                        </button>
+                    </div>
+                    <button id="logout-btn" class="btn btn-outline-danger w-100" title="Log Out" aria-label="Log Out">
+                        <i class="bi bi-box-arrow-right me-2"></i>Log Out
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="stockQuoteModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content bg-dark">
+            <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title"><i class="bi bi-receipt-cutoff me-2"></i>Order Details</h5><button
-                        type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
+                    <h5 class="modal-title"><span id="modalCompanyName"></span> Stock Quote</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="stock-info-row"><span class="stock-info-label">Date</span><span id="modalOrderDate"
-                            class="stock-info-value"></span></div>
-                    <div class="stock-info-row"><span class="stock-info-label">Company</span><span
-                            id="modalOrderCompany" class="stock-info-value"></span></div>
-                    <div class="stock-info-row"><span class="stock-info-label">Action</span><span id="modalOrderAction"
-                            class="stock-info-value"></span></div>
-                    <div class="stock-info-row"><span class="stock-info-label">Order Type</span><span
-                            id="modalOrderType" class="stock-info-value"></span></div>
-                    <div class="stock-info-row"><span class="stock-info-label">Quantity</span><span
-                            id="modalOrderQuantity" class="stock-info-value"></span></div>
-                    <div class="stock-info-row"><span class="stock-info-label">Total Cost</span><span
-                            id="modalOrderCost" class="stock-info-value"></span></div>
-                    <div class="stock-info-row"><span class="stock-info-label">Status</span><span id="modalOrderStatus"
-                            class="stock-info-value"></span></div>
-                    <div class="stock-info-row"><span class="stock-info-label">Order ID</span><span id="modalOrderID"
-                            class="stock-info-value"></span></div>
+                    <div class="d-flex align-items-center mb-2">
+                        <img id="modalCompanyLogo" class="company-logo me-3" alt="Company Logo">
+                        <div>
+                            <h5 id="modalCompanyFullName" class="mb-0"></h5>
+                            <p id="modalCompanyTicker" class="card-text mb-0"></p>
+                        </div>
+                    </div>
+                    <div class="stock-info-row"><span class="stock-info-label">Current Price</span><span id="modalCurrentPrice" class="stock-info-value"></span></div>
+                    <div class="stock-info-row"><span class="stock-info-label">Daily Change</span><span id="modalDailyChange" class="stock-info-value"></span></div>
+                    <div class="stock-info-row"><span class="stock-info-label">Open</span><span id="modalOpen" class="stock-info-value"></span></div>
+                    <div class="stock-info-row"><span class="stock-info-label">High</span><span id="modalHigh" class="stock-info-value"></span></div>
+                    <div class="stock-info-row"><span class="stock-info-label">Low</span><span id="modalLow" class="stock-info-value"></span></div>
+                    <div class="stock-info-row"><span class="stock-info-label">Volume</span><span id="modalVolume" class="stock-info-value"></span></div>
                 </div>
-                <div class="modal-footer"><button type="button" class="btn btn-secondary"
-                        data-bs-dismiss="modal">Close</button></div>
+                <div class="modal-footer">
+                    <button class="btn btn-buy text-white" onclick="alert('Buy functionality to be implemented')"><i class="bi bi-plus-circle me-1"></i>Buy</button>
+                    <button class="btn btn-sell text-white" onclick="alert('Sell functionality to be implemented')"><i class="bi bi-dash-circle me-1"></i>Sell</button>
+                    <button class="btn btn-details text-white" id="modalDetailsBtn"><i class="bi bi-info-circle me-1"></i>Full Details</button>
+                </div>
+            </div>
+        </div>
+    </div>  
+    <div class="modal fade" id="companyDetailsModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="bi bi-building me-2"></i>
+                        <span id="companyDetailsName"></span>
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Company Basic Info -->
+                    <div class="d-flex align-items-center mb-3">
+                        <img id="companyDetailsLogo" src="" alt="Company Logo" class="company-logo me-3">
+                        <div>
+                            <h5 id="companyDetailsFullName" class="mb-0"></h5>
+                            <p class="mb-0" id="companyDetailsSector"></p>
+                        </div>
+                    </div>
+                    <!-- Stock Info -->
+                    <div class="mb-3">
+                        <span id="companyDetailsPrice" class="h5"></span>
+                        <small id="companyDetailsDailyChange" class="ms-2"></small>
+                    </div>
+                    <!-- Company Details -->
+                    <div class="row">
+                        <div class="col-md-6"> 
+                            <ul class="list-group ">
+                                <li class="list-group-item "><strong>Ticker:</strong> <span id="companyDetailsTicker"></span></li>
+                                <li class="list-group-item "><strong>Open:</strong> <span id="companyDetailsOpen"></span></li>
+                                <li class="list-group-item "><strong>High:</strong> <span id="companyDetailsHigh"></span></li>
+                                <li class="list-group-item "><strong>Low:</strong> <span id="companyDetailsLow"></span></li>
+                                <li class="list-group-item "><strong>Volume:</strong> <span id="companyDetailsVolume"></span></li>
+                                <li class="list-group-item "><strong>Market Cap:</strong> <span id="companyDetailsMarketCap"></span></li>
+                                <li class="list-group-item "><strong>Listing Date:</strong> <span id="companyDetailsListingDate"></span></li>
+                                <li class="list-group-item "><strong>Listing Price:</strong> <span id="companyDetailsListingPrice"></span></li>
+                                <li class="list-group-item "><strong>Shares in Issue:</strong> <span id="companyDetailsShares"></span></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-group ">
+                                <li class="list-group-item "><strong>CEO:</strong> <span id="companyDetailsCEO"></span></li>
+                                <li class="list-group-item "><strong>CFO:</strong> <span id="companyDetailsCFO"></span></li>
+                                <li class="list-group-item "><strong>Company Secretary:</strong> <span id="companyDetailsSecretary"></span></li>
+                                <li class="list-group-item "><strong>Transfer Secretary:</strong> <span id="companyDetailsTransferSecretary"></span></li>
+                                <li class="list-group-item "><strong>Address:</strong> <span id="companyDetailsAddress"></span></li>
+                                <li class="list-group-item "><strong>Phone:</strong> <span id="companyDetailsTel"></span></li>
+                                <li class="list-group-item "><strong>Website:</strong> <a href="#" target="_blank" id="companyDetailsWebsite" class="text-info"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Additional Fields from investorScripts.js -->
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <ul class="list-group ">
+                                <li class="list-group-item "><strong>Last Updated:</strong> <span id="companyDetailsLastUpdate"></span></li>
+                                <li class="list-group-item "><strong>Overview:</strong> <span id="companyDetailsOverview"></span></li>
+                                <li class="list-group-item "><strong>Day Range:</strong> <span id="companyDetailsDayRange"></span></li>
+                                <li class="list-group-item "><strong>52 Week Range:</strong> <span id="companyDetails52WRange"></span></li>
+                                <li class="list-group-item "><strong>P/E Ratio:</strong> <span id="companyDetailsPE"></span></li>
+                                <li class="list-group-item "><strong>Dividend Yield:</strong> <span id="companyDetailsDivYield"></span></li>
+                                <li class="list-group-item "><strong>RSI:</strong> <span id="companyDetailsRSI"></span></li>
+                                <li class="list-group-item "><strong>MACD:</strong> <span id="companyDetailsMACD"></span></li>
+                                <li class="list-group-item "><strong>50 DMA:</strong> <span id="companyDetails50DMA"></span></li>
+                                <li class="list-group-item "><strong>200 DMA:</strong> <span id="companyDetails200DMA"></span></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-group ">
+                                <li class="list-group-item "><strong>Technical Summary:</strong> <span id="companyDetailsTechSummary"></span></li>
+                                <li class="list-group-item "><strong>EPS:</strong> <span id="companyDetailsEPS"></span></li>
+                                <li class="list-group-item "><strong>ROE:</strong> <span id="companyDetailsROE"></span></li>
+                                <li class="list-group-item "><strong>Debt/Equity:</strong> <span id="companyDetailsDebtEquity"></span></li>
+                                <li class="list-group-item "><strong>P/B Ratio:</strong> <span id="companyDetailsPB"></span></li>
+                                <li class="list-group-item "><strong>Fundamental Summary:</strong> <span id="companyDetailsFundSummary"></span></li>
+                                <li class="list-group-item "><strong>PEG Ratio:</strong> <span id="companyDetailsPEG"></span></li>
+                                <li class="list-group-item "><strong>Current Ratio:</strong> <span id="companyDetailsCurrentRatio"></span></li>
+                                <li class="list-group-item "><strong>ROIC:</strong> <span id="companyDetailsROIC"></span></li>
+                                <li class="list-group-item "><strong>EBITDA Margin:</strong> <span id="companyDetailsEBITDA"></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- News -->
+                    <div class="mt-3">
+                        <h6>Recent News</h6>
+                        <ul id="companyDetailsNews" class="list-unstyled"></ul>
+                    </div>
+                    <!-- Ownership -->
+                    <div class="mt-3">
+                        <h6>Ownership Structure</h6>
+                        <div class="progress">
+                            <div class="progress-bar bg-primary" id="companyDetailsInst" style="width: 0%"></div>
+                            <div class="progress-bar bg-secondary" id="companyDetailsInsiders" style="width: 0%"></div>
+                            <div class="progress-bar bg-info" id="companyDetailsPublic" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="orderModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Order Confirmation</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row small mb-1">
+                        <div class="col-6">Action:</div>
+                        <div class="col-6 text-end text-success" id="modalAction">Buy</div>
+                        <div class="col-6">Company:</div>
+                        <div class="col-6 text-end" id="modalCompany">AIRTEL</div>
+                        <div class="col-6">Order Type:</div>
+                        <div class="col-6 text-end" id="modalType">Market Order</div>
+                        <div class="col-6">Quantity:</div>
+                        <div class="col-6 text-end" id="modalQty">0</div>
+                        <div class="col-6">Price per Share:</div>
+                        <div class="col-6 text-end" id="modalPrice">MK0.00</div>
+                        <div class="col-6">Total Cost:</div>
+                        <div class="col-6 text-end fw-bold" id="modalTotal">MK0.00</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="confirmOrder">Confirm Order</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="orderDetailsModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="bi bi-receipt-cutoff me-2"></i>Order Details</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="stock-info-row"><span class="stock-info-label">Date</span><span id="modalOrderDate" class="stock-info-value"></span></div>
+                    <div class="stock-info-row"><span class="stock-info-label">Company</span><span id="modalOrderCompany" class="stock-info-value"></span></div>
+                    <div class="stock-info-row"><span class="stock-info-label">Action</span><span id="modalOrderAction" class="stock-info-value"></span></div>
+                    <div class="stock-info-row"><span class="stock-info-label">Order Type</span><span id="modalOrderType" class="stock-info-value"></span></div>
+                    <div class="stock-info-row"><span class="stock-info-label">Quantity</span><span id="modalOrderQuantity" class="stock-info-value"></span></div>
+                    <div class="stock-info-row"><span class="stock-info-label">Total Cost</span><span id="modalOrderCost" class="stock-info-value"></span></div>
+                    <div class="stock-info-row"><span class="stock-info-label">Status</span><span id="modalOrderStatus" class="stock-info-value"></span></div>
+                    <div class="stock-info-row"><span class="stock-info-label">Order ID</span><span id="modalOrderID" class="stock-info-value"></span></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="mobileMoneyDepositModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="bi bi-arrow-down-circle me-2"></i>Mobile Money Deposit</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-2">Instantly deposit funds using Mpamba or Airtel Money.</p>
+                    <form id="mobileMoneyDepositForm">
+                        <div class="mb-2">
+                            <label for="depositProvider" class="form-label">Select Provider</label>
+                            <select class="form-select" id="depositProvider" required>
+                                <option value="" disabled selected>Select a provider</option>
+                                <option value="mpamba">Mpamba</option>
+                                <option value="airtel">Airtel Money</option>
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label for="depositPhoneNumber" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="depositPhoneNumber" placeholder="+265 XXX XXX XXX" required>
+                        </div>
+                        <div class="mb-2">
+                            <label for="depositAmount" class="form-label">Amount (MK)</label>
+                            <input type="number" class="form-control" id="depositAmount" placeholder="Enter amount in MK" min="100" required>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">Deposit Funds</button>
+                    </form>
+                    <p class="mt-2 small"><strong>Note:</strong> Ensure your mobile money account has sufficient funds.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="mobileMoneyWithdrawModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="bi bi-arrow-up-circle me-2"></i>Mobile Money Withdrawal</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-2">Withdraw funds to your mobile money account.</p>
+                    <form id="mobileMoneyWithdrawForm">
+                        <div class="mb-2">
+                            <label for="withdrawProvider" class="form-label">Select Provider</label>
+                            <select class="form-select" id="withdrawProvider" required>
+                                <option value="" disabled selected>Select a provider</option>
+                                <option value="mpamba">Mpamba</option>
+                                <option value="airtel">Airtel Money</option>
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label for="withdrawPhoneNumber" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="withdrawPhoneNumber" placeholder="+265 XXX XXX XXX" required>
+                        </div>
+                        <div class="mb-2">
+                            <label for="withdrawAmount" class="form-label">Amount (MK)</label>
+                            <input type="number" class="form-control" id="withdrawAmount" placeholder="Enter amount in MK" min="100" required>
+                        </div>
+                        <button type="submit" class="btn btn-danger w-100">Withdraw Funds</button>
+                    </form>
+                    <p class="mt-2 small"><strong>Note:</strong> Available balance: MK${user.cashBalance.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="transactionDetailsModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="bi bi-receipt me-2"></i>Transaction Details</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="stock-info-row"><span class="stock-info-label">Date</span><span id="modalTransDate" class="stock-info-value"></span></div>
+                    <div class="stock-info-row"><span class="stock-info-label">Method</span><span id="modalTransMethod" class="stock-info-value"></span></div>
+                    <div class="stock-info-row"><span class="stock-info-label">Type</span><span id="modalTransType" class="stock-info-value"></span></div>
+                    <div class="stock-info-row"><span class="stock-info-label">Amount</span><span id="modalTransAmount" class="stock-info-value"></span></div>
+                    <div class="stock-info-row"><span class="stock-info-label">Status</span><span id="modalTransStatus" class="stock-info-value"></span></div>
+                    <div class="stock-info-row"><span class="stock-info-label">Transaction ID</span><span id="modalTransID" class="stock-info-value"></span></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
 
     <script type="module" src="../../Dist/scripts/market.js"></script>
+    <script type="module" src="../../Dist/scripts/userData.js"></script>
+    <script type="module" src="../../Dist/scripts/transactions.js"></script>
+    <script type="module" src="../../Dist/scripts/transfer.js"></script>
     <script type="module" src="../../Dist/scripts/portfolio.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="../../Dist/scripts/orders.js"></script>
+    <script type="module" src="../../Dist/scripts/trade.js"></script>
+    <script src="../../Dist/scripts/theme.js"></script>
     <script src="../../Dist/scripts/navScripts.js"></script>
-    <script src="../../Dist/scripts/ordersScripts.js"></script>
-    <script src="../../Dist/scripts/transactionScripts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
