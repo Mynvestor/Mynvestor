@@ -18,8 +18,8 @@
                     <img src="Dist/images/omni.png" alt="Mynvestor Logo" class="w-12 mr-3">
                     <span class="text-2xl font-bold"><span class="highlight">Myn</span>vestor</span>
                 </a>
-                <div class="nav-links ml-8 flex space-x-6">
-                    <a href="#open-account" class="nav-link">Open Account</a>
+                <div class="nav-links ml-8 flex space-x-6 hidden md:flex">
+                    <a href="#open-account" class="nav-link">Account</a>
                     <a href="#place-order" class="nav-link">Trade</a>
                     <a href="#portfolio" class="nav-link">Portfolio</a>
                     <a href="#support" class="nav-link">Support</a>
@@ -28,22 +28,22 @@
             </div>
             <div class="auth-buttons flex items-center space-x-4">
                 <a href="Authentication/investor/login.html" class="auth-button login font-semibold py-2 px-4 rounded-full">Log In</a>
-                <a href="intro/disclaimer.html" class="auth-button signup font-semibold py-2 px-4 rounded-full">Sign Up</a>
+                <a href="intro/disclaimer.html" class="auth-button signup font-semibold py-2 px-4 rounded-full"><i class="bi bi-box-arrow-in-right"></i></a>
                 <div class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
                     <i class="bi bi-sun"></i>
                     <i class="bi bi-moon"></i>
                 </div>
-                <div class="hamburger">
+                <div class="hamburger md:hidden" id="hamburger">
                     <i class="bi bi-list text-3xl"></i>
                 </div>
             </div>
         </div>
-        <div class="mobile-menu">
-            <a href="#open-account" class="nav-link py-2">Open Account</a>
-            <a href="#place-order" class="nav-link py-2">Trade</a>
-            <a href="#portfolio" class="nav-link py-2">Portfolio</a>
-            <a href="#support" class="nav-link py-2">Support</a>
-            <a href="#learn" class="nav-link py-2">Learn</a>
+        <div class="mobile-menu hidden md:hidden" id="mobile-menu">
+            <a href="#open-account" class="nav-link py-2 block">Account</a>
+            <a href="#place-order" class="nav-link py-2 block">Trade</a>
+            <a href="#portfolio" class="nav-link py-2 block">Portfolio</a>
+            <a href="#support" class="nav-link py-2 block">Support</a>
+            <a href="#learn" class="nav-link py-2 block">Learn</a>
         </div>
     </nav>
 
@@ -382,16 +382,51 @@
         document.addEventListener('DOMContentLoaded', () => {
             const themeToggle = document.getElementById('theme-toggle');
             const html = document.documentElement;
+            const hamburger = document.getElementById('hamburger');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            // Select the screenshot images
+            const openAccountImg = document.querySelector('#open-account img.schwab-image');
+            const placeOrderImg = document.querySelector('#place-order img.schwab-image');
+            const portfolioImg = document.querySelector('#portfolio img.schwab-image');
+
+            // Function to update images based on theme
+            function updateImages(theme) {
+                const basePath = 'Dist/images/shots/';
+                if (openAccountImg) {
+                    openAccountImg.src = basePath + (theme === 'dark' ? 'loginDark.png' : 'loginLight.png');
+                }
+                if (placeOrderImg) {
+                    placeOrderImg.src = basePath + (theme === 'dark' ? 'tradeDark.png' : 'tradeLight.png');
+                }
+                if (portfolioImg) {
+                    portfolioImg.src = basePath + (theme === 'dark' ? 'portfolioDark.png' : 'portfolioLight.png');
+                }
+            }
 
             // Load saved theme from localStorage or default to dark
             const savedTheme = localStorage.getItem('theme') || 'dark';
             html.setAttribute('data-theme', savedTheme);
+            updateImages(savedTheme);
 
             // Toggle theme on click
             themeToggle.addEventListener('click', () => {
                 const newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
                 html.setAttribute('data-theme', newTheme);
                 localStorage.setItem('theme', newTheme);
+                updateImages(newTheme);
+            });
+
+            // Toggle mobile menu on hamburger click
+            hamburger.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Optional: Close mobile menu when a link is clicked
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
             });
         });
     </script>
