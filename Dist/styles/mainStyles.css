@@ -1,0 +1,1393 @@
+/* Define color variables for light and dark modes */
+:root {
+    --bg-primary: #fff;
+    --bg-secondary: #f0f4f8;
+    --bg-gradient: linear-gradient(135deg, rgba(240, 244, 248, 0.9) 0%, rgba(217, 226, 236, 0.9) 100%);
+    --text-primary: #333;
+    --text-secondary: #666;
+    --border: #d1d5db;
+    --accent-green: #27a844;
+    --accent-green-hover: #1f8836;
+    --accent-red: #ef4444;
+    --accent-red-hover: #dc2626;
+    --accent-blue: #0284c7;
+    --accent-blue-hover: #026ba6;
+    --accent-yellow: #f59e0b;
+    --placeholder: #9ca3af;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --admin-dark-bg: #1a1a1a;
+    --admin-dark-card: #2c3034;
+    --admin-border: #495057;
+    --admin-text: #d0d4d6;
+    --admin-accent-dark: #003366;
+}
+
+[data-theme="dark"] {
+    --bg-primary: #1f2a44;
+    --bg-secondary: #2d3b55;
+    --bg-gradient: linear-gradient(135deg, rgba(31, 42, 68, 0.9) 0%, rgba(45, 59, 85, 0.9) 100%);
+    --text-primary: #e5e7eb;
+    --text-secondary: #9ca3af;
+    --border: #4b5e7e;
+    --accent-green: #34d399;
+    --accent-green-hover: #22c55e;
+    --accent-red: #f87171;
+    --accent-red-hover: #ef4444;
+    --accent-blue: #60a5fa;
+    --accent-blue-hover: #3b82f6;
+    --accent-yellow: #facc15;
+    --placeholder: #6b7280;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    --admin-dark-bg: #1a1a1a;
+    --admin-dark-card: #2c3034;
+    --admin-border: #495057;
+    --admin-text: #d0d4d6;
+    --admin-accent-dark: #003366;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: var(--bg-gradient);
+    background-size: cover;
+    padding: 60px 0 80px;
+    min-height: 100vh;
+    color: var(--text-primary);
+}
+
+/* Theme Toggle */
+.theme-toggle {
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: var(--text-gray);
+    transition: transform 0.2s, color 0.3s ease;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+    color: var(--accent-green);
+}
+
+.theme-toggle .bi-sun,
+.theme-toggle .bi-moon {
+    display: none;
+}
+
+[data-theme="light"] .theme-toggle .bi-sun {
+    display: inline;
+}
+
+[data-theme="dark"] .theme-toggle .bi-moon {
+    display: inline;
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 200px;
+    height: calc(100vh - 60px);
+    background: var(--bg-primary);
+    border-right: 1px solid var(--border);
+    padding: 20px;
+    z-index: 999;
+    transition: transform 0.3s ease;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sidebar .nav-item {
+    display: flex;
+    align-items: center;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.sidebar .nav-item:hover {
+    background: var(--bg-secondary);
+    transform: translateX(5px);
+}
+
+.sidebar .nav-item.active {
+    background: var(--accent-green);
+    color: #fff;
+}
+
+.nav-icon {
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+/* Admin Sidebar */
+.admin-sidebar {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 200px;
+    height: calc(100vh - 60px);
+    background: #001f3f;
+    padding: 20px;
+    z-index: 999;
+    transition: transform 0.3s ease;
+}
+
+.admin-sidebar .nav-item {
+    color: #fff;
+}
+
+.admin-sidebar .nav-item:hover {
+    background: var(--admin-accent-dark);
+    transform: translateX(5px);
+}
+
+.admin-sidebar .nav-item.active {
+    background: var(--admin-accent-dark);
+    color: var(--accent-green);
+}
+
+/* Top Navigation */
+.top-nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--text-primary);
+    z-index: 1000;
+}
+
+.company-name {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.jon {
+    color: var(--accent-green);
+}
+
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--border);
+    transition: transform 0.2s;
+}
+
+.profile-pic:hover {
+    transform: scale(1.1);
+}
+
+.profile-pic img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-pic-img {
+    background-size: cover;
+    background-position: center;
+}
+
+.profile-initials {
+    width: 100%;
+    height: 100%;
+    background: var(--accent-green);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.notifications-icon,
+.help-icon {
+    cursor: pointer;
+    padding: 8px;
+    color: var(--text-primary);
+    font-size: 24px;
+    transition: transform 0.2s;
+}
+
+.help-icon:hover {
+    transform: scale(1.1);
+}
+
+/* Footer Navigation */
+.footer-nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: var(--bg-primary);
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px solid var(--border);
+}
+
+.footer-nav .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 0.8rem;
+    padding: 5px;
+    transition: transform 0.2s;
+}
+
+.footer-nav .nav-item:hover {
+    transform: translateY(-3px);
+}
+
+.footer-nav .nav-item.active {
+    color: var(--accent-green);
+    background: var(--bg-secondary);
+    border-radius: 5px;
+}
+
+/* Content Sections */
+.content-section {
+    display: none;
+    padding: 20px 20px 80px;
+    min-height: calc(100vh - 160px);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+}
+
+.content-section.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Cards */
+.card, .balance-card, .company-card, .portfolio-summary, .chart-card, .portfolio-card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin: 0.5rem;
+    box-shadow: var(--shadow);
+    color: var(--text-primary);
+}
+
+.balance-card .card-body {
+    padding: 0.75rem;
+}
+
+.balance-card small {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.balance-card .fw-bold {
+    font-size: 0.9rem;
+}
+
+.company-card {
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 70px;
+}
+
+.company-card:hover {
+    background: var(--bg-secondary);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.portfolio-summary {
+    padding: 15px;
+}
+
+.portfolio-summary h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.portfolio-summary .row div {
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.portfolio-summary .fw-bold {
+    font-size: 1.25rem;
+}
+
+.chart-card {
+    padding: 15px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.chart-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+}
+
+.chart-card canvas {
+    width: 100% !important;
+    height: 200px !important;
+}
+
+.portfolio-card {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 90px;
+    transition: all 0.2s;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.portfolio-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Admin Cards */
+.settings-card {
+    background-color: var(--admin-dark-bg);
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--admin-text);
+}
+
+.settings-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: #f8f9fa;
+}
+
+.settings-card .form-group {
+    margin-bottom: 1rem;
+}
+
+.settings-card label {
+    font-weight: 500;
+    color: var(--admin-text);
+    margin-bottom: 0.25rem;
+}
+
+.settings-card input[type="number"],
+.settings-card select {
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    color: var(--admin-text);
+    border-radius: 4px;
+    padding: 0.5rem;
+    width: 100%;
+    transition: border-color 0.2s;
+}
+
+.settings-card input[type="number"]:focus,
+.settings-card select:focus {
+    border-color: var(--accent-blue);
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.settings-card input[type="checkbox"] {
+    margin-right: 0.5rem;
+}
+
+.settings-card .form-check-label {
+    color: var(--admin-text);
+}
+
+.settings-card button {
+    background-color: var(--accent-blue);
+    border: none;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.settings-card button:hover {
+    background-color: var(--accent-blue-hover);
+}
+
+.settings-card input:disabled {
+    background-color: #3a3a3a;
+    color: #888;
+}
+
+.settings-card > div > div {
+    margin-bottom: 1rem;
+}
+
+/* Text Styles */
+.card-title, .card-text, .index-name, .index-points, .stock-info-label, .stock-info-value,
+.portfolio-details h5, .portfolio-details p, .company-info h5, .company-info p,
+.modal-body p, .modal-body span, .modal-body h5, .modal-body h6, .table th, .table td,
+.form-label, .form-check-label {
+    color: var(--text-primary);
+}
+
+.card-text small, .portfolio-summary, #transfers .card-text,
+#learn .quiz-card .form-check-label {
+    color: var(--text-secondary);
+}
+
+.card-title {
+    text-align: center;
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: initial;
+    max-width: 100%;
+}
+
+.card-title.long-name {
+    font-size: 0.75rem;
+}
+
+.card-text {
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+.share-price {
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-align: right;
+}
+
+.daily-change {
+    font-size: 0.85rem;
+    text-align: right;
+}
+
+.price-change-up {
+    color: var(--accent-green);
+}
+
+.price-change-down {
+    color: var(--accent-red);
+}
+
+/* Company Info */
+.company-info, .portfolio-info {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.company-logo {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.price-info {
+    flex-shrink: 0;
+    text-align: right;
+    min-width: 120px;
+}
+
+.portfolio-details {
+    flex-grow: 1;
+    margin-left: 12px;
+}
+
+.portfolio-details .card-text {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.portfolio-actions {
+    flex-shrink: 0;
+    display: flex;
+    gap: 8px;
+}
+
+/* Index Charts */
+.index-chart {
+    height: 200px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 15px 15px 15px 40px;
+    position: relative;
+}
+
+.index-name, .index-points {
+    position: absolute;
+    top: 10px;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.index-name { left: 15px; }
+.index-points { right: 15px; color: var(--accent-green); }
+
+/* Buttons */
+.btn-buy, #trade .btn-group .btn:not(.btn-danger) {
+    background: var(--accent-green);
+    border-color: var(--accent-green);
+    color: #fff;
+    font-size: 0.85rem;
+    padding: 5px 10px;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+}
+
+.btn-buy:hover, #trade .btn-group .btn:not(.btn-danger):hover {
+    background: var(--accent-green-hover);
+    border-color: var(--accent-green-hover);
+}
+
+.btn-sell, #trade .btn-group .btn-danger {
+    background: var(--accent-red);
+    border-color: var(--accent-red);
+    color: #fff;
+    font-size: 0.85rem;
+    padding: 5px 10px;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+}
+
+.btn-sell:hover, #trade .btn-group .btn-danger:hover {
+    background: var(--accent-red-hover);
+    border-color: var(--accent-red-hover);
+}
+
+.btn-details {
+    background: var(--accent-blue);
+    border-color: var(--accent-blue);
+    color: #fff;
+}
+
+.btn-details:hover {
+    background: var(--accent-blue-hover);
+    border-color: var(--accent-blue-hover);
+}
+
+.btn-outline-danger {
+    border-color: var(--accent-red);
+    color: var(--accent-red);
+}
+
+.btn-outline-danger:hover {
+    background: var(--accent-red);
+    color: #fff;
+}
+
+/* Form Elements */
+.form-control, .form-select {
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+}
+
+.form-control::placeholder {
+    color: var(--placeholder);
+}
+
+.form-control:focus, .form-select:focus {
+    background: var(--bg-primary);
+    border-color: var(--accent-green);
+    box-shadow: none;
+    color: var(--text-primary);
+}
+
+.form-check-input:checked {
+    background-color: var(--accent-green);
+    border-color: var(--accent-green);
+}
+
+/* Tables */
+.table, .table-dark, #trade .table, #trade .table-dark {
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+}
+
+.table th, .table-dark th, #trade .table th, #trade .table-dark th {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border);
+}
+
+.table td, .table-dark td, #trade .table td, #trade .table-dark td {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border-top: 1px solid var(--border);
+}
+
+#trade .table, #trade .table-dark {
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}
+
+/* Admin Tables */
+
+
+
+/* Modals */
+.modal-content, #userAccountModal .modal-content, #companyDetailsModal .modal-content {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+}
+
+.modal-header, .modal-footer {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border-color: var(--border);
+    padding: 0.75rem;
+}
+
+.modal-body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    padding: 1.5rem;
+}
+
+/* User Account Modal */
+#userAccountModal .user-avatar .profile-pic {
+    width: 60px;
+    height: 60px;
+    background: var(--accent-green);
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0 auto;
+}
+
+#userAccountModal .btn-outline-deposit {
+    border-color: var(--accent-green);
+    color: var(--accent-green);
+}
+
+#userAccountModal .btn-outline-deposit:hover {
+    background: var(--accent-green);
+    color: #fff;
+}
+
+#userAccountModal .btn-outline-withdraw {
+    border-color: var(--accent-red);
+    color: var(--accent-red);
+}
+
+#userAccountModal .btn-outline-withdraw:hover {
+    background: var(--accent-red);
+    color: #fff;
+}
+
+#userAccountModal .btn-outline-light {
+    border-color: var(--border);
+    color: var(--text-primary);
+}
+
+#userAccountModal .btn-outline-light:hover {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+/* Admin User Account Modal */
+#userAccountModal.admin .modal-content {
+    background-color: #001f3f;
+    color: #fff;
+    border: none;
+}
+
+#userAccountModal.admin .user-avatar .profile-pic {
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#userAccountModal.admin .user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* Company Details Modal */
+#companyDetailsModal h1 { font-size: 1.8rem; }
+#companyDetailsModal h2 { font-size: 1.5rem; }
+#companyDetailsModal h5 { font-size: 1.25rem; }
+#companyDetailsModal h6 { font-size: 1rem; color: var(--text-secondary); font-weight: 600; }
+
+#companyDetailsModal .card, #companyDetailsModal .table, #companyDetailsModal .table-dark {
+    box-shadow: var(--shadow);
+}
+
+#companyDetailsModal .progress { background: var(--bg-secondary); }
+#companyDetailsModal .progress-bar { background: var(--accent-blue); color: #fff; padding-left: 5px; }
+
+#companyDetailsModal a { color: var(--text-primary); text-decoration: none; }
+#companyDetailsModal a:hover { text-decoration: underline; }
+
+/* Admin Company Details Modal */
+#companyDetailsModal.admin .modal-content {
+    background: var(--admin-dark-card);
+    color: #fff;
+    border: 1px solid var(--admin-border);
+}
+
+#companyDetailsModal.admin .modal-header {
+    border-bottom: 1px solid var(--admin-border);
+    padding: 1rem;
+}
+
+#companyDetailsModal.admin h1, #companyDetailsModal.admin h2, #companyDetailsModal.admin h5 {
+    color: #fff;
+}
+
+#companyDetailsModal.admin h6 {
+    color: #e9ecef;
+}
+
+#companyDetailsModal.admin .card {
+    background: var(--admin-dark-card);
+    border: 1px solid var(--admin-border);
+}
+
+
+#companyDetailsModal.admin .progress {
+    background: var(--admin-dark-input);
+}
+
+/* Stock Info */
+.stock-info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.stock-info-label { color: var(--text-secondary); }
+.stock-info-value { font-weight: 500; }
+
+/* Help Section */
+#helpModal .accordion-button {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+}
+
+#helpModal .accordion-button:not(.collapsed) {
+    background: var(--bg-secondary);
+    color: var(--accent-green);
+}
+
+#helpModal .accordion-body, #learn {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+}
+
+/* Learn Section */
+#learn .accordion-button {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+}
+
+#learn .accordion-button:not(.collapsed) {
+    background: var(--bg-secondary);
+    color: var(--accent-green);
+}
+
+#learn .accordion-body, #learn {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+}
+
+.list-group-item {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+}
+
+.list-group-item:hover { background: var(--bg-secondary); }
+#learn { background: var(--bg-secondary); }
+#learn .quiz-card { max-width: 600px; margin: 0 auto; }
+
+#learn .btn-primary { background: var(--accent-blue); border: none; }
+#learn .btn-primary:hover { background: var(--accent-blue-hover); }
+
+/* Trade Section */
+#trade .card {
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 1rem;
+    transition: transform 0.2s;
+}
+
+#trade .card:hover { transform: translateY(-5px); }
+#trade h1 { font-size: 1.8rem; margin-bottom: 1.5rem; }
+#trade h4 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+#trade .h5 { color: var(--text-secondary); font-weight: 600; }
+
+#trade .btn-group .btn.active { background: var(--accent-green-hover); }
+#trade .btn-group .btn-danger.active { background: var(--accent-red-hover); }
+
+#trade .btn-primary { background: var(--accent-blue); border: none; }
+#trade .btn-primary:hover { background: var(--accent-blue-hover); }
+
+/* Transfers Section */
+#transfers .card {
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+#transfers .card:hover { transform: scale(1.05); }
+#transfers .card-title { font-size: 1.2rem; margin-bottom: 0.75rem; }
+#transfers .card-text { font-size: 0.9rem; margin-bottom: 1rem; font-weight: 500; }
+
+#transfers .btn-outline-warning { background: var(--accent-yellow); border: none; color: #fff; }
+#transfers .btn-outline-primary { background: var(--accent-blue); border: none; color: #fff; }
+#transfers .btn-outline-success { background: var(--accent-green); border: none; color: #fff; }
+#transfers .btn-outline-success:hover { background: var(--accent-green-hover); }
+
+/* Toast */
+.toast-container .toast.bg-success { background: var(--accent-green); color: #fff; }
+.toast-container .toast.bg-danger { background: var(--accent-red); color: #fff; }
+.toast-container .toast.bg-info { background: var(--accent-blue); color: #fff; }
+
+/* Badges */
+.badge {
+    padding: 0.5em 0.75em;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: #fff;
+}
+
+.badge.bg-success { background: var(--accent-green); }
+.badge.bg-danger { background: var(--accent-red); }
+.badge.bg-warning { background: var(--accent-yellow); }
+
+/* Admin Badges */
+.badge.bg-warning {
+    background-color: #e0a800 !important;
+    color: #fff !important;
+}
+
+.badge.bg-secondary {
+    background-color: #6c757d !important;
+    color: #fff !important;
+}
+
+/* Brokers Section */
+.broker-search {
+    margin-bottom: 15px;
+}
+
+.broker-search .form-control {
+    background: var(--admin-dark-input);
+    border: 1px solid var(--admin-border);
+    color: var(--admin-text);
+}
+
+.broker-search .form-control:focus {
+    border-color: var(--accent-green);
+    box-shadow: none;
+}
+
+/* Investors Section */
+.investor-search {
+    margin-bottom: 15px;
+}
+
+.investor-search .form-control {
+    background: var(--admin-dark-input);
+    border: 1px solid var(--admin-border);
+    color: var(--admin-text);
+}
+
+.investor-search .form-control:focus {
+    border-color: var(--accent-green);
+    box-shadow: none;
+}
+
+/* Transactions Section */
+.transaction-search {
+    margin-bottom: 15px;
+}
+
+.transaction-search .form-control {
+    background: var(--admin-dark-input);
+    border: 1px solid var(--admin-border);
+    color: var(--admin-text);
+}
+
+.transaction-search .form-control:focus {
+    border-color: var(--accent-green);
+    box-shadow: none;
+}
+
+.table-dark .verify-trans-btn,
+.table-dark .view-trans-btn {
+    background: linear-gradient(145deg, #17a2b8 0%, #138496 100%);
+    border: none;
+    font-weight: 500;
+}
+
+.table-dark .verify-trans-btn:hover,
+.table-dark .view-trans-btn:hover {
+    background: linear-gradient(145deg, #138496 0%, #117a8b 100%);
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    background: linear-gradient(145deg, var(--admin-dark-card) 0%, #1a1e22 100%);
+    border: 1px solid #5a6268;
+    color: var(--admin-text);
+}
+
+.dropdown-menu .dropdown-item {
+    color: var(--admin-text);
+    font-weight: 500;
+    padding: 8px 16px;
+    transition: background 0.2s, color 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-menu .dropdown-item i {
+    margin-right: 8px;
+    font-size: 1.1rem;
+}
+
+.dropdown-menu .dropdown-item:hover {
+    background: var(--admin-accent-dark);
+    color: var(--accent-green);
+}
+
+.dropdown-menu .dropdown-item.active {
+    background: var(--admin-accent-dark);
+    color: var(--accent-green);
+    font-weight: 600;
+}
+
+/* Settings Section */
+#settings .form-label {
+    color: var(--admin-text);
+    font-weight: 500;
+}
+
+#settings .form-control.bg-dark,
+#settings .form-select.bg-dark {
+    background: var(--admin-dark-input);
+    border: 1px solid var(--admin-border);
+    color: var(--admin-text);
+}
+
+#settings .form-control.bg-dark:focus,
+#settings .form-select.bg-dark:focus {
+    border-color: var(--accent-green);
+    box-shadow: none;
+}
+
+#settings .btn-success {
+    background: var(--accent-green);
+    border: none;
+}
+
+#settings .btn-success:hover {
+    background: var(--accent-green-hover);
+}
+
+/* Edit Profile and Change Password Modals */
+#editProfileModal .modal-content,
+#changePasswordModal .modal-content {
+    background: linear-gradient(145deg, var(--admin-dark-card) 0%, #1a1e22 100%);
+    border: 1px solid #5a6268;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+#editProfileModal .modal-body,
+#changePasswordModal .modal-body {
+    padding: 20px;
+}
+
+/* Messaging Modals */
+#messageInvestorModal .modal-content,
+#messageBrokerModal .modal-content {
+    background: linear-gradient(145deg, var(--admin-dark-card) 0%, #1a1e22 100%);
+    border: 1px solid #5a6268;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+#messageInvestorModal .modal-body,
+#messageBrokerModal .modal-body {
+    padding: 20px;
+}
+
+#messageInvestorModal .form-label,
+#messageBrokerModal .form-label {
+    color: var(--admin-text);
+    font-weight: 500;
+}
+
+#messageInvestorModal .form-control,
+#messageInvestorModal .form-select,
+#messageBrokerModal .form-control,
+#messageBrokerModal .form-select {
+    background: var(--admin-dark-input);
+    border: 1px solid var(--admin-border);
+    color: var(--admin-text);
+}
+
+#messageInvestorModal .form-control:focus,
+#messageInvestorModal .form-select:focus,
+#messageBrokerModal .form-control:focus,
+#messageBrokerModal .form-select:focus {
+    border-color: var(--accent-green);
+    box-shadow: none;
+}
+
+/* Transaction and Order Detail Modals */
+#transactionDetailsModal .modal-content,
+#orderDetailsModal .modal-content {
+    background: linear-gradient(145deg, var(--admin-dark-card) 0%, #1a1e22 100%);
+    border: 1px solid #5a6268;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+#transactionDetailsModal .modal-body,
+#orderDetailsModal .modal-body {
+    padding: 20px;
+}
+
+
+#transactionDetailsModal .stock-info-value,
+#orderDetailsModal .stock-info-value {
+    font-weight: 500;
+    color: var(--admin-text);
+}
+
+/* Investor Details Modal */
+#investorDetailsModal .modal-content {
+    background: linear-gradient(145deg, var(--admin-dark-card) 0%, #1a1e22 100%);
+    border: 1px solid #5a6268;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+#investorDetailsModal .modal-body {
+    padding: 20px;
+}
+
+#investorDetailsModal .investor-info-section {
+    margin-bottom: 20px;
+}
+
+#investorDetailsModal .investor-info-section h6 {
+    color: var(--accent-green);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+#investorDetailsModal .investor-info-section p {
+    margin: 5px 0;
+    font-size: 0.9rem;
+    color: var(--admin-text);
+}
+
+#investorDetailsModal .status-badge {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+    border-radius: 12px;
+}
+
+#investorDetailsModal .status-new {
+    background: #6c757d;
+    color: #fff;
+}
+
+#investorDetailsModal .status-pending {
+    background: #ffc107;
+    color: #000;
+}
+
+#investorDetailsModal .status-active {
+    background: var(--accent-green);
+    color: #fff;
+}
+
+#investorDetailsModal .nav-tabs {
+    border-bottom: 1px solid var(--admin-border);
+}
+
+#investorDetailsModal .nav-tabs .nav-link {
+    color: var(--admin-text);
+    background: var(--admin-dark-card);
+    border: 1px solid transparent;
+    margin-right: 4px;
+    border-radius: 8px 8px 0 0;
+}
+
+#investorDetailsModal .nav-tabs .nav-link:hover {
+    border-color: var(--admin-border);
+    background: #343a40;
+}
+
+#investorDetailsModal .nav-tabs .nav-link.active {
+    color: #fff;
+    background: var(--admin-accent-dark);
+    border-color: var(--admin-border) var(--admin-border) var(--admin-dark-card);
+}
+
+#investorDetailsModal .tab-content {
+    background: var(--admin-dark-card);
+    padding: 20px;
+    border-radius: 0 0 8px 8px;
+    border: 1px solid var(--admin-border);
+    border-top: none;
+}
+
+#investorDetailsModal canvas {
+    max-height: 200px;
+    width: 100%;
+}
+
+#investorDetailsModal .table-dark tr.transaction-row,
+#investorDetailsModal .table-dark tr.order-row {
+    cursor: pointer;
+}
+
+#investorDetailsModal .table-dark tr.transaction-row:hover,
+#investorDetailsModal .table-dark tr.order-row:hover {
+    background: var(--admin-accent-dark);
+}
+
+#investorDetailsModal .investor-info-section a.text-success {
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+#investorDetailsModal .investor-info-section a.text-success:hover {
+    color: #20c997;
+    text-decoration: underline;
+}
+
+/* Broker Details Modal */
+#brokerDetailsModal .nav-tabs {
+    border-bottom: 1px solid var(--admin-border);
+}
+
+#brokerDetailsModal .nav-tabs .nav-link {
+    color: var(--admin-text);
+    background: var(--admin-dark-card);
+    border: 1px solid transparent;
+    margin-right: 4px;
+    border-radius: 8px 8px 0 0;
+}
+
+#brokerDetailsModal .nav-tabs .nav-link:hover {
+    border-color: var(--admin-border);
+    background: #343a40;
+}
+
+#brokerDetailsModal .nav-tabs .nav-link.active {
+    color: #fff;
+    background: var(--admin-accent-dark);
+    border-color: var(--admin-border) var(--admin-border) var(--admin-dark-card);
+}
+
+#brokerDetailsModal .tab-content {
+    background: var(--admin-dark-card);
+    padding: 20px;
+    border-radius: 0 0 8px 8px;
+    border: 1px solid var(--admin-border);
+    border-top: none;
+}
+
+#brokerDetailsModal canvas {
+    max-height: 200px;
+    width: 100%;
+}
+
+#brokerDetailsModal .table-dark tr.transaction-row,
+#brokerDetailsModal .table-dark tr.order-row {
+    cursor: pointer;
+}
+
+#brokerDetailsModal .table-dark tr.transaction-row:hover,
+#brokerDetailsModal .table-dark tr.order-row:hover {
+    background: var(--admin-accent-dark);
+}
+
+#brokerDetailsModal .broker-info-section a.text-success {
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+#brokerDetailsModal .broker-info-section a.text-success:hover {
+    color: #20c997;
+    text-decoration: underline;
+}
+
+/* Pending Verification Section */
+#pendingVerificationSection .input-group-text {
+    background: var(--admin-dark-input);
+    border: 1px solid var(--admin-border);
+    color: var(--admin-text);
+}
+
+#pendingVerificationSection .form-control {
+    background: var(--admin-dark-input);
+    border: 1px solid var(--admin-border);
+    color: var(--admin-text);
+}
+
+#pendingVerificationSection .form-control:focus {
+    border-color: var(--accent-green);
+    box-shadow: none;
+}
+
+#pendingVerificationSection .form-control.is-invalid {
+    border-color: var(--accent-red);
+}
+
+#pendingVerificationSection .invalid-feedback {
+    color: var(--accent-red);
+    font-size: 0.875rem;
+}
+
+/* Transaction Verification Table */
+#transactionVerificationTable .form-select,
+#transactionVerificationTable .form-control {
+    background: var(--admin-dark-input);
+    border: 1px solid var(--admin-border);
+    color: var(--admin-text);
+}
+
+#transactionVerificationTable .form-select:focus,
+#transactionVerificationTable .form-control:focus {
+    border-color: var(--accent-green);
+    box-shadow: none;
+}
+
+#transactionVerificationTable .form-label {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+#refreshTransactionsBtn,
+#exportTransactionDataBtn {
+    background: linear-gradient(145deg, #17a2b8 0%, #138496 100%);
+    border: none;
+}
+
+#refreshTransactionsBtn:hover,
+#exportTransactionDataBtn:hover {
+    background: linear-gradient(145deg, #138496 0%, #117a8b 100%);
+}
+
+/* Sortable */
+.sortable {
+    cursor: pointer;
+    user-select: none;
+}
+
+.sortable.asc i::before {
+    content: '\F145';
+}
+
+.sortable.desc i::before {
+    content: '\F140';
+}
+
+.sortable i {
+    opacity: 0.5;
+}
+
+.sortable:hover i {
+    opacity: 1;
+}
+
+/* Responsive Design */
+@media (min-width: 769px) {
+    .footer-nav { display: none; }
+    .sidebar, .admin-sidebar { transform: translateX(0); }
+    .content-section { margin-left: 200px; width: calc(100% - 200px); }
+}
+
+@media (max-width: 768px) {
+    .sidebar, .admin-sidebar { display: none; }
+    .content-section { margin-left: 0; width: 100%; }
+    .footer-nav { display: flex; padding: 5px 0; }
+    .nav-item { font-size: 0.7rem; }
+    .nav-icon { font-size: 18px; }
+    .index-chart { height: 150px; }
+    .chart-card canvas { height: 180px !important; }
+    .portfolio-summary .row div { font-size: 0.9rem; }
+    .portfolio-summary .fw-bold { font-size: 1.1rem; }
+    .card-body, #learn .card-body { padding: 1rem; }
+    .settings-card { padding: 1rem; }
+    .settings-card h3 { font-size: 1.1rem; }
+    #learn .quiz-card { max-width: 100%; }
+}
+
+@media (max-width: 576px) {
+    .card-title { max-width: 100px; }
+    .portfolio-card { flex-direction: column; align-items: flex-start; min-height: 120px; padding: 8px; }
+    .portfolio-info, .portfolio-actions { width: 100%; }
+    .portfolio-details .card-text { font-size: 0.8rem; }
+    .price-info { min-width: 100px; }
+    .portfolio-actions { margin-top: 8px; justify-content: flex-start; }
+    .chart-card canvas { height: 160px !important; }
+    .portfolio-summary .row div { font-size: 0.85rem; }
+    .portfolio-summary .fw-bold { font-size: 1rem; }
+    .btn-group { flex-direction: column; }
+    .btn-group .btn { width: 100%; margin-bottom: 5px; }
+}

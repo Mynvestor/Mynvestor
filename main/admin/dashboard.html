@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Mynvestor</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <link rel="stylesheet" href="../../Dist/styles/mainStyles.css">
+    </head>
+    <body>
+        <aside class="sidebar" id="sidebar">
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="nav-item" title="View Dashboard" aria-label="Dashboard">
+                    <i class="bi bi-speedometer2 nav-icon"></i>Dashboard
+                </a>
+                <a href="#market" class="nav-item active" title="View Market Data" aria-label="Market">
+                    <i class="bi bi-bar-chart-line nav-icon"></i>Market
+                </a>
+                <a href="#investors" class="nav-item" title="Manage Investor" aria-label="Investors">
+                    <i class="bi bi-people nav-icon"></i>Investors
+                </a>
+                <a href="#orders" class="nav-item" title="View Orders" aria-label="Orders">
+                    <i class="bi bi-arrow-left-right nav-icon"></i>Orders
+                </a>
+                <a href="#transactions" class="nav-item" title="View Transactions" aria-label="Transactions">
+                    <i class="bi bi-cash-coin nav-icon"></i>Transactions
+                </a>
+            </nav>
+        </aside>
+        <nav class="top-nav">
+            <div class="profile-pic" id="profile-pic-container">
+                <img src="../../Dist/images/admin.png" alt="Admin Profile" style="width: 100%; height: 100%; object-fit: cover;">
+                <div class="profile-initials" id="user-initials">AD</div>
+            </div>
+            <div class="company-name"><span class="jon">Myn</span>vestor Admin</div>
+            <div class="dropdown">
+                <i class="bi bi-three-dots more-icon" id="more-icon" data-bs-toggle="dropdown" aria-label="More Options"></i>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="#compliance"><i class="bi bi-shield-check"></i>Compliance</a></li>
+                    <li><a class="dropdown-item" href="#learn"><i class="bi bi-book"></i>Learn</a></li>
+                    <li><a class="dropdown-item" href="#help"><i class="bi bi-question-circle"></i>Help</a></li>
+                    <li><a class="dropdown-item" href="#settings"><i class="bi bi-gear"></i>Settings</a></li>
+                </ul>
+            </div>
+        </nav>
+        <section id="dashboard" class="content-section active">
+            <div class="loading" id="dashboard-loading">Loading...</div>
+            <h1 class="mb-2"><i class="bi bi-speedometer2 me-2"></i>Dashboard</h1>
+            <!-- Market Snapshot -->
+            <div class="card mb-2">
+                <div class="card-body">
+                    <h2 class="mb-2"><i class="bi bi-bar-chart-line me-2"></i>Market Snapshot</h2>
+                    <div class="row" id="marketSnapshot"></div>
+                </div>
+            </div>
+            <!-- Key Statistics -->
+            <div class="row mb-2">
+                <div class="col-md-4 col-xl-4 mb-1">
+                    <h2 class="mb-2"><i class="bi bi-arrow-up-circle me-2"></i>Top Gainers</h2>
+                    <div class="row mb-2" id="topGainers"></div>
+                </div>
+                <div class="col-md-4 col-xl-4 mb-1">
+                    <h2 class="mb-2"><i class="bi bi-arrow-down-circle me-2"></i>Top Losers</h2>
+                    <div class="row mb-2" id="topLosers"></div>
+                </div>
+                <div class="col-md-4 col-xl-4 mb-1">
+                    <h2 class="mb-2"><i class="bi bi-graph-up me-2"></i>Volume Gainers</h2>
+                    <div class="row" id="volumeGainers"></div>
+                </div>
+            </div>
+            <!-- Investor Overview -->
+            <div class="card mb-2">
+                <div class="card-body">
+                    <h2 class="mb-2"><i class="bi bi-people me-2"></i>Investor Overview</h2>
+                    <div class="investor-search mb-2">
+                        <input type="text" class="form-control" id="dashboardInvestorSearch" placeholder="Search investors by name or ID..." aria-label="Search investors">
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="dashboardInvestorTable">
+                            <thead>
+                                <tr>
+                                    <th class="sortable" data-sort="name"><i class="bi bi-arrow-down-up"></i> Name</th>
+                                    <th class="sortable" data-sort="investorId"><i class="bi bi-arrow-down-up"></i> Investor ID</th>
+                                    <th class="sortable" data-sort="status"><i class="bi bi-arrow-down-up"></i> Status</th>
+                                    <th class="sortable" data-sort="lastActive"><i class="bi bi-arrow-down-up"></i> Last Active</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dashboardInvestorTableBody">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- Recent Orders -->
+            <div class="card mb-2">
+                <div class="card-body">
+                    <h2 class="mb-2"><i class="bi bi-arrow-left-right me-2"></i>Recent Orders</h2>
+                    <div class="transaction-search mb-2">
+                        <input type="text" class="form-control" id="dashboardOrderSearch" placeholder="Search orders by ID or investor..." aria-label="Search orders">
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="dashboardOrderTable">
+                            <thead>
+                                <tr>
+                                    <th class="sortable" data-sort="orderId"><i class="bi bi-arrow-down-up"></i> Order ID</th>
+                                    <th class="sortable" data-sort="investor"><i class="bi bi-arrow-down-up"></i> Investor</th>
+                                    <th class="sortable" data-sort="type"><i class="bi bi-arrow-down-up"></i> Type</th>
+                                    <th class="sortable" data-sort="stock"><i class="bi bi-arrow-down-up"></i> Stock</th>
+                                    <th class="sortable" data-sort="quantity"><i class="bi bi-arrow-down-up"></i> Quantity</th>
+                                    <th class="sortable" data-sort="price"><i class="bi bi-arrow-down-up"></i> Price</th>
+                                    <th class="sortable" data-sort="status"><i class="bi bi-arrow-down-up"></i> Status</th>
+                                    <th class="sortable" data-sort="date"><i class="bi bi-arrow-down-up"></i> Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dashboardOrderTableBody">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- Recent Transactions -->
+            <div class="card mb-2">
+                <div class="card-body">
+                    <h2 class="mb-2"><i class="bi bi-cash-coin me-2"></i>Recent Transactions</h2>
+                    <div class="transaction-search mb-2">
+                        <input type="text" class="form-control" id="dashboardTransactionSearch" placeholder="Search transactions by ID or investor..." aria-label="Search transactions">
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="dashboardTransactionTable">
+                            <thead>
+                                <tr>
+                                    <th class="sortable" data-sort="transId"><i class="bi bi-arrow-down-up"></i> Transaction ID</th>
+                                    <th class="sortable" data-sort="investor"><i class="bi bi-arrow-down-up"></i> Investor</th>
+                                    <th class="sortable" data-sort="type"><i class="bi bi-arrow-down-up"></i> Type</th>
+                                    <th class="sortable" data-sort="amount"><i class="bi bi-arrow-down-up"></i> Amount</th>
+                                    <th class="sortable" data-sort="date"><i class="bi bi-arrow-down-up"></i> Date</th>
+                                    <th class="sortable" data-sort="status"><i class="bi bi-arrow-down-up"></i> Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dashboardTransactionTableBody">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="d-flex justify-content-end mt-2">
+                        <button class="btn btn-outline-primary me-2" id="exportDashboardTransactionsBtn"><i class="bi bi-download me-1"></i>Export</button>
+                        <button class="btn btn-outline-primary" id="refreshDashboardTransactionsBtn"><i class="bi bi-arrow-repeat me-1"></i>Refresh</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Modals -->
+        <div class="modal fade" id="stockQuoteModal" tabindex="-1" aria-labelledby="stockQuoteModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="stockQuoteModalLabel">Stock Quote</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="stock-info-row">
+                            <img id="modalCompanyLogo" src="" alt="Company Logo" class="company-logo me-3">
+                            <div>
+                                <h5 id="modalCompanyFullName"></h5>
+                                <p id="modalCompanyTicker" class="mb-0"></p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="stock-info-row"><span class="stock-info-label">Price</span><span id="modalCurrentPrice" class="stock-info-value"></span></div>
+                        <div class="stock-info-row"><span class="stock-info-label">Change</span><span id="modalDailyChange" class="stock-info-value"></span></div>
+                        <div class="stock-info-row"><span class="stock-info-label">Open</span><span id="modalOpen" class="stock-info-value"></span></div>
+                        <div class="stock-info-row"><span class="stock-info-label">High</span><span id="modalHigh" class="stock-info-value"></span></div>
+                        <div class="stock-info-row"><span class="stock-info-label">Low</span><span id="modalLow" class="stock-info-value"></span></div>
+                        <div class="stock-info-row"><span class="stock-info-label">Volume</span><span id="modalVolume" class="stock-info-value"></span></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="modalDetailsBtn"><i class="bi bi-info-circle me-1"></i>Full Details</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="companyDetailsModal" tabindex="-1" aria-labelledby="companyDetailsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content text-light">
+                    <div class="modal-header border-0">
+                        <h5 class="modal-title" id="companyDetailsModalLabel">Company Details</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <img id="companyDetailsLogo" src="" alt="Company Logo" class="company-logo me-3">
+                            <div>
+                                <h5 id="companyDetailsFullName"></h5>
+                                <p class="mb-0">Last Updated: <span id="companyDetailsLastUpdate"></span></p>
+                            </div>
+                        </div>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h6>Overview</h6>
+                                <p class="mb-0"><strong>Sector:</strong> <span id="companyDetailsSector"></span></p>
+                                <p id="companyDetailsOverview"></p>
+                            </div>
+                        </div>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h6>Quote</h6>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p class="mb-1"><strong>Ticker:</strong> <span id="companyDetailsTicker"></span></p>
+                                        <p class="mb-1"><strong>Price:</strong> <span id="companyDetailsPrice"></span></p>
+                                        <p class="mb-1"><strong>Day Range:</strong> <span id="companyDetailsDayRange"></span></p>
+                                        <p class="mb-1"><strong>52W Range:</strong> <span id="companyDetails52WRange"></span></p>
+                                        <p class="mb-1"><strong>Volume:</strong> <span id="companyDetailsVolume"></span></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p class="mb-1"><strong>Market Cap:</strong> <span id="companyDetailsMarketCap"></span></p>
+                                        <p class="mb-1"><strong>Listing Date:</strong> <span id="companyDetailsListingDate"></span></p>
+                                        <p class="mb-1"><strong>Listing Price:</strong> <span id="companyDetailsListingPrice"></span></p>
+                                        <p class="mb-1"><strong>Shares in Issue:</strong> <span id="companyDetailsShares"></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h6>Management</h6>
+                                <p class="mb-1"><strong>CEO:</strong> <span id="companyDetailsCEO"></span></p>
+                                <p class="mb-1"><strong>CFO:</strong> <span id="companyDetailsCFO"></span></p>
+                                <p class="mb-1"><strong>Company Secretary:</strong> <span id="companyDetailsSecretary"></span></p>
+                                <p class="mb-1"><strong>Transfer Secretary:</strong> <span id="companyDetailsTransferSecretary"></span></p>
+                            </div>
+                        </div>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h6>Contact</h6>
+                                <p class="mb-1"><strong>Address:</strong> <span id="companyDetailsAddress"></span></p>
+                                <p class="mb-1"><strong>Tel:</strong> <span id="companyDetailsTel"></span></p>
+                                <p class="mb-1"><strong>Website:</strong> <a id="companyDetailsWebsite" href="#" target="_blank"></a></p>
+                            </div>
+                        </div>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h6>Valuation</h6>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p class="mb-1"><strong>P/E Ratio:</strong> <span id="companyDetailsPE"></span></p>
+                                        <p class="mb-1"><strong>Dividend Yield:</strong> <span id="companyDetailsDivYield"></span></p>
+                                        <p class="mb-1"><strong>EPS:</strong> <span id="companyDetailsEPS"></span></p>
+                                        <p class="mb-1"><strong>P/B Ratio:</strong> <span id="companyDetailsPB"></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h6>Technical Indicators</h6>
+                                <p class="mb-1"><strong>RSI (14):</strong> <span id="companyDetailsRSI"></span></p>
+                                <p class="mb-1"><strong>MACD:</strong> <span id="companyDetailsMACD"></span></p>
+                                <p class="mb-1"><strong>50-Day MA:</strong> <span id="companyDetails50DMA"></span></p>
+                                <p class="mb-1"><strong>200-Day MA:</strong> <span id="companyDetails200DMA"></span></p>
+                                <p class="mb-1"><strong>Summary:</strong> <span id="companyDetailsTechSummary"></span></p>
+                            </div>
+                        </div>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h6>Fundamental Metrics</h6>
+                                <p class="mb-1"><strong>ROE:</strong> <span id="companyDetailsROE"></span></p>
+                                <p class="mb-1"><strong>Debt/Equity:</strong> <span id="companyDetailsDebtEquity"></span></p>
+                                <p class="mb-1"><strong>PEG Ratio:</strong> <span id="companyDetailsPEG"></span></p>
+                                <p class="mb-1"><strong>Current Ratio:</strong> <span id="companyDetailsCurrentRatio"></span></p>
+                                <p class="mb-1"><strong>ROIC:</strong> <span id="companyDetailsROIC"></span></p>
+                                <p class="mb-1"><strong>EBITDA Margin:</strong> <span id="companyDetailsEBITDA"></span></p>
+                                <p class="mb-1"><strong>Summary:</strong> <span id="companyDetailsFundSummary"></span></p>
+                            </div>
+                        </div>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h6>Ownership Structure</h6>
+                                <div class="progress mb-2">
+                                    <div class="progress-bar" id="companyDetailsInst"></div>
+                                </div>
+                                <div class="progress mb-2">
+                                    <div class="progress-bar bg-success" id="companyDetailsInsiders"></div>
+                                </div>
+                                <div class="progress mb-2">
+                                    <div class="progress-bar bg-info" id="companyDetailsPublic"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <h6>Recent News</h6>
+                                <ul id="companyDetailsNews" class="list-unstyled"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="investorDetailsModal" tabindex="-1" aria-labelledby="investorDetailsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content text-light">
+                    <div class="modal-header border-0">
+                        <h5 class="modal-title" id="investorDetailsModalLabel">Investor Details</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="investorDetailsContent">
+                        <!-- Content will be dynamically populated based on investor status -->
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <div class="d-none" id="pendingVerificationSection">
+                            <div class="input-group me-2" style="max-width: 200px;">
+                                <span class="input-group-text text-light">CSD #</span>
+                                <input type="text" class="form-control text-light" id="csdNumberInput" placeholder="e.g., CSD123456" required>
+                            </div>
+                            <button type="button" class="btn btn-success" id="verifyInvestorBtn"><i class="bi bi-check"></i> Verify Investor</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="transactionDetailsModal" tabindex="-1" aria-labelledby="transactionDetailsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="transactionDetailsModalLabel">Transaction Details</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="stock-info-row"><span class="stock-info-label">Transaction ID</span><span id="transId" class="stock-info-value"></span></div>
+                        <div class="stock-info-row"><span class="stock-info-label">Investor</span><span id="transInvestor" class="stock-info-value"></span></div>
+                        <div class="stock-info-row"><span class="stock-info-label">Type</span><span id="transType" class="stock-info-value"></span></div>
+                        <div class="stock-info-row"><span class="stock-info-label">Amount</span><span id="transAmount" class="stock-info-value"></span></div>
+                        <div class="stock-info-row"><span class="stock-info-label">Date</span><span id="transDate" class="stock-info-value"></span></div>
+                        <div class="stock-info-row"><span class="stock-info-label">Status</span><span id="transStatus" class="stock-info-value"></span></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="exportTransactionDetailsBtn"><i class="bi bi-download me-1"></i>Export</button>
+                        <div id="transactionActions"></div>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="orderDetailsModal" tabindex="-1" aria-labelledby="orderDetailsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="orderDetailsModalLabel">Order Details</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="stock-info-row"><span class="stock-info-label">Order ID</span><span id="orderId" class="stock-info-value"></span></div>
+                        <div class="stock-info-row"><span class="stock-info-label">Investor</span><span id="orderInvestor" class="stock-info-value"></span></div>
+                        <div class="stock-info-row"><span class="stock-info-label">Type</span><span id="orderType" class="stock-info-value"></span></div>
+                        <div class="stock-info-row"><span class="stock-info-label">Stock</span><span id="orderStock" class="stock-info-value"></span></div>
+                        <div class="stock-info-row"><span class="stock-info-label">Quantity</span><span id="orderQuantity" class="stock-info-value"></span></div>
+                        <div class="stock-info-row"><span class="stock-info-label">Price</span><span id="orderPrice" class="stock-info-value"></span></div>
+                        <div class="stock-info-row"><span class="stock-info-label">Status</span><span id="orderStatus" class="stock-info-value"></span></div>
+                        <div class="stock-info-row"><span class="stock-info-label">Date</span><span id="orderDate" class="stock-info-value"></span></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="exportOrderDetailsBtn"><i class="bi bi-download me-1"></i>Export</button>
+                        <div id="orderActions"></div>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="userAccountModal" tabindex="-1" aria-labelledby="userAccountModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="userAccountModalLabel">Admin Profile</h5>
+                        <div class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                            <i class="bi bi-sun"></i>
+                            <i class="bi bi-moon"></i>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="user-avatar text-center mb-3">
+                            <div class="profile-pic mx-auto" id="modal-profile-pic">
+                                <img src="../../Dist/images/admin.png" alt="Admin Profile" style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                        </div>
+                        <div class="user-info text-center">
+                            <h5 id="brokerName">Admin Name</h5>
+                            <p id="brokerEmail">admin@example.com</p>
+                            <p id="brokerPhone">+265 999 999 999</p>
+                        </div>
+                        <div class="d-flex flex-column gap-2 mt-3">
+                            <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                                <i class="bi bi-pencil"></i> Edit Profile
+                            </button>
+                            <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
+                                <i class="bi bi-lock"></i> Change Password
+                            </button>
+                            <button class="btn btn-outline-danger" onclick="window.location.href='/Authentication/admin/login.html'">
+                                <i class="bi bi-box-arrow-right"></i> Log Out
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="../../Dist/scripts/admin/adminScripts.js" defer></script>
+        <script type="module" src="../../Dist/scripts/dashboard.js"></script>
+        <script type="module" src="../../Dist/scripts/market.js"></script>
+        <script src="../../Dist/scripts/theme.js"></script>
+    </body>
+</html>
