@@ -1,19 +1,21 @@
 export const indexItem = [
     {
         indexName: 'MASI',
-        indexValue: '336,715.90',
-        indexVolume: '73,431',
-        uniqueTrades: '47'
-    }, {
+        indexValue: '606,629.38',
+        indexVolume: '1,799,854',
+        uniqueTrades: '51'
+    }, 
+    {
         indexName: 'DSI',
-        indexValue: '252,827.77',
-        indexVolume: '73,431',
-        uniqueTrades: '23'
-    }, {
+        indexValue: '454,917.49',
+        indexVolume: '1,799,854',
+        uniqueTrades: '21'
+    }, 
+    {
         indexName: 'FSI',
-        indexValue: '59,748.59',
-        indexVolume: '73,431',
-        uniqueTrades: '7'
+        indexValue: '108,101.02',
+        indexVolume: '1,799,854',
+        uniqueTrades: '12'
     }
 ];
 
@@ -387,5 +389,6 @@ export const companyData = [
         logo: '../../Dist/images/tnm.png'
     }
 ];
+
 
 
